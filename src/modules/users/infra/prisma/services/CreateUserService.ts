@@ -3,11 +3,13 @@ import { Prisma, Users } from '@prisma/client';
 import { hash } from 'bcryptjs';
 import ErrorHandling from '../../../../../shared/errors/ErrorHandling';
 import { PrismaService } from '../../../../../shared/infra/prisma/prisma.service';
+import { SendMailProducerService } from '../../jobs/bull/send-mail-producer.service';
 
 @Injectable()
 export class CreateUserService {
   constructor(
     private prismaService: PrismaService,
+    private sendMailProducerService: SendMailProducerService,
     private readonly logger: Logger,
   ) {}
 
@@ -31,6 +33,8 @@ export class CreateUserService {
             password: await hash(password, 8),
           },
         });
+
+        await this.sendMailProducerService.execute({ name, email });
       }
 
       delete user.password;

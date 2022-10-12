@@ -17,13 +17,19 @@ export class CreateUserService {
     name,
     email,
     password,
+    cellphone,
+    height,
+    weight,
+    lat,
+    lng,
   }: Prisma.UsersCreateInput): Promise<Users> {
     try {
       let user = await this.prismaService.users.findUnique({
         where: { email },
       });
 
-      if (user) throw new BadRequestException('User already exists');
+      if (user)
+        throw new BadRequestException('User with e-mail already registered');
 
       if (!user) {
         user = await this.prismaService.users.create({
@@ -31,6 +37,11 @@ export class CreateUserService {
             name,
             email,
             password: await hash(password, 8),
+            cellphone,
+            height,
+            weight,
+            lat,
+            lng,
           },
         });
 

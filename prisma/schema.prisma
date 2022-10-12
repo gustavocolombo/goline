@@ -6,17 +6,37 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgres"
+  url      = env("DATABASE_URL")
 }
 
 model Users{
   id String @unique @default(uuid())
   name String
   email String @unique
-  password String 
+  password String
+  height Float
+  weight Float
+  lat Float
+  lng Float
+  cellphone String 
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
   @@map("users")
+}
+
+model Dressmaker{
+  id String @unique @default(uuid())
+  name String
+  email String @unique
+  password String 
+  expertise String[]
+  lat Float
+  lng Float
+  cellphone String 
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  @@map("dressmaker")
 }

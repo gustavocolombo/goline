@@ -9,10 +9,10 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe());
   const config = new DocumentBuilder()
-    .setTitle('Prisma API Appointments')
-    .setDescription('Prisma API Appointment System')
+    .setTitle('Prisma API GoLine')
+    .setDescription('API developed for the GoLine system')
     .setVersion('1.0')
-    .addTag('prisma')
+    .addTag('goline')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

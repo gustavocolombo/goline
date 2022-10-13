@@ -1,18 +1,17 @@
 import {
   IsEmail,
-  IsNotEmpty,
   IsString,
-  MaxLength,
+  IsNotEmpty,
   MinLength,
+  MaxLength,
   IsPhoneNumber,
   IsLatitude,
   IsLongitude,
-  IsNumber,
+  IsArray,
 } from 'class-validator';
-
 import { ApiProperty } from '@nestjs/swagger';
 
-export class ICreateUserDTO {
+export class ICreateDressmakerDTO {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
@@ -31,14 +30,9 @@ export class ICreateUserDTO {
   password: string;
 
   @ApiProperty()
+  @IsArray()
   @IsNotEmpty()
-  @IsNumber()
-  height: number;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  weight: number;
+  expertise: string[];
 
   @ApiProperty()
   @IsNotEmpty()

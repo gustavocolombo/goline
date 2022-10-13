@@ -4,10 +4,14 @@ import { hash } from 'bcryptjs';
 import ErrorHandling from '../../../../../shared/errors/ErrorHandling';
 import { PrismaService } from '../../../../../shared/infra/prisma/prisma.service';
 import { ICreateDressmakerDTO } from '../../../dtos/ICreateDressmakerDTO';
+import { SendMailDressmakerProducerService } from '../../jobs/send-mail-dressmaker-producer.service';
 
 @Injectable()
 export class CreateDressmakerService {
-  constructor(private prismaService: PrismaService) {}
+  constructor(
+    private prismaService: PrismaService,
+    private sendMailDressmakerProducerService: SendMailDressmakerProducerService,
+  ) {}
 
   async execute({
     name,
@@ -23,8 +27,6 @@ export class CreateDressmakerService {
         where: { email },
       });
 
-      console.log('log no expertise', expertise);
-
       if (!dressmaker) {
         dressmaker = await this.prismaService.dressmaker.create({
           data: {
@@ -37,6 +39,8 @@ export class CreateDressmakerService {
             expertise,
           },
         });
+
+        await this.sendMailDressmakerProducerService.execute({ name, email });
       } else {
         throw new BadRequestException('User with email already exists');
       }

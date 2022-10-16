@@ -4,9 +4,11 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaService } from '../../shared/infra/prisma/prisma.service';
 import { DressmakerController } from './infra/http/express/controller/dressmaker.controller';
+import { DressmakingController } from './infra/http/express/controller/dressmaking.controller';
 import { SendMailDressmakerConsumerService } from './infra/jobs/send-mail-dressmaker-consumer.service';
 import { SendMailDressmakerProducerService } from './infra/jobs/send-mail-dressmaker-producer.service';
 import { CreateDressmakerService } from './infra/prisma/services/create-dressmaker-service';
+import { CreateDressmakingService } from './infra/prisma/services/create-dressmaking-service';
 
 @Module({
   imports: [
@@ -34,9 +36,10 @@ import { CreateDressmakerService } from './infra/prisma/services/create-dressmak
   providers: [
     PrismaService,
     CreateDressmakerService,
+    CreateDressmakingService,
     SendMailDressmakerProducerService,
     SendMailDressmakerConsumerService,
   ],
-  controllers: [DressmakerController],
+  controllers: [DressmakerController, DressmakingController],
 })
 export class DressmakerModule {}

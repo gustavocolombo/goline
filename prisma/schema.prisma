@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native"]
 }
 
 datasource db {
@@ -10,33 +11,48 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Users{
-  id String @unique @default(uuid())
-  name String
-  email String @unique
-  password String
-  height Float
-  weight Float
-  lat Float
-  lng Float
-  cellphone String 
+model Users {
+  id         String   @unique @default(uuid())
+  name       String
+  email      String   @unique
+  password   String
+  height     Float
+  weight     Float
+  lat        Float
+  lng        Float
+  cellphone  String
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
   @@map("users")
 }
 
-model Dressmaker{
-  id String @unique @default(uuid())
-  name String
-  email String @unique
-  password String 
-  expertise String[]
-  lat Float
-  lng Float
-  cellphone String 
+model Dressmaker {
+  id         String   @id @default(uuid())
+  name       String
+  email      String   @unique
+  password   String
+  expertise  String[]
+  lat        Float
+  lng        Float
+  cellphone  String
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
+  dressmaking Dressmaking[]
+
   @@map("dressmaker")
+}
+
+model Dressmaking {
+  id           String      @id @default(uuid())
+  name_service String
+  price        Float
+  start_date    DateTime
+  end_date      DateTime
+
+  dressmaker   Dressmaker? @relation(fields: [dressmaker_id], references: [id])
+  dressmaker_id String?
+
+  @@map("dressmaking")
 }

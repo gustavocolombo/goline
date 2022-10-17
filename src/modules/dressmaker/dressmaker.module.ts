@@ -1,8 +1,14 @@
 import { MailerModule } from '@nestjs-modules/mailer';
 import { BullModule } from '@nestjs/bull';
-import { Module } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaService } from '../../shared/infra/prisma/prisma.service';
+import { ensureAuthenticatedMiddleware } from '../../shared/middlewares/ensureAuthenticatedMiddleware';
 import { DressmakerController } from './infra/http/express/controller/dressmaker.controller';
 import { DressmakingController } from './infra/http/express/controller/dressmaking.controller';
 import { SendMailDressmakerConsumerService } from './infra/jobs/send-mail-dressmaker-consumer.service';
@@ -42,4 +48,10 @@ import { CreateDressmakingService } from './infra/prisma/services/create-dressma
   ],
   controllers: [DressmakerController, DressmakingController],
 })
-export class DressmakerModule {}
+export class DressmakerModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(ensureAuthenticatedMiddleware)
+      .forRoutes({ path: '/dressmaking', method: RequestMethod.ALL });
+  }
+}

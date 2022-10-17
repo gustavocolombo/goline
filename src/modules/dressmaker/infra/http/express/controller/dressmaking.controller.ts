@@ -1,8 +1,9 @@
-import { Body, Controller, Param, Post } from '@nestjs/common';
+import { Body, Controller, Post, Req } from '@nestjs/common';
 import { ApiBadRequestResponse, ApiOkResponse } from '@nestjs/swagger';
 import { Dressmaking } from '@prisma/client';
 import { ICreateDressmakingDTO } from '../../../../dtos/ICreateDressmakingDTO';
 import { CreateDressmakingService } from '../../../prisma/services/create-dressmaking-service';
+import { Request } from 'express';
 
 @Controller('dressmaking')
 export class DressmakingController {
@@ -16,18 +17,18 @@ export class DressmakingController {
     status: 400,
     description: 'The dressmaking has not created, failed',
   })
-  @Post('/:id')
+  @Post()
   async createDressmaking(
     @Body()
     { name_service, price, start_date, end_date }: ICreateDressmakingDTO,
-    @Param('id') id: string,
+    @Req() req: Request,
   ): Promise<Dressmaking> {
     return await this.createDressmakingService.execute({
       name_service,
       price,
       start_date,
       end_date,
-      dressmaker_id: id,
+      dressmaker_id: req.user.id,
     });
   }
 }

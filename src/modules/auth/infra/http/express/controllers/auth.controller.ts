@@ -3,6 +3,7 @@ import { IAuthFieldsRequiredDTO } from '../../../../dtos/IAuthFieldsRequiredDTO'
 import { IResponseAuthDTO } from '../../../../dtos/IResponseAuthDTO';
 import { AuthenticateUsersService } from '../../../prisma/services/AuthenticateUserService';
 import { ApiOkResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import { Dressmaker, Users } from '@prisma/client';
 
 @Controller('/authenticate')
 export class AuthController {
@@ -16,7 +17,7 @@ export class AuthController {
   @Post()
   async login(
     @Body() { email, password }: IAuthFieldsRequiredDTO,
-  ): Promise<IResponseAuthDTO> {
+  ): Promise<IResponseAuthDTO<Users | Dressmaker>> {
     return await this.authenticateUserService.execute({ email, password });
   }
 }

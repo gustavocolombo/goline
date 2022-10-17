@@ -1,6 +1,4 @@
-import { Users } from '@prisma/client';
-
-export interface IResponseAuthDTO {
+export interface IResponseAuthDTO<T> {
   token: string;
-  user: Users;
+  user: T;
 }

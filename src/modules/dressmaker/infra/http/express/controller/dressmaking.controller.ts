@@ -22,7 +22,6 @@ export class DressmakingController {
     { name_service, price, start_date, end_date }: ICreateDressmakingDTO,
     @Param('id') id: string,
   ): Promise<Dressmaking> {
-    // console.log('dressmaker_id', dressmaker_id);
     return await this.createDressmakingService.execute({
       name_service,
       price,

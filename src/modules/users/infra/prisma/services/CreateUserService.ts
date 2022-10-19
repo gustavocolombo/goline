@@ -1,8 +1,9 @@
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
-import { Prisma, Users } from '@prisma/client';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { Users } from '@prisma/client';
 import { hash } from 'bcryptjs';
 import ErrorHandling from '../../../../../shared/errors/ErrorHandling';
 import { PrismaService } from '../../../../../shared/infra/prisma/prisma.service';
+import { ICreateUserDTO } from '../../../dtos/ICreateUserDTO';
 import { SendMailProducerService } from '../../jobs/bull/send-mail-producer.service';
 
 @Injectable()
@@ -10,7 +11,6 @@ export class CreateUserService {
   constructor(
     private prismaService: PrismaService,
     private sendMailProducerService: SendMailProducerService,
-    private readonly logger: Logger,
   ) {}
 
   async execute({
@@ -20,9 +20,13 @@ export class CreateUserService {
     cellphone,
     height,
     weight,
+    city,
+    street,
+    neighborhoud,
+    number,
     lat,
     lng,
-  }: Prisma.UsersCreateInput): Promise<Users> {
+  }: ICreateUserDTO): Promise<Users> {
     try {
       let user = await this.prismaService.users.findUnique({
         where: { email },
@@ -40,8 +44,19 @@ export class CreateUserService {
             cellphone,
             height,
             weight,
-            lat,
-            lng,
+            address: {
+              create: {
+                city,
+                street,
+                neighborhoud,
+                number,
+                lat,
+                lng,
+              },
+            },
+          },
+          include: {
+            address: true,
           },
         });
 
@@ -52,7 +67,6 @@ export class CreateUserService {
 
       return user;
     } catch (err) {
-      this.logger.error(err);
       throw new ErrorHandling(err);
     }
   }

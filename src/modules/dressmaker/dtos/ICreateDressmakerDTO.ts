@@ -8,6 +8,7 @@ import {
   IsLatitude,
   IsLongitude,
   IsArray,
+  IsNumber,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -48,4 +49,24 @@ export class ICreateDressmakerDTO {
   @IsLongitude()
   @IsNotEmpty()
   lng: number;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  street: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  city: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  neighborhoud: string;
+
+  @ApiProperty()
+  @IsNumber()
+  @IsNotEmpty()
+  number: number;
 }

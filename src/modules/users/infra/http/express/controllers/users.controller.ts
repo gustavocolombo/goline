@@ -23,6 +23,10 @@ export class UsersController {
       cellphone,
       height,
       weight,
+      city,
+      neighborhoud,
+      number,
+      street,
       lat,
       lng,
     }: ICreateUserDTO,
@@ -36,6 +40,10 @@ export class UsersController {
       weight,
       lat,
       lng,
+      city,
+      neighborhoud,
+      number,
+      street,
     });
   }
 }

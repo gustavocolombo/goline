@@ -19,8 +19,12 @@ export class CreateDressmakerService {
     password,
     cellphone,
     expertise,
+    city,
     lat,
     lng,
+    neighborhoud,
+    number,
+    street,
   }: ICreateDressmakerDTO): Promise<Dressmaker> {
     try {
       let dressmaker = await this.prismaService.dressmaker.findUnique({
@@ -34,9 +38,20 @@ export class CreateDressmakerService {
             email,
             password: await hash(password, 8),
             cellphone,
-            lat,
-            lng,
             expertise,
+            address: {
+              create: {
+                city,
+                street,
+                neighborhoud,
+                number,
+                lat,
+                lng,
+              },
+            },
+          },
+          include: {
+            address: true,
           },
         });
 

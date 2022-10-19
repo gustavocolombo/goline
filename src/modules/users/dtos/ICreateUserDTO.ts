@@ -54,4 +54,24 @@ export class ICreateUserDTO {
   @IsLongitude()
   @IsNotEmpty()
   lng: number;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  street: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  city: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  neighborhoud: string;
+
+  @ApiProperty()
+  @IsNumber()
+  @IsNotEmpty()
+  number: number;
 }

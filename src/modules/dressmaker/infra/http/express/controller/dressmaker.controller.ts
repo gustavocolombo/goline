@@ -26,6 +26,10 @@ export class DressmakerController {
       lat,
       lng,
       expertise,
+      city,
+      neighborhoud,
+      number,
+      street,
     }: ICreateDressmakerDTO,
   ) {
     return await this.createDressmakerService.execute({
@@ -36,6 +40,10 @@ export class DressmakerController {
       lat,
       lng,
       expertise,
+      city,
+      neighborhoud,
+      number,
+      street,
     });
   }
 }

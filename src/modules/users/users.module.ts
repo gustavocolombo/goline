@@ -1,13 +1,21 @@
 import { MailerModule } from '@nestjs-modules/mailer';
 import { BullModule } from '@nestjs/bull';
-import { Logger, Module } from '@nestjs/common';
+import {
+  Logger,
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaService } from '../../shared/infra/prisma/prisma.service';
+import { ensureAuthenticatedMiddleware } from '../../shared/middlewares/ensureAuthenticatedMiddleware';
 import { AuthenticateUsersService } from '../auth/infra/prisma/services/AuthenticateUserService';
 import { UsersController } from './infra/http/express/controllers/users.controller';
 import { SendMailConsumerService } from './infra/jobs/bull/send-mail-consumer.service';
 import { SendMailProducerService } from './infra/jobs/bull/send-mail-producer.service';
 import { CreateUserService } from './infra/prisma/services/CreateUserService';
+import { GetInfoUserService } from './infra/prisma/services/get-info-user-service';
 import { UpdateUserService } from './infra/prisma/services/update-user-service';
 
 @Module({
@@ -39,9 +47,16 @@ import { UpdateUserService } from './infra/prisma/services/update-user-service';
     CreateUserService,
     AuthenticateUsersService,
     UpdateUserService,
+    GetInfoUserService,
     SendMailProducerService,
     SendMailConsumerService,
     Logger,
   ],
 })
-export class UsersModule {}
+export class UsersModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(ensureAuthenticatedMiddleware)
+      .forRoutes({ path: '/users', method: RequestMethod.GET });
+  }
+}

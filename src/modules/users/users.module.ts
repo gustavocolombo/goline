@@ -8,6 +8,7 @@ import { UsersController } from './infra/http/express/controllers/users.controll
 import { SendMailConsumerService } from './infra/jobs/bull/send-mail-consumer.service';
 import { SendMailProducerService } from './infra/jobs/bull/send-mail-producer.service';
 import { CreateUserService } from './infra/prisma/services/CreateUserService';
+import { UpdateUserService } from './infra/prisma/services/update-user-service';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { CreateUserService } from './infra/prisma/services/CreateUserService';
     PrismaService,
     CreateUserService,
     AuthenticateUsersService,
+    UpdateUserService,
     SendMailProducerService,
     SendMailConsumerService,
     Logger,

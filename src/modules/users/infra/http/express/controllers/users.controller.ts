@@ -1,12 +1,17 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, Put } from '@nestjs/common';
 import { Users } from '@prisma/client';
 import { ICreateUserDTO } from '../../../../dtos/ICreateUserDTO';
 import { CreateUserService } from '../../../prisma/services/CreateUserService';
 import { ApiBadRequestResponse, ApiOkResponse } from '@nestjs/swagger';
+import { IUpdateUserDTO } from '../../../../dtos/IUpdateUserDTO';
+import { UpdateUserService } from '../../../prisma/services/update-user-service';
 
 @Controller('/users')
 export class UsersController {
-  constructor(private createUserService: CreateUserService) {}
+  constructor(
+    private createUserService: CreateUserService,
+    private updateUserService: UpdateUserService,
+  ) {}
 
   @ApiOkResponse({ status: 201, description: 'The user has been created' })
   @ApiBadRequestResponse({
@@ -45,5 +50,10 @@ export class UsersController {
       number,
       street,
     });
+  }
+
+  @Put()
+  async updateUser(@Body() { ...rest }: IUpdateUserDTO): Promise<any> {
+    return await this.updateUserService.execute({ ...rest });
   }
 }

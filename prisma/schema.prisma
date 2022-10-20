@@ -22,7 +22,8 @@ model Users {
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
-  address Address[]
+  address     Address[]
+  dressmaking Dressmaking[]
 
   @@map("users")
 }
@@ -47,17 +48,21 @@ model Dressmaking {
   id           String   @id @default(uuid())
   name_service String
   price        Float
+  grabbed      Boolean  @default(false)
   start_date   DateTime
   end_date     DateTime
 
   dressmaker    Dressmaker? @relation(fields: [dressmaker_id], references: [id])
   dressmaker_id String?
 
+  user    Users?  @relation(fields: [user_id], references: [id])
+  user_id String?
+
   @@map("dressmaking")
 }
 
 model Address {
-  id           String      @id @default(uuid())
+  id           String @id @default(uuid())
   city         String
   neighborhoud String
   number       Int
@@ -65,9 +70,9 @@ model Address {
   lat          Float
   lng          Float
 
-  users        Users?      @relation(fields: [users_id], references: [id])
-  users_id     String?
-  dressmaker   Dressmaker? @relation(fields: [dressmaker_id], references: [id])
+  users         Users?      @relation(fields: [users_id], references: [id])
+  users_id      String?
+  dressmaker    Dressmaker? @relation(fields: [dressmaker_id], references: [id])
   dressmaker_id String?
 
   @@map("address")

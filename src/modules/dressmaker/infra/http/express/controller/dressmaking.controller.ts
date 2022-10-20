@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Req } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiOkResponse,
@@ -9,12 +9,14 @@ import { ICreateDressmakingDTO } from '../../../../dtos/ICreateDressmakingDTO';
 import { CreateDressmakingService } from '../../../prisma/services/create-dressmaking-service';
 import { Request } from 'express';
 import { GetDressmakingsService } from '../../../prisma/services/get-dressmakings-service';
+import { GrabDressmakingService } from '../../../prisma/services/grab-dressmaking-service';
 
 @Controller('dressmaking')
 export class DressmakingController {
   constructor(
     private createDressmakingService: CreateDressmakingService,
     private getDressmakingService: GetDressmakingsService,
+    private grabDressmakingService: GrabDressmakingService,
   ) {}
 
   @ApiOkResponse({
@@ -55,5 +57,28 @@ export class DressmakingController {
   @Get()
   async getDressmakings(@Req() req: Request) {
     return await this.getDressmakingService.execute(req.user.id);
+  }
+
+  @ApiOkResponse({
+    status: 200,
+    description: 'The dressmaking has been updated',
+  })
+  @ApiBadRequestResponse({
+    status: 400,
+    description: 'The dressmaking can not updated',
+  })
+  @ApiUnauthorizedResponse({
+    status: 401,
+    description: 'You are not authorized to update this dressmaking',
+  })
+  @Patch('/:id')
+  async updateDressmaking(
+    @Req() req: Request,
+    @Param('id') id: string,
+  ): Promise<Dressmaking> {
+    return await this.grabDressmakingService.execute({
+      user_id: req.user.id,
+      dressmaking_id: id,
+    });
   }
 }

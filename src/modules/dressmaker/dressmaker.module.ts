@@ -16,6 +16,7 @@ import { SendMailDressmakerProducerService } from './infra/jobs/send-mail-dressm
 import { CreateDressmakerService } from './infra/prisma/services/create-dressmaker-service';
 import { CreateDressmakingService } from './infra/prisma/services/create-dressmaking-service';
 import { GetDressmakingsService } from './infra/prisma/services/get-dressmakings-service';
+import { GrabDressmakingService } from './infra/prisma/services/grab-dressmaking-service';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { GetDressmakingsService } from './infra/prisma/services/get-dressmakings
     CreateDressmakerService,
     CreateDressmakingService,
     GetDressmakingsService,
+    GrabDressmakingService,
     SendMailDressmakerProducerService,
     SendMailDressmakerConsumerService,
   ],

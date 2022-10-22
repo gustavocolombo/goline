@@ -13,6 +13,8 @@ import { GetInfoUserService } from '../../../prisma/services/get-info-user-servi
 import { Request } from 'express';
 import { SoftDeleteUserService } from '../../../prisma/services/soft-delete-user-service';
 import { ISoftDeleteUserDTO } from '../../../../dtos/ISoftDeleteUserDTO';
+import { IResetPasswordDTO } from '../../../../dtos/IResetPasswordDTO';
+import { ResetPasswordService } from '../../../prisma/services/reset-password-service';
 
 @Controller('/users')
 export class UsersController {
@@ -21,6 +23,7 @@ export class UsersController {
     private updateUserService: UpdateUserService,
     private getUserInfoService: GetInfoUserService,
     private softDeleteUserService: SoftDeleteUserService,
+    private resetPasswordService: ResetPasswordService,
   ) {}
 
   @ApiOkResponse({ status: 201, description: 'The user has been created' })
@@ -96,8 +99,39 @@ export class UsersController {
     return await this.updateUserService.execute({ ...rest });
   }
 
+  @ApiOkResponse({
+    status: 200,
+    description: 'The user has been inactivated, success',
+  })
+  @ApiBadRequestResponse({
+    status: 400,
+    description: 'The user can not be inactivated, failed',
+  })
+  @ApiUnauthorizedResponse({
+    status: 401,
+    description: 'The user has not been authorized',
+  })
   @Patch()
   async softDeleteUser(@Body() { email }: ISoftDeleteUserDTO): Promise<any> {
     return await this.softDeleteUserService.execute({ email });
+  }
+
+  @ApiOkResponse({
+    status: 200,
+    description: 'The user can be reset your password, success',
+  })
+  @ApiBadRequestResponse({
+    status: 400,
+    description: 'The user can not be reset password, failed',
+  })
+  @ApiUnauthorizedResponse({
+    status: 401,
+    description: 'The user has not been authorized',
+  })
+  @Patch('/reset-password')
+  async resetPassword(
+    @Body() { email, new_password }: IResetPasswordDTO,
+  ): Promise<Users> {
+    return await this.resetPasswordService.execute({ email, new_password });
   }
 }

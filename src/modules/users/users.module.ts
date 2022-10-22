@@ -16,6 +16,7 @@ import { SendMailConsumerService } from './infra/jobs/bull/send-mail-consumer.se
 import { SendMailProducerService } from './infra/jobs/bull/send-mail-producer.service';
 import { CreateUserService } from './infra/prisma/services/CreateUserService';
 import { GetInfoUserService } from './infra/prisma/services/get-info-user-service';
+import { ResetPasswordService } from './infra/prisma/services/reset-password-service';
 import { SoftDeleteUserService } from './infra/prisma/services/soft-delete-user-service';
 import { UpdateUserService } from './infra/prisma/services/update-user-service';
 
@@ -50,6 +51,7 @@ import { UpdateUserService } from './infra/prisma/services/update-user-service';
     UpdateUserService,
     GetInfoUserService,
     SoftDeleteUserService,
+    ResetPasswordService,
     SendMailProducerService,
     SendMailConsumerService,
     Logger,

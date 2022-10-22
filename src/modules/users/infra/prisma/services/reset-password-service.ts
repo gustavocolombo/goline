@@ -23,7 +23,6 @@ export class ResetPasswordService {
       const newPasswordHashed = await hash(new_password, 8);
 
       if (await compare(new_password, user.password)) {
-        console.log('entrou no if');
         throw new BadRequestException(
           'The new password can not be the same as previous one',
         );

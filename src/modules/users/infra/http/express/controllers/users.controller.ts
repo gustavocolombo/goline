@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Put, Req } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post, Put, Req } from '@nestjs/common';
 import { Users } from '@prisma/client';
 import { ICreateUserDTO } from '../../../../dtos/ICreateUserDTO';
 import { CreateUserService } from '../../../prisma/services/CreateUserService';
@@ -11,6 +11,8 @@ import { IUpdateUserDTO } from '../../../../dtos/IUpdateUserDTO';
 import { UpdateUserService } from '../../../prisma/services/update-user-service';
 import { GetInfoUserService } from '../../../prisma/services/get-info-user-service';
 import { Request } from 'express';
+import { SoftDeleteUserService } from '../../../prisma/services/soft-delete-user-service';
+import { ISoftDeleteUserDTO } from '../../../../dtos/ISoftDeleteUserDTO';
 
 @Controller('/users')
 export class UsersController {
@@ -18,6 +20,7 @@ export class UsersController {
     private createUserService: CreateUserService,
     private updateUserService: UpdateUserService,
     private getUserInfoService: GetInfoUserService,
+    private softDeleteUserService: SoftDeleteUserService,
   ) {}
 
   @ApiOkResponse({ status: 201, description: 'The user has been created' })
@@ -91,5 +94,10 @@ export class UsersController {
   @Put()
   async updateUser(@Body() { ...rest }: IUpdateUserDTO): Promise<any> {
     return await this.updateUserService.execute({ ...rest });
+  }
+
+  @Patch()
+  async softDeleteUser(@Body() { email }: ISoftDeleteUserDTO): Promise<any> {
+    return await this.softDeleteUserService.execute({ email });
   }
 }

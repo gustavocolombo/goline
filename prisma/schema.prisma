@@ -19,6 +19,7 @@ model Users {
   height     Float
   weight     Float
   cellphone  String
+  status     StatusUser @default(ACTIVE)
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
@@ -35,6 +36,7 @@ model Dressmaker {
   password   String
   expertise  String[]
   cellphone  String
+  status     StatusUser @default(ACTIVE)
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
@@ -76,4 +78,10 @@ model Address {
   dressmaker_id String?
 
   @@map("address")
+}
+
+enum StatusUser {
+  ACTIVE
+  INACTIVE
+  DELETED
 }

@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { IAuthFieldsRequiredDTO } from '../../../../dtos/IAuthFieldsRequiredDTO';
 import { IResponseAuthDTO } from '../../../../dtos/IResponseAuthDTO';
-import { AuthenticateUsersService } from '../../../prisma/services/AuthenticateUserService';
+import { AuthenticateUsersService } from '../../../services/prisma/AuthenticateUserService';
 import { ApiOkResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { Dressmaker, Users } from '@prisma/client';
 

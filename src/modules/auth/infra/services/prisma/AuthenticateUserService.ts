@@ -34,10 +34,14 @@ export class AuthenticateUsersService {
         if (!verifyPass)
           throw new BadRequestException('Combination e-mail/password failed');
 
-        const token = sign({ id: user.id, email: user.email }, secrets.secret, {
-          expiresIn: secrets.expiresIn,
-          subject: user.id,
-        });
+        const token = sign(
+          { id: user.id, email: user.email, roles: user.roles },
+          secrets.secret,
+          {
+            expiresIn: secrets.expiresIn,
+            subject: user.id,
+          },
+        );
 
         delete user.password;
 
@@ -52,7 +56,11 @@ export class AuthenticateUsersService {
           throw new BadRequestException('Combination e-mail/password failed');
 
         const token = sign(
-          { id: dressmaker.id, email: dressmaker.email },
+          {
+            id: dressmaker.id,
+            email: dressmaker.email,
+            roles: dressmaker.roles,
+          },
           secrets.secret,
           {
             expiresIn: secrets.expiresIn,

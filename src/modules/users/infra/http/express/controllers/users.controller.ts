@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Patch, Post, Put, Req } from '@nestjs/common';
-import { Users } from '@prisma/client';
+import { RolesUser, Users } from '@prisma/client';
 import { ICreateUserDTO } from '../../../../dtos/ICreateUserDTO';
 import { CreateUserService } from '../../../prisma/services/CreateUserService';
 import {
@@ -15,6 +15,7 @@ import { SoftDeleteUserService } from '../../../prisma/services/soft-delete-user
 import { ISoftDeleteUserDTO } from '../../../../dtos/ISoftDeleteUserDTO';
 import { IResetPasswordDTO } from '../../../../dtos/IResetPasswordDTO';
 import { ResetPasswordService } from '../../../prisma/services/reset-password-service';
+import { Roles } from '../../../../../../shared/roles/users-roles';
 
 @Controller('/users')
 export class UsersController {
@@ -78,6 +79,7 @@ export class UsersController {
     description: 'The user has not been authorized',
   })
   @Get()
+  @Roles(RolesUser.USER)
   async getUserInfo(@Req() req: Request): Promise<Users | undefined> {
     return await this.getUserInfoService.execute({ user_id: req.user.id });
   }

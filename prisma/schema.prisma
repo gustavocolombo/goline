@@ -20,6 +20,7 @@ model Users {
   weight     Float
   cellphone  String
   status     StatusUser @default(ACTIVE)
+  roles       RolesUser @default(USER)
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
@@ -37,6 +38,7 @@ model Dressmaker {
   expertise  String[]
   cellphone  String
   status     StatusUser @default(ACTIVE)
+  roles      RolesUser @default(DRESSMAKER)
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
@@ -84,4 +86,9 @@ enum StatusUser {
   ACTIVE
   INACTIVE
   DELETED
+}
+
+enum RolesUser {
+  USER
+  DRESSMAKER
 }

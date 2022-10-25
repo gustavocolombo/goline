@@ -7,8 +7,8 @@ interface TokenPayload {
   exp: number;
   id: string;
   name: string;
-  lastname: string;
   email: string;
+  roles: string;
 }
 export function ensureAuthenticatedMiddleware(
   req: Request,
@@ -22,8 +22,8 @@ export function ensureAuthenticatedMiddleware(
   const [, token] = authHeader.split(' ');
   try {
     const decoded = verify(token, secrets.secret);
-    const { id, email } = decoded as TokenPayload;
-    req.user = { id, email };
+    const { id, email, roles } = decoded as TokenPayload;
+    req.user = { id, email, roles };
     return next();
   } catch {
     throw new HttpException('Invalid JWT Token', HttpStatus.UNAUTHORIZED);

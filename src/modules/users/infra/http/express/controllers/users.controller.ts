@@ -32,6 +32,7 @@ export class UsersController {
     status: 400,
     description: 'The user has not created',
   })
+  @Roles(RolesUser.USER)
   @Post()
   async createUser(
     @Body()
@@ -96,6 +97,7 @@ export class UsersController {
     status: 401,
     description: 'The user has not been authorized',
   })
+  @Roles(RolesUser.USER)
   @Put()
   async updateUser(@Body() { ...rest }: IUpdateUserDTO): Promise<any> {
     return await this.updateUserService.execute({ ...rest });
@@ -113,6 +115,7 @@ export class UsersController {
     status: 401,
     description: 'The user has not been authorized',
   })
+  @Roles(RolesUser.USER)
   @Patch()
   async softDeleteUser(@Body() { email }: ISoftDeleteUserDTO): Promise<any> {
     return await this.softDeleteUserService.execute({ email });
@@ -130,6 +133,7 @@ export class UsersController {
     status: 401,
     description: 'The user has not been authorized',
   })
+  @Roles(RolesUser.USER)
   @Patch('/reset-password')
   async resetPassword(
     @Body() { email, new_password }: IResetPasswordDTO,

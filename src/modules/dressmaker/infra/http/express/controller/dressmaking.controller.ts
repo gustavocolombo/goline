@@ -4,12 +4,13 @@ import {
   ApiOkResponse,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { Dressmaking } from '@prisma/client';
+import { Dressmaking, RolesUser } from '@prisma/client';
 import { ICreateDressmakingDTO } from '../../../../dtos/ICreateDressmakingDTO';
 import { CreateDressmakingService } from '../../../prisma/services/create-dressmaking-service';
 import { Request } from 'express';
 import { GetDressmakingsService } from '../../../prisma/services/get-dressmakings-service';
 import { GrabDressmakingService } from '../../../prisma/services/grab-dressmaking-service';
+import { Roles } from '../../../../../../shared/roles/users-roles';
 
 @Controller('dressmaking')
 export class DressmakingController {
@@ -27,6 +28,7 @@ export class DressmakingController {
     status: 400,
     description: 'The dressmaking has not created, failed',
   })
+  @Roles(RolesUser.DRESSMAKER)
   @Post()
   async createDressmaking(
     @Body()
@@ -54,6 +56,7 @@ export class DressmakingController {
     status: 401,
     description: 'The dressmaking can not be loaded, fail authentication',
   })
+  @Roles(RolesUser.DRESSMAKER, RolesUser.DRESSMAKER)
   @Get()
   async getDressmakings(@Req() req: Request) {
     return await this.getDressmakingService.execute(req.user.id);
@@ -71,6 +74,7 @@ export class DressmakingController {
     status: 401,
     description: 'You are not authorized to update this dressmaking',
   })
+  @Roles(RolesUser.DRESSMAKER)
   @Patch('/:id')
   async updateDressmaking(
     @Req() req: Request,

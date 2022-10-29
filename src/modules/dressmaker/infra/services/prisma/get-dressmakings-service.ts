@@ -1,13 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { Dressmaking } from '@prisma/client';
 import { PrismaService } from '../../../../../shared/infra/prisma/prisma.service';
-import { IGetDressmakingDTO } from '../../../dtos/IGetDressmakingsDTO';
+import {
+  IGetDressmakingDTO,
+  IReturnDressmakingDTO,
+} from '../../../dtos/IGetDressmakingsDTO';
 
 @Injectable()
 export class GetDressmakingsService {
   constructor(private prismaService: PrismaService) {}
 
-  async execute({ id }: IGetDressmakingDTO): Promise<any> {
+  async execute({ id }: IGetDressmakingDTO): Promise<IReturnDressmakingDTO[]> {
     const dressmakings = await this.prismaService.dressmaker.findFirst({
       where: { id },
       select: {
@@ -38,6 +40,6 @@ export class GetDressmakingsService {
       },
     });
 
-    return dressmakings;
+    return dressmakings.dressmaking;
   }
 }

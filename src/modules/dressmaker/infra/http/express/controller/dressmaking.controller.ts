@@ -6,11 +6,11 @@ import {
 } from '@nestjs/swagger';
 import { Dressmaking, RolesUser } from '@prisma/client';
 import { ICreateDressmakingDTO } from '../../../../dtos/ICreateDressmakingDTO';
-import { CreateDressmakingService } from '../../../prisma/services/create-dressmaking-service';
 import { Request } from 'express';
-import { GetDressmakingsService } from '../../../prisma/services/get-dressmakings-service';
-import { GrabDressmakingService } from '../../../prisma/services/grab-dressmaking-service';
 import { Roles } from '../../../../../../shared/roles/users-roles';
+import { CreateDressmakingService } from '../../../services/prisma/create-dressmaking-service';
+import { GetDressmakingsService } from '../../../services/prisma/get-dressmakings-service';
+import { GrabDressmakingService } from '../../../services/prisma/grab-dressmaking-service';
 
 @Controller('dressmaking')
 export class DressmakingController {

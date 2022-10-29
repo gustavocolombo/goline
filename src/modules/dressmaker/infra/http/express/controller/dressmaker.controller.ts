@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiBadRequestResponse, ApiOkResponse } from '@nestjs/swagger';
 import { ICreateDressmakerDTO } from '../../../../dtos/ICreateDressmakerDTO';
-import { CreateDressmakerService } from '../../../prisma/services/create-dressmaker-service';
+import { CreateDressmakerService } from '../../../services/prisma/create-dressmaker-service';
 
 @Controller('dressmaker')
 export class DressmakerController {

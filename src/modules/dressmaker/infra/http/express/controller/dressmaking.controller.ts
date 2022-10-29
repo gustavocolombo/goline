@@ -59,7 +59,7 @@ export class DressmakingController {
   @Roles(RolesUser.DRESSMAKER, RolesUser.DRESSMAKER)
   @Get()
   async getDressmakings(@Req() req: Request) {
-    return await this.getDressmakingService.execute(req.user.id);
+    return await this.getDressmakingService.execute({ id: req.user.id });
   }
 
   @ApiOkResponse({

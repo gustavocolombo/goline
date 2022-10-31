@@ -3,10 +3,9 @@ import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import { PrismaService } from '../../../../../shared/infra/prisma/prisma.service';
 import { IAuthFieldsRequiredDTO } from '../../../dtos/IAuthFieldsRequiredDTO';
-import { IResponseAuthDTO } from '../../../dtos/IResponseAuthDTO';
+import { UsersResponse } from '../../../dtos/IResponseAuthDTO';
 import secrets from '../../../../../shared/config/auth/secrets';
 import ErrorHandling from '../../../../../shared/errors/ErrorHandling';
-import { Dressmaker, Users } from '@prisma/client';
 
 @Injectable()
 export class AuthenticateUsersService {
@@ -18,7 +17,7 @@ export class AuthenticateUsersService {
   async execute({
     email,
     password,
-  }: IAuthFieldsRequiredDTO): Promise<IResponseAuthDTO<Users | Dressmaker>> {
+  }: IAuthFieldsRequiredDTO): Promise<UsersResponse> {
     try {
       let dressmaker = await this.prismaService.dressmaker.findFirst({
         where: { email },

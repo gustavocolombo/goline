@@ -9,6 +9,7 @@ import {
   IsLongitude,
   IsArray,
   IsNumber,
+  IsOptional,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -69,4 +70,9 @@ export class ICreateDressmakerDTO {
   @IsNumber()
   @IsNotEmpty()
   number: number;
+
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
+  image_profile?: string;
 }

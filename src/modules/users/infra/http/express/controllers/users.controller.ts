@@ -32,7 +32,6 @@ export class UsersController {
     status: 400,
     description: 'The user has not created',
   })
-  @Roles(RolesUser.USER)
   @Post()
   async createUser(
     @Body()

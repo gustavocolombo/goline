@@ -32,12 +32,21 @@ export class DressmakingController {
   @Post()
   async createDressmaking(
     @Body()
-    { name_service, price, start_date, end_date }: ICreateDressmakingDTO,
+    {
+      name_service,
+      price,
+      description,
+      tag,
+      start_date,
+      end_date,
+    }: ICreateDressmakingDTO,
     @Req() req: Request,
   ): Promise<Dressmaking> {
     return await this.createDressmakingService.execute({
       name_service,
       price,
+      description,
+      tag,
       start_date,
       end_date,
       dressmaker_id: req.user.id,

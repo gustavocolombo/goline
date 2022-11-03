@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { Users } from '@prisma/client';
+import { RolesUser, StatusUser, Users } from '@prisma/client';
 import { hash } from 'bcryptjs';
 import ErrorHandling from '../../../../../shared/errors/ErrorHandling';
 import { PrismaService } from '../../../../../shared/infra/prisma/prisma.service';
@@ -44,6 +44,8 @@ export class CreateUserService {
             cellphone,
             height,
             weight,
+            roles: RolesUser.USER,
+            status: StatusUser.ACTIVE,
             address: {
               create: {
                 city,

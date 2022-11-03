@@ -1,6 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { TagsDressmaking } from '@prisma/client';
 import { Type } from 'class-transformer';
-import { IsDate, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsDate,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class ICreateDressmakingDTO {
   @ApiProperty()
@@ -12,6 +20,21 @@ export class ICreateDressmakingDTO {
   @IsNotEmpty()
   @IsNumber()
   price: number;
+
+  @ApiProperty()
+  @IsBoolean()
+  @IsOptional()
+  grabbed?: boolean;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  description: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
+  tag?: TagsDressmaking;
 
   @ApiProperty()
   @IsNotEmpty()

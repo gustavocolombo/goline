@@ -12,17 +12,17 @@ datasource db {
 }
 
 model Users {
-  id         String   @unique @default(uuid())
+  id         String     @unique @default(uuid())
   name       String
-  email      String   @unique
+  email      String     @unique
   password   String
   height     Float
   weight     Float
   cellphone  String
   status     StatusUser @default(ACTIVE)
-  roles       RolesUser @default(USER)
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
+  roles      RolesUser  @default(USER)
+  created_at DateTime   @default(now())
+  updated_at DateTime   @default(now())
 
   address     Address[]
   dressmaking Dressmaking[]
@@ -31,16 +31,17 @@ model Users {
 }
 
 model Dressmaker {
-  id         String   @id @default(uuid())
-  name       String
-  email      String   @unique
-  password   String
-  expertise  String[]
-  cellphone  String
-  status     StatusUser @default(ACTIVE)
-  roles      RolesUser @default(DRESSMAKER)
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
+  id            String     @id @default(uuid())
+  name          String
+  email         String     @unique
+  password      String
+  expertise     String[]
+  cellphone     String
+  status        StatusUser? @default(ACTIVE)
+  roles         RolesUser?  @default(DRESSMAKER)
+  image_profile String?
+  created_at    DateTime   @default(now())
+  updated_at    DateTime   @default(now())
 
   dressmaking Dressmaking[]
   address     Address[]
@@ -49,10 +50,12 @@ model Dressmaker {
 }
 
 model Dressmaking {
-  id           String   @id @default(uuid())
+  id           String           @id @default(uuid())
   name_service String
   price        Float
-  grabbed      Boolean  @default(false)
+  grabbed      Boolean          @default(false)
+  tag          TagsDressmaking? @default(DRESSMAKING)
+  description  String
   start_date   DateTime
   end_date     DateTime
 
@@ -91,4 +94,12 @@ enum StatusUser {
 enum RolesUser {
   USER
   DRESSMAKER
+}
+
+enum TagsDressmaking {
+  DRESSMAKING
+  NEEDLEWORK
+  ADJUSTMENT
+  REPAIR
+  OTHERS
 }

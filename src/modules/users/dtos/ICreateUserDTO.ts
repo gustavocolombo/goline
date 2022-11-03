@@ -8,9 +8,11 @@ import {
   IsLatitude,
   IsLongitude,
   IsNumber,
+  IsOptional,
 } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
+import { RolesUser, StatusUser } from '@prisma/client';
 
 export class ICreateUserDTO {
   @ApiProperty()
@@ -74,4 +76,14 @@ export class ICreateUserDTO {
   @IsNumber()
   @IsNotEmpty()
   number: number;
+
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
+  roles?: RolesUser;
+
+  @ApiProperty()
+  @IsEmail()
+  @IsOptional()
+  status?: StatusUser;
 }

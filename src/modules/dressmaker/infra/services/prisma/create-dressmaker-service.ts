@@ -51,7 +51,16 @@ export class CreateDressmakerService {
             },
           },
           include: {
-            address: true,
+            address: {
+              select: {
+                city: true,
+                neighborhoud: true,
+                lat: true,
+                lng: true,
+                street: true,
+                number: true,
+              },
+            },
           },
         });
 

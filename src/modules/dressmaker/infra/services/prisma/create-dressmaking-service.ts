@@ -16,6 +16,7 @@ export class CreateDressmakingService {
     dressmaker_id,
     grabbed,
     description,
+    tag,
   }: ICreateDressmakingDTO): Promise<Dressmaking> {
     try {
       const verifyDressmaker = await this.prismaService.dressmaker.findFirst({
@@ -34,6 +35,7 @@ export class CreateDressmakingService {
           dressmaker_id,
           grabbed,
           description,
+          tag,
         },
         include: {
           dressmaker: {

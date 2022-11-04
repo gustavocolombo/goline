@@ -1,4 +1,9 @@
-import { Module } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { AuthModule } from './modules/auth/auth.module';
@@ -8,6 +13,7 @@ import { UsersModule } from './modules/users/users.module';
 import { OAuthService } from './modules/auth/infra/services/express/oauth-service';
 import { OAuthController } from './modules/auth/infra/http/express/controllers/oauth.controller';
 import { PrismaService } from './shared/infra/prisma/prisma.service';
+import { ensureAuthenticatedMiddleware } from './shared/middlewares/ensureAuthenticatedMiddleware';
 
 @Module({
   imports: [
@@ -27,4 +33,15 @@ import { PrismaService } from './shared/infra/prisma/prisma.service';
     GoogleStrategy,
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(ensureAuthenticatedMiddleware)
+      .exclude(
+        { path: '/api/users', method: RequestMethod.POST },
+        { path: '/api/authenticate', method: RequestMethod.POST },
+        { path: '/api/dressmaker', method: RequestMethod.POST },
+      )
+      .forRoutes('*');
+  }
+}

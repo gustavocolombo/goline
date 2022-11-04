@@ -1,16 +1,9 @@
 import { MailerModule } from '@nestjs-modules/mailer';
 import { BullModule } from '@nestjs/bull';
-import {
-  Logger,
-  MiddlewareConsumer,
-  Module,
-  NestModule,
-  RequestMethod,
-} from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { PrismaService } from '../../shared/infra/prisma/prisma.service';
-import { ensureAuthenticatedMiddleware } from '../../shared/middlewares/ensureAuthenticatedMiddleware';
 import { RolesGuard } from '../../shared/roles/roles-guard';
 import { AuthenticateUsersService } from '../auth/infra/services/prisma/AuthenticateUserService';
 import { UsersController } from './infra/http/express/controllers/users.controller';
@@ -60,14 +53,4 @@ import { UpdateUserService } from './infra/prisma/services/update-user-service';
     Logger,
   ],
 })
-export class UsersModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(ensureAuthenticatedMiddleware)
-      .forRoutes(
-        { path: '/users', method: RequestMethod.GET },
-        { path: '/users', method: RequestMethod.PUT },
-        { path: '/users', method: RequestMethod.PATCH },
-      );
-  }
-}
+export class UsersModule {}

@@ -1,8 +1,9 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { ApiBadRequestResponse, ApiOkResponse } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { ICreateDressmakerDTO } from '../../../../dtos/ICreateDressmakerDTO';
 import { CreateDressmakerService } from '../../../services/prisma/create-dressmaker-service';
 
+@ApiTags('dressmaker')
 @Controller('dressmaker')
 export class DressmakerController {
   constructor(private createDressmakerService: CreateDressmakerService) {}

@@ -2,9 +2,14 @@ import { Body, Controller, Post } from '@nestjs/common';
 import { IAuthFieldsRequiredDTO } from '../../../../dtos/IAuthFieldsRequiredDTO';
 import { IResponseAuthDTO } from '../../../../dtos/IResponseAuthDTO';
 import { AuthenticateUsersService } from '../../../services/prisma/AuthenticateUserService';
-import { ApiOkResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import {
+  ApiOkResponse,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import { Dressmaker, Users } from '@prisma/client';
 
+@ApiTags('authenticate')
 @Controller('/authenticate')
 export class AuthController {
   constructor(private authenticateUserService: AuthenticateUsersService) {}

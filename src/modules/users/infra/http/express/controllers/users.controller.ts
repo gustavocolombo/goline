@@ -5,6 +5,7 @@ import { CreateUserService } from '../../../prisma/services/CreateUserService';
 import {
   ApiBadRequestResponse,
   ApiOkResponse,
+  ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { IUpdateUserDTO } from '../../../../dtos/IUpdateUserDTO';
@@ -16,7 +17,9 @@ import { ISoftDeleteUserDTO } from '../../../../dtos/ISoftDeleteUserDTO';
 import { IResetPasswordDTO } from '../../../../dtos/IResetPasswordDTO';
 import { ResetPasswordService } from '../../../prisma/services/reset-password-service';
 import { Roles } from '../../../../../../shared/roles/users-roles';
+import { UserDecorator } from '../../../../../../shared/decorator/user.decorator';
 
+@ApiTags('users')
 @Controller('/users')
 export class UsersController {
   constructor(
@@ -138,5 +141,10 @@ export class UsersController {
     @Body() { email, new_password }: IResetPasswordDTO,
   ): Promise<Users> {
     return await this.resetPasswordService.execute({ email, new_password });
+  }
+
+  @Get('/teste')
+  async teste(@UserDecorator() user: Users) {
+    console.log('user', user);
   }
 }

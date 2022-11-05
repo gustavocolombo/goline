@@ -2,6 +2,7 @@ import { Body, Controller, Get, Param, Patch, Post, Req } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiOkResponse,
+  ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { Dressmaking, RolesUser } from '@prisma/client';
@@ -12,6 +13,7 @@ import { CreateDressmakingService } from '../../../services/prisma/create-dressm
 import { GetDressmakingsService } from '../../../services/prisma/get-dressmakings-service';
 import { GrabDressmakingService } from '../../../services/prisma/grab-dressmaking-service';
 
+@ApiTags('dressmaking')
 @Controller('dressmaking')
 export class DressmakingController {
   constructor(

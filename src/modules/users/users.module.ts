@@ -7,8 +7,8 @@ import { PrismaService } from '../../shared/infra/prisma/prisma.service';
 import { RolesGuard } from '../../shared/roles/roles-guard';
 import { AuthenticateUsersService } from '../auth/infra/services/prisma/AuthenticateUserService';
 import { UsersController } from './infra/http/express/controllers/users.controller';
-import { SendMailConsumerService } from './infra/jobs/bull/send-mail-consumer.service';
-import { SendMailProducerService } from './infra/jobs/bull/send-mail-producer.service';
+import { SendMailConsumerUserService } from './infra/jobs/bull/send-mail-consumer-user.service';
+import { SendMailProducerUserService } from './infra/jobs/bull/send-mail-producer-user.service';
 import { CreateUserService } from './infra/prisma/services/CreateUserService';
 import { GetInfoUserService } from './infra/prisma/services/get-info-user-service';
 import { ResetPasswordService } from './infra/prisma/services/reset-password-service';
@@ -25,15 +25,15 @@ import { UpdateUserService } from './infra/prisma/services/update-user-service';
       },
     }),
     BullModule.registerQueue({
-      name: 'send-mail-queue',
+      name: 'send-mail-queue-user',
     }),
     MailerModule.forRoot({
       transport: {
-        host: process.env.SMTP_HOST,
-        port: Number(process.env.SMTP_PORT),
+        host: process.env.SMTP_HOST_ETHEREAL,
+        port: Number(process.env.SMTP_PORT_ETHEREAL),
         auth: {
-          user: process.env.SMTP_AUTH_USER,
-          pass: process.env.SMTP_AUTH_PASS,
+          user: process.env.SMTP_AUTH_USER_ETHEREAL,
+          pass: process.env.SMTP_AUTH_PASS_ETHEREAL,
         },
       },
     }),
@@ -47,8 +47,8 @@ import { UpdateUserService } from './infra/prisma/services/update-user-service';
     GetInfoUserService,
     SoftDeleteUserService,
     ResetPasswordService,
-    SendMailProducerService,
-    SendMailConsumerService,
+    SendMailProducerUserService,
+    SendMailConsumerUserService,
     { provide: APP_GUARD, useClass: RolesGuard },
     Logger,
   ],

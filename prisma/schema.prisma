@@ -26,22 +26,23 @@ model Users {
 
   address     Address[]
   dressmaking Dressmaking[]
+  UsersToken  UsersToken[]
 
   @@map("users")
 }
 
 model Dressmaker {
-  id            String     @id @default(uuid())
+  id            String      @id @default(uuid())
   name          String
-  email         String     @unique
+  email         String      @unique
   password      String
   expertise     String[]
   cellphone     String
   status        StatusUser? @default(ACTIVE)
   roles         RolesUser?  @default(DRESSMAKER)
   image_profile String?
-  created_at    DateTime   @default(now())
-  updated_at    DateTime   @default(now())
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @default(now())
 
   dressmaking Dressmaking[]
   address     Address[]
@@ -83,6 +84,21 @@ model Address {
   dressmaker_id String?
 
   @@map("address")
+}
+
+model UsersToken {
+  id         String   @id @default(uuid())
+  token      String   @default(uuid())
+  used       Boolean  @default(false)
+  used_in    DateTime
+  expires_in DateTime
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  users_id String
+  user    Users  @relation(fields: [users_id], references: [id])
+
+  @@map("userstoken")
 }
 
 enum StatusUser {

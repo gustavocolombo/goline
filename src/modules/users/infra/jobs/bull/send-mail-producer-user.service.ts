@@ -4,10 +4,10 @@ import { Queue } from 'bull';
 import { ICreateUserDTO } from '../../../dtos/ICreateUserDTO';
 
 @Injectable()
-export class SendMailProducerService {
-  constructor(@InjectQueue('send-mail-queue') private queue: Queue) {}
+export class SendMailProducerUserService {
+  constructor(@InjectQueue('send-mail-queue-user') private queue: Queue) {}
 
   async execute({ email, name }: Partial<ICreateUserDTO>) {
-    await this.queue.add('send-mail-job', { email, name });
+    await this.queue.add('send-mail-job-user', { email, name });
   }
 }

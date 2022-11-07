@@ -5,12 +5,12 @@ import { ConfigModule } from '@nestjs/config';
 import { PrismaService } from '../../shared/infra/prisma/prisma.service';
 import { DressmakerController } from './infra/http/express/controller/dressmaker.controller';
 import { DressmakingController } from './infra/http/express/controller/dressmaking.controller';
-import { SendMailDressmakerConsumerService } from './infra/jobs/send-mail-dressmaker-consumer.service';
-import { SendMailDressmakerProducerService } from './infra/jobs/send-mail-dressmaker-producer.service';
 import { CreateDressmakerService } from './infra/services/prisma/create-dressmaker-service';
 import { CreateDressmakingService } from './infra/services/prisma/create-dressmaking-service';
 import { GetDressmakingsService } from './infra/services/prisma/get-dressmakings-service';
 import { GrabDressmakingService } from './infra/services/prisma/grab-dressmaking-service';
+import { SendMailConsumerDressmakerService } from './jobs/bull/send-mail-consumer.service';
+import { SendMailProducerDressmakerService } from './jobs/bull/send-mail-producer.service';
 
 @Module({
   imports: [
@@ -23,11 +23,11 @@ import { GrabDressmakingService } from './infra/services/prisma/grab-dressmaking
     }),
     MailerModule.forRoot({
       transport: {
-        host: process.env.SMTP_HOST,
-        port: Number(process.env.SMTP_PORT),
+        host: process.env.SMTP_HOST_ETHEREAL,
+        port: Number(process.env.SMTP_PORT_ETHEREAL),
         auth: {
-          user: process.env.SMTP_AUTH_USER,
-          pass: process.env.SMTP_AUTH_PASS,
+          user: process.env.SMTP_AUTH_USER_ETHEREAL,
+          pass: process.env.SMTP_AUTH_PASS_ETHEREAL,
         },
       },
     }),
@@ -41,8 +41,8 @@ import { GrabDressmakingService } from './infra/services/prisma/grab-dressmaking
     CreateDressmakingService,
     GetDressmakingsService,
     GrabDressmakingService,
-    SendMailDressmakerProducerService,
-    SendMailDressmakerConsumerService,
+    SendMailConsumerDressmakerService,
+    SendMailProducerDressmakerService,
   ],
   controllers: [DressmakerController, DressmakingController],
 })

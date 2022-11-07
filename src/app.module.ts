@@ -14,6 +14,7 @@ import { OAuthService } from './modules/auth/infra/services/express/oauth-servic
 import { OAuthController } from './modules/auth/infra/http/express/controllers/oauth.controller';
 import { PrismaService } from './shared/infra/prisma/prisma.service';
 import { ensureAuthenticatedMiddleware } from './shared/middlewares/ensureAuthenticatedMiddleware';
+import { MailModule } from './modules/mail/mail.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { ensureAuthenticatedMiddleware } from './shared/middlewares/ensureAuthen
     UsersModule,
     AuthModule,
     DressmakerModule,
+    MailModule,
   ],
   controllers: [OAuthController],
   providers: [
@@ -41,6 +43,7 @@ export class AppModule implements NestModule {
         { path: '/api/users', method: RequestMethod.POST },
         { path: '/api/authenticate', method: RequestMethod.POST },
         { path: '/api/dressmaker', method: RequestMethod.POST },
+        { path: '/api/mail', method: RequestMethod.POST },
       )
       .forRoutes('*');
   }

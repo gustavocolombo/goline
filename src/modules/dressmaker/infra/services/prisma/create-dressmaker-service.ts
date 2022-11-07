@@ -4,13 +4,13 @@ import { hash } from 'bcryptjs';
 import ErrorHandling from '../../../../../shared/errors/ErrorHandling';
 import { PrismaService } from '../../../../../shared/infra/prisma/prisma.service';
 import { ICreateDressmakerDTO } from '../../../dtos/ICreateDressmakerDTO';
-import { SendMailDressmakerProducerService } from '../../jobs/send-mail-dressmaker-producer.service';
+import { SendMailProducerDressmakerService } from '../../../jobs/bull/send-mail-producer.service';
 
 @Injectable()
 export class CreateDressmakerService {
   constructor(
     private prismaService: PrismaService,
-    private sendMailDressmakerProducerService: SendMailDressmakerProducerService,
+    private sendMailDressmakerProducerService: SendMailProducerDressmakerService,
   ) {}
 
   async execute({

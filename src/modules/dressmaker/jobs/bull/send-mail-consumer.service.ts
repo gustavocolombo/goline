@@ -1,13 +1,13 @@
 import { Processor, Process } from '@nestjs/bull';
 import { MailerService } from '@nestjs-modules/mailer';
 import { Job } from 'bull';
-import { ICreateUserDTO } from '../../../dtos/ICreateUserDTO';
+import { ICreateUserDTO } from '../../../users/dtos/ICreateUserDTO';
 
-@Processor('send-mail-queue')
-export class SendMailConsumerService {
+@Processor('send-mail-queue-dressmaker')
+export class SendMailConsumerDressmakerService {
   constructor(private mailerService: MailerService) {}
 
-  @Process('send-mail-job')
+  @Process('send-mail-job-dressmaker')
   async sendMail(job: Job<Partial<ICreateUserDTO>>) {
     const { data } = job;
 

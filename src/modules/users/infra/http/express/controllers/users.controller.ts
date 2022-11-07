@@ -83,8 +83,8 @@ export class UsersController {
   })
   @Get()
   @Roles(RolesUser.USER)
-  async getUserInfo(@Req() req: Request): Promise<Users | undefined> {
-    return await this.getUserInfoService.execute({ user_id: req.user.id });
+  async getUserInfo(@UserDecorator() user: Users): Promise<Users | undefined> {
+    return await this.getUserInfoService.execute({ user_id: user.id });
   }
 
   @ApiOkResponse({
@@ -141,10 +141,5 @@ export class UsersController {
     @Body() { email, new_password }: IResetPasswordDTO,
   ): Promise<Users> {
     return await this.resetPasswordService.execute({ email, new_password });
-  }
-
-  @Get('/teste')
-  async teste(@UserDecorator() user: Users) {
-    console.log('user', user);
   }
 }

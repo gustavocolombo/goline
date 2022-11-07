@@ -5,13 +5,13 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { Dressmaking, RolesUser } from '@prisma/client';
+import { Dressmaking, RolesUser, Users } from '@prisma/client';
 import { ICreateDressmakingDTO } from '../../../../dtos/ICreateDressmakingDTO';
-import { Request } from 'express';
 import { Roles } from '../../../../../../shared/roles/users-roles';
 import { CreateDressmakingService } from '../../../services/prisma/create-dressmaking-service';
 import { GetDressmakingsService } from '../../../services/prisma/get-dressmakings-service';
 import { GrabDressmakingService } from '../../../services/prisma/grab-dressmaking-service';
+import { UserDecorator } from '../../../../../../shared/decorator/user.decorator';
 
 @ApiTags('dressmaking')
 @Controller('dressmaking')
@@ -42,7 +42,7 @@ export class DressmakingController {
       start_date,
       end_date,
     }: ICreateDressmakingDTO,
-    @Req() req: Request,
+    @UserDecorator() user: Users,
   ): Promise<Dressmaking> {
     return await this.createDressmakingService.execute({
       name_service,
@@ -51,7 +51,7 @@ export class DressmakingController {
       tag,
       start_date,
       end_date,
-      dressmaker_id: req.user.id,
+      dressmaker_id: user.id,
     });
   }
 
@@ -69,8 +69,8 @@ export class DressmakingController {
   })
   @Roles(RolesUser.DRESSMAKER, RolesUser.DRESSMAKER)
   @Get()
-  async getDressmakings(@Req() req: Request) {
-    return await this.getDressmakingService.execute({ id: req.user.id });
+  async getDressmakings(@UserDecorator() user: Users) {
+    return await this.getDressmakingService.execute({ id: user.id });
   }
 
   @ApiOkResponse({
@@ -88,11 +88,11 @@ export class DressmakingController {
   @Roles(RolesUser.DRESSMAKER)
   @Patch('/:id')
   async updateDressmaking(
-    @Req() req: Request,
+    @UserDecorator() user: Users,
     @Param('id') id: string,
   ): Promise<Dressmaking> {
     return await this.grabDressmakingService.execute({
-      user_id: req.user.id,
+      user_id: user.id,
       dressmaking_id: id,
     });
   }

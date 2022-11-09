@@ -90,8 +90,8 @@ model UsersToken {
   id         String   @id @default(uuid())
   token      String   @default(uuid())
   used       Boolean  @default(false)
-  used_in    DateTime
-  expires_in DateTime
+  used_in    DateTime? 
+  expires_in DateTime?
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 

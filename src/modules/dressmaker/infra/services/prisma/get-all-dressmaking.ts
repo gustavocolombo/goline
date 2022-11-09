@@ -1,13 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { StatusUser } from '@prisma/client';
 import { PrismaService } from '../../../../../shared/infra/prisma/prisma.service';
-import { IGetDressmakingCronJobDTO } from '../../../dtos/IGetDressmakingsDTO';
+import { IGetAllDressmakingDTO } from '../../../dtos/IGetDressmakingsDTO';
+import { GetAllDressmakingsImplementations } from '../../../implementations/dressmakings/get-all-dressmakings.implementation';
 
 @Injectable()
-export class GetAllDressmakingService {
+export class GetAllDressmakingService
+  implements GetAllDressmakingsImplementations
+{
   constructor(private prismaService: PrismaService) {}
 
-  async execute(): Promise<IGetDressmakingCronJobDTO[]> {
+  async getAllDressmakings(): Promise<IGetAllDressmakingDTO[]> {
     const getDressmaking = await this.prismaService.dressmaking.findMany({
       where: {
         grabbed: false,

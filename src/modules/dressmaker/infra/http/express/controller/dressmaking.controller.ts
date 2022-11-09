@@ -12,7 +12,7 @@ import { CreateDressmakingService } from '../../../services/prisma/create-dressm
 import { GetDressmakingsService } from '../../../services/prisma/get-dressmakings-service';
 import { GrabDressmakingService } from '../../../services/prisma/grab-dressmaking-service';
 import { UserDecorator } from '../../../../../../shared/decorator/user.decorator';
-import { IGetDressmakingCronJobDTO } from '../../../../dtos/IGetDressmakingsDTO';
+import { IGetAllDressmakingDTO } from '../../../../dtos/IGetDressmakingsDTO';
 import { GetAllDressmakingService } from '../../../services/prisma/get-all-dressmaking';
 
 @ApiTags('dressmaking')
@@ -114,7 +114,7 @@ export class DressmakingController {
   })
   @Roles(RolesUser.USER, RolesUser.DRESSMAKER)
   @Get('/global')
-  async getDressmakingCronJob(): Promise<IGetDressmakingCronJobDTO[]> {
-    return await this.getAllDressmakingService.execute();
+  async getDressmakingCronJob(): Promise<IGetAllDressmakingDTO[]> {
+    return await this.getAllDressmakingService.getAllDressmakings();
   }
 }

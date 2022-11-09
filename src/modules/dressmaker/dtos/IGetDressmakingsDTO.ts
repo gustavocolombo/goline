@@ -26,7 +26,7 @@ export interface IReturnDressmakingDTO {
   user: IDataToReturnUserDTO;
 }
 
-export interface IGetDressmakingCronJobDTO {
+export interface IGetAllDressmakingDTO {
   id: string;
   name_service: string;
   grabbed: boolean;

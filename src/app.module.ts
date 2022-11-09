@@ -15,6 +15,7 @@ import { OAuthController } from './modules/auth/infra/http/express/controllers/o
 import { PrismaService } from './shared/infra/prisma/prisma.service';
 import { ensureAuthenticatedMiddleware } from './shared/middlewares/ensureAuthenticatedMiddleware';
 import { MailModule } from './modules/mail/mail.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { MailModule } from './modules/mail/mail.module';
       ttl: 60,
       limit: 10,
     }),
+    ScheduleModule.forRoot(),
     UsersModule,
     AuthModule,
     DressmakerModule,

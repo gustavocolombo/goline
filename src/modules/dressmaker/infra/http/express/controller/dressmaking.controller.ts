@@ -12,6 +12,8 @@ import { CreateDressmakingService } from '../../../services/prisma/create-dressm
 import { GetDressmakingsService } from '../../../services/prisma/get-dressmakings-service';
 import { GrabDressmakingService } from '../../../services/prisma/grab-dressmaking-service';
 import { UserDecorator } from '../../../../../../shared/decorator/user.decorator';
+import { IGetDressmakingCronJobDTO } from '../../../../dtos/IGetDressmakingsDTO';
+import { GetAllDressmakingService } from '../../../services/prisma/get-all-dressmaking';
 
 @ApiTags('dressmaking')
 @Controller('dressmaking')
@@ -20,6 +22,7 @@ export class DressmakingController {
     private createDressmakingService: CreateDressmakingService,
     private getDressmakingService: GetDressmakingsService,
     private grabDressmakingService: GrabDressmakingService,
+    private getAllDressmakingService: GetAllDressmakingService,
   ) {}
 
   @ApiOkResponse({
@@ -95,5 +98,23 @@ export class DressmakingController {
       user_id: user.id,
       dressmaking_id: id,
     });
+  }
+
+  @ApiOkResponse({
+    status: 200,
+    description: 'A new dressmaking has been added',
+  })
+  @ApiBadRequestResponse({
+    status: 400,
+    description: 'A new dressmaking cannot be added, fail',
+  })
+  @ApiUnauthorizedResponse({
+    status: 401,
+    description: 'You are not authorized to view this list',
+  })
+  @Roles(RolesUser.USER, RolesUser.DRESSMAKER)
+  @Get('/global')
+  async getDressmakingCronJob(): Promise<IGetDressmakingCronJobDTO[]> {
+    return await this.getAllDressmakingService.execute();
   }
 }

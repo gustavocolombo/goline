@@ -25,3 +25,13 @@ export interface IReturnDressmakingDTO {
   dressmaker: IDataToReturnUserDTO;
   user: IDataToReturnUserDTO;
 }
+
+export interface IGetDressmakingCronJobDTO {
+  id: string;
+  name_service: string;
+  grabbed: boolean;
+  price: number;
+  start_date: Date;
+  end_date: Date;
+  dressmaker: IDataToReturnUserDTO;
+}

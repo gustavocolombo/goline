@@ -1,15 +1,15 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Users } from '@prisma/client';
 import { compare, hash } from 'bcryptjs';
-import ErrorHandling from '../../../../../shared/errors/ErrorHandling';
-import { PrismaService } from '../../../../../shared/infra/prisma/prisma.service';
-import { IResetPasswordDTO } from '../../../dtos/IResetPasswordDTO';
+import ErrorHandling from '../../../../shared/errors/ErrorHandling';
+import { PrismaService } from '../../../../shared/infra/prisma/prisma.service';
+import { ResetPasswordDTO } from '../../dtos/ResetPasswordDTO';
 
 @Injectable()
 export class ResetPasswordService {
   constructor(private prismaService: PrismaService) {}
 
-  async execute({ email, new_password }: IResetPasswordDTO): Promise<Users> {
+  async execute({ email, new_password }: ResetPasswordDTO): Promise<Users> {
     try {
       const user = await this.prismaService.users.findFirst({
         where: { email },

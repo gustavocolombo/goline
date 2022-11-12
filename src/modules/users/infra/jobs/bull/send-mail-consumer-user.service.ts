@@ -1,14 +1,14 @@
 import { Processor, Process } from '@nestjs/bull';
 import { MailerService } from '@nestjs-modules/mailer';
 import { Job } from 'bull';
-import { ICreateUserDTO } from '../../../dtos/ICreateUserDTO';
+import { CreateUserDTO } from '../../../dtos/CreateUserDTO';
 
 @Processor('send-mail-queue-user')
 export class SendMailConsumerUserService {
   constructor(private mailerService: MailerService) {}
 
   @Process('send-mail-job-user')
-  async sendMail(job: Job<Partial<ICreateUserDTO>>) {
+  async sendMail(job: Job<Partial<CreateUserDTO>>) {
     const { data } = job;
 
     return await this.mailerService.sendMail({

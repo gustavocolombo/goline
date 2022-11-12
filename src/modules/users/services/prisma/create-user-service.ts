@@ -1,10 +1,10 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { RolesUser, StatusUser, Users } from '@prisma/client';
 import { hash } from 'bcryptjs';
-import ErrorHandling from '../../../../../shared/errors/ErrorHandling';
-import { PrismaService } from '../../../../../shared/infra/prisma/prisma.service';
-import { ICreateUserDTO } from '../../../dtos/ICreateUserDTO';
-import { SendMailProducerUserService } from '../../jobs/bull/send-mail-producer-user.service';
+import ErrorHandling from '../../../../shared/errors/ErrorHandling';
+import { PrismaService } from '../../../../shared/infra/prisma/prisma.service';
+import { CreateUserDTO } from '../../dtos/CreateUserDTO';
+import { SendMailProducerUserService } from '../../infra/jobs/bull/send-mail-producer-user.service';
 
 @Injectable()
 export class CreateUserService {
@@ -26,7 +26,7 @@ export class CreateUserService {
     number,
     lat,
     lng,
-  }: ICreateUserDTO): Promise<Users> {
+  }: CreateUserDTO): Promise<Users> {
     try {
       let user = await this.prismaService.users.findUnique({
         where: { email },

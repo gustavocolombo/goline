@@ -1,21 +1,20 @@
-import { Body, Controller, Get, Patch, Post, Put, Req } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post, Put } from '@nestjs/common';
 import { RolesUser, Users } from '@prisma/client';
-import { ICreateUserDTO } from '../../../../dtos/ICreateUserDTO';
-import { CreateUserService } from '../../../prisma/services/CreateUserService';
+import { CreateUserDTO } from '../../../../dtos/CreateUserDTO';
+import { CreateUserService } from '../../../../services/prisma/create-user-service';
 import {
   ApiBadRequestResponse,
   ApiOkResponse,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { IUpdateUserDTO } from '../../../../dtos/IUpdateUserDTO';
-import { UpdateUserService } from '../../../prisma/services/update-user-service';
-import { GetInfoUserService } from '../../../prisma/services/get-info-user-service';
-import { Request } from 'express';
-import { SoftDeleteUserService } from '../../../prisma/services/soft-delete-user-service';
-import { ISoftDeleteUserDTO } from '../../../../dtos/ISoftDeleteUserDTO';
-import { IResetPasswordDTO } from '../../../../dtos/IResetPasswordDTO';
-import { ResetPasswordService } from '../../../prisma/services/reset-password-service';
+import { UpdateUserDTO } from '../../../../dtos/UpdateUserDTO';
+import { UpdateUserService } from '../../../../services/prisma/update-user-service';
+import { GetInfoUserService } from '../../../../services/prisma/get-info-user-service';
+import { SoftDeleteUserService } from '../../../../services/prisma/soft-delete-user-service';
+import { SoftDeleteUserDTO } from '../../../../dtos/SoftDeleteUserDTO';
+import { ResetPasswordDTO } from '../../../../dtos/ResetPasswordDTO';
+import { ResetPasswordService } from '../../../../services/prisma/reset-password-service';
 import { Roles } from '../../../../../../shared/roles/users-roles';
 import { UserDecorator } from '../../../../../../shared/decorator/user.decorator';
 
@@ -51,7 +50,7 @@ export class UsersController {
       street,
       lat,
       lng,
-    }: ICreateUserDTO,
+    }: CreateUserDTO,
   ): Promise<Users> {
     return await this.createUserService.execute({
       name,
@@ -101,7 +100,7 @@ export class UsersController {
   })
   @Roles(RolesUser.USER)
   @Put()
-  async updateUser(@Body() { ...rest }: IUpdateUserDTO): Promise<any> {
+  async updateUser(@Body() { ...rest }: UpdateUserDTO): Promise<any> {
     return await this.updateUserService.execute({ ...rest });
   }
 
@@ -119,7 +118,7 @@ export class UsersController {
   })
   @Roles(RolesUser.USER)
   @Patch()
-  async softDeleteUser(@Body() { email }: ISoftDeleteUserDTO): Promise<any> {
+  async softDeleteUser(@Body() { email }: SoftDeleteUserDTO): Promise<any> {
     return await this.softDeleteUserService.execute({ email });
   }
 
@@ -138,7 +137,7 @@ export class UsersController {
   @Roles(RolesUser.USER)
   @Patch('/reset-password')
   async resetPassword(
-    @Body() { email, new_password }: IResetPasswordDTO,
+    @Body() { email, new_password }: ResetPasswordDTO,
   ): Promise<Users> {
     return await this.resetPasswordService.execute({ email, new_password });
   }

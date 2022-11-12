@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { IAuthFieldsRequiredDTO } from '../../../../dtos/IAuthFieldsRequiredDTO';
 import { IResponseAuthDTO } from '../../../../dtos/IResponseAuthDTO';
-import { AuthenticateUsersService } from '../../../services/prisma/AuthenticateUserService';
+import { AuthenticateUsersService } from '../../../services/prisma/authenticate-user-service';
 import {
   ApiOkResponse,
   ApiTags,
@@ -9,8 +9,8 @@ import {
 } from '@nestjs/swagger';
 import { Dressmaker, Users } from '@prisma/client';
 import RedefinePasswordDTO from '../../../../dtos/RedefinePasswordDTO';
-import RedefinePasswordService from '../../../services/prisma/RedefinePasswordService';
-import { SendMailWithTokenService } from '../../../services/prisma/SendMailWithTokenService';
+import RedefinePasswordService from '../../../services/prisma/redefine-password-service';
+import { SendMailWithTokenService } from '../../../services/prisma/send-mail-with-token-service';
 import SendEmailWithTokenDTO from '../../../../dtos/SendEmailWithTokenDTO';
 
 @ApiTags('authenticate')

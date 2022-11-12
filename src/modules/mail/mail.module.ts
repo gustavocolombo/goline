@@ -2,7 +2,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaService } from '../../shared/infra/prisma/prisma.service';
-import { SendMailWithTokenService } from '../auth/infra/services/prisma/SendMailWithTokenService';
+import { SendMailWithTokenService } from '../auth/infra/services/prisma/send-mail-with-token-service';
 import { MailController } from './infra/http/mail/mail.controller';
 import SendEmailWithTokenForRecoverPasswordService from './infra/services/SendEmailWithTokenForRecoverPasswordService';
 

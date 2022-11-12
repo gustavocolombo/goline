@@ -1,75 +1,89 @@
-import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
+  IsNotEmpty,
+  IsString,
+  MaxLength,
+  MinLength,
+  IsPhoneNumber,
   IsLatitude,
   IsLongitude,
   IsNumber,
   IsOptional,
-  IsPhoneNumber,
-  IsString,
-  MaxLength,
-  MinLength,
 } from 'class-validator';
 
-export class IUpdateUserDTO {
+import { ApiProperty } from '@nestjs/swagger';
+import { RolesUser, StatusUser } from '@prisma/client';
+
+export class CreateUserDTO {
   @ApiProperty()
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   name: string;
 
   @ApiProperty()
   @IsEmail()
+  @IsNotEmpty()
   email: string;
 
   @ApiProperty()
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   @MinLength(4)
   @MaxLength(12)
   password: string;
 
   @ApiProperty()
-  @IsOptional()
+  @IsNotEmpty()
   @IsNumber()
   height: number;
 
   @ApiProperty()
-  @IsOptional()
+  @IsNotEmpty()
   @IsNumber()
   weight: number;
 
   @ApiProperty()
-  @IsOptional()
+  @IsNotEmpty()
   @IsPhoneNumber('BR')
   cellphone: string;
 
   @ApiProperty()
-  @IsOptional()
+  @IsNotEmpty()
   @IsLatitude()
   lat: number;
 
   @ApiProperty()
   @IsLongitude()
-  @IsOptional()
+  @IsNotEmpty()
   lng: number;
 
   @ApiProperty()
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   street: string;
 
   @ApiProperty()
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   city: string;
 
   @ApiProperty()
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   neighborhoud: string;
 
   @ApiProperty()
   @IsNumber()
-  @IsOptional()
+  @IsNotEmpty()
   number: number;
+
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
+  roles?: RolesUser;
+
+  @ApiProperty()
+  @IsEmail()
+  @IsOptional()
+  status?: StatusUser;
 }

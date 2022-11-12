@@ -1,14 +1,14 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { StatusUser, Users } from '@prisma/client';
-import ErrorHandling from '../../../../../shared/errors/ErrorHandling';
-import { PrismaService } from '../../../../../shared/infra/prisma/prisma.service';
-import { ISoftDeleteUserDTO } from '../../../dtos/ISoftDeleteUserDTO';
+import ErrorHandling from '../../../../shared/errors/ErrorHandling';
+import { PrismaService } from '../../../../shared/infra/prisma/prisma.service';
+import { SoftDeleteUserDTO } from '../../dtos/SoftDeleteUserDTO';
 
 @Injectable()
 export class SoftDeleteUserService {
   constructor(private prismaService: PrismaService) {}
 
-  async execute({ email }: ISoftDeleteUserDTO): Promise<Users> {
+  async execute({ email }: SoftDeleteUserDTO): Promise<Users> {
     try {
       const user = await this.prismaService.users.findFirst({
         where: { email },

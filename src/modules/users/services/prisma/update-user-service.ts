@@ -1,14 +1,14 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Users } from '@prisma/client';
-import ErrorHandling from '../../../../../shared/errors/ErrorHandling';
-import { PrismaService } from '../../../../../shared/infra/prisma/prisma.service';
-import { IUpdateUserDTO } from '../../../dtos/IUpdateUserDTO';
+import ErrorHandling from '../../../../shared/errors/ErrorHandling';
+import { PrismaService } from '../../../../shared/infra/prisma/prisma.service';
+import { UpdateUserDTO } from '../../dtos/UpdateUserDTO';
 
 @Injectable()
 export class UpdateUserService {
   constructor(private prismaService: PrismaService) {}
 
-  async execute({ ...rest }: IUpdateUserDTO): Promise<Users> {
+  async execute({ ...rest }: UpdateUserDTO): Promise<Users> {
     try {
       const user = await this.prismaService.users.findFirst({
         where: { email: rest.email },

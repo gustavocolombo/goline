@@ -8,8 +8,11 @@ import { DressmakingController } from './infra/http/express/controller/dressmaki
 import { CreateDressmakerService } from './infra/services/prisma/create-dressmaker-service';
 import { CreateDressmakingService } from './infra/services/prisma/create-dressmaking-service';
 import { GetAllDressmakingService } from './infra/services/prisma/get-all-dressmaking';
+import { GetDressmakerService } from './infra/services/prisma/get-dressmaker-service';
 import { GetDressmakingsService } from './infra/services/prisma/get-dressmakings-service';
 import { GrabDressmakingService } from './infra/services/prisma/grab-dressmaking-service';
+import { SoftDeleteDressmakerService } from './infra/services/prisma/soft-delete-dressmaker-service';
+import { UpdateDressmakerService } from './infra/services/prisma/update-dressmaker-service';
 import { SendMailConsumerDressmakerService } from './jobs/bull/send-mail-consumer.service';
 import { SendMailProducerDressmakerService } from './jobs/bull/send-mail-producer.service';
 
@@ -45,6 +48,9 @@ import { SendMailProducerDressmakerService } from './jobs/bull/send-mail-produce
     SendMailConsumerDressmakerService,
     SendMailProducerDressmakerService,
     GetAllDressmakingService,
+    GetDressmakerService,
+    UpdateDressmakerService,
+    SoftDeleteDressmakerService,
   ],
   controllers: [DressmakerController, DressmakingController],
 })

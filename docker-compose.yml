@@ -1,0 +1,36 @@
+version: '1'
+
+services:
+
+  api:
+    container_name: 'container-goline-api'
+    build: .
+    image: 'node:lts'
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/home/api
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+    depends_on:
+      - database
+    networks:
+      - backendgoline
+      
+  database:
+    container_name: 'container-goline-database'
+    image: 'postgres:latest'
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER_ENV}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD_ENV}
+      - POSTGRES_DB=${POSTGRES_DB_ENV}
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    networks:
+      - backendgoline
+
+networks:
+  backendgoline:
+    driver: bridge

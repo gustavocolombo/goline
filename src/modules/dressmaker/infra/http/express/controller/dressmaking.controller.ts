@@ -1,4 +1,14 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  DefaultValuePipe,
+  Get,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiOkResponse,
@@ -114,7 +124,10 @@ export class DressmakingController {
   })
   @Roles(RolesUser.USER, RolesUser.DRESSMAKER)
   @Get('/global')
-  async getDressmakingCronJob(): Promise<IGetAllDressmakingDTO[]> {
-    return await this.getAllDressmakingService.getAllDressmakings();
+  async getDressmakingCronJob(
+    @Query('skip', new DefaultValuePipe(0), ParseIntPipe) skip = 0,
+    @Query('take', new DefaultValuePipe(10), ParseIntPipe) take = 10,
+  ): Promise<IGetAllDressmakingDTO[]> {
+    return await this.getAllDressmakingService.getAllDressmakings(skip, take);
   }
 }

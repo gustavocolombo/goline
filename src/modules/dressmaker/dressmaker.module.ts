@@ -7,6 +7,7 @@ import { DressmakerController } from './infra/http/express/controller/dressmaker
 import { DressmakingController } from './infra/http/express/controller/dressmaking.controller';
 import { CreateDressmakerService } from './infra/services/prisma/create-dressmaker-service';
 import { CreateDressmakingService } from './infra/services/prisma/create-dressmaking-service';
+import { GetAllDressmakersInsideGeolocation } from './infra/services/prisma/get-all-dressmakers-inside-geolocation';
 import { GetAllDressmakingService } from './infra/services/prisma/get-all-dressmaking';
 import { GetDressmakerService } from './infra/services/prisma/get-dressmaker-service';
 import { GetDressmakingsService } from './infra/services/prisma/get-dressmakings-service';
@@ -51,6 +52,7 @@ import { SendMailProducerDressmakerService } from './jobs/bull/send-mail-produce
     GetDressmakerService,
     UpdateDressmakerService,
     SoftDeleteDressmakerService,
+    GetAllDressmakersInsideGeolocation,
   ],
   controllers: [DressmakerController, DressmakingController],
 })

@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Patch, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiOkResponse,
@@ -7,8 +16,10 @@ import {
 } from '@nestjs/swagger';
 import { Dressmaker } from '@prisma/client';
 import { UserDecorator } from '../../../../../../shared/decorator/user.decorator';
+import { GetDressmakerByGeolocation } from '../../../../dtos/GetDressmakerByGeolocationDTO';
 import { ICreateDressmakerDTO } from '../../../../dtos/ICreateDressmakerDTO';
 import { CreateDressmakerService } from '../../../services/prisma/create-dressmaker-service';
+import { GetAllDressmakersInsideGeolocation } from '../../../services/prisma/get-all-dressmakers-inside-geolocation';
 import { GetDressmakerService } from '../../../services/prisma/get-dressmaker-service';
 import { SoftDeleteDressmakerService } from '../../../services/prisma/soft-delete-dressmaker-service';
 import { UpdateDressmakerService } from '../../../services/prisma/update-dressmaker-service';
@@ -21,7 +32,21 @@ export class DressmakerController {
     private getDressmakerService: GetDressmakerService,
     private updateDressmakerService: UpdateDressmakerService,
     private softDeleteDressmakerService: SoftDeleteDressmakerService,
+    private testService: GetAllDressmakersInsideGeolocation,
   ) {}
+
+  @Get('/get-by-geolocation/:user_id')
+  async teste(
+    @Param('user_id') user_id: string,
+    @Query() query: GetDressmakerByGeolocation,
+  ) {
+    return await this.testService.execute({
+      lat: parseFloat(query.lat),
+      lng: parseFloat(query.lng),
+      radius: parseFloat(query.radius),
+      user_id,
+    });
+  }
 
   @ApiOkResponse({
     status: 201,

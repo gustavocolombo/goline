@@ -4,14 +4,10 @@ import { hash } from 'bcryptjs';
 import ErrorHandling from '../../../../shared/errors/ErrorHandling';
 import { PrismaService } from '../../../../shared/infra/prisma/prisma.service';
 import { CreateUserDTO } from '../../dtos/CreateUserDTO';
-import { SendMailProducerUserService } from '../../infra/jobs/bull/send-mail-producer-user.service';
 
 @Injectable()
 export class CreateUserService {
-  constructor(
-    private prismaService: PrismaService,
-    private sendMailProducerService: SendMailProducerUserService,
-  ) {}
+  constructor(private prismaService: PrismaService) {}
 
   async execute({
     name,
@@ -61,8 +57,6 @@ export class CreateUserService {
             address: true,
           },
         });
-
-        await this.sendMailProducerService.execute({ name, email });
       }
 
       delete user.password;

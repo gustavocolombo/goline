@@ -10,8 +10,13 @@ export class GetAllDressmakingService
 {
   constructor(private prismaService: PrismaService) {}
 
-  async getAllDressmakings(): Promise<IGetAllDressmakingDTO[]> {
+  async getAllDressmakings(
+    skip?: number,
+    take?: number,
+  ): Promise<IGetAllDressmakingDTO[]> {
     const getDressmaking = await this.prismaService.dressmaking.findMany({
+      skip,
+      take,
       where: {
         grabbed: false,
         dressmaker: {

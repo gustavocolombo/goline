@@ -52,6 +52,10 @@ export class AppModule implements NestModule {
           method: RequestMethod.POST,
         },
         { path: '/api/dressmaker', method: RequestMethod.POST },
+        {
+          path: '/api/dressmaker/get-by-geolocation/:user_id',
+          method: RequestMethod.GET,
+        },
       )
       .forRoutes('*');
   }

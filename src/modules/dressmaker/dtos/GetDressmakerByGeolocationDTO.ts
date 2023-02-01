@@ -3,14 +3,14 @@ import { IsNotEmpty, IsString } from 'class-validator';
 
 export class GetDressmakerByGeolocation {
   @ApiProperty()
-  @IsString()
-  @IsNotEmpty()
-  lat: string;
+  // @IsString()
+  // @IsNotEmpty()
+  lat?: string;
 
   @ApiProperty()
-  @IsString()
-  @IsNotEmpty()
-  lng: string;
+  // @IsString()
+  // @IsNotEmpty()
+  lng?: string;
 
   @ApiProperty()
   @IsString()

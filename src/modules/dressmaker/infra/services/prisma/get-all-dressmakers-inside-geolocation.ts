@@ -20,39 +20,49 @@ export class GetAllDressmakersInsideGeolocation {
 
     if (!user) throw new NotFoundException('User not found');
 
-    const center = { lat, lng };
+    const center = {
+      lat: user.address[0].lat,
+      lng: user.address[0].lng,
+    } ?? { lat, lng };
 
-    for (let i in dressmakers) {
-      const teste = insideCircle(
-        {
-          lat: dressmakers[i].address[i].lat,
-          lng: dressmakers[i].address[i].lng,
-        },
-        center,
-        radius,
-      );
+    let arrayOfDressmakersInsideRadius = [];
 
-      if (teste) {
-        return await this.prismaService.dressmaker.findMany({
-          where: {
-            address: {
-              some: {
-                lat: dressmakers[i].address[i].lat,
-                lng: dressmakers[i].address[i].lng,
+    await Promise.all(
+      dressmakers.map(async (dressmaker) => {
+        const isInsideCircle = insideCircle(
+          {
+            lat: dressmaker.address[0].lat,
+            lng: dressmaker.address[0].lng,
+          },
+          center,
+          radius,
+        );
+
+        if (isInsideCircle === true) {
+          const dressmakers = await this.prismaService.dressmaker.findMany({
+            where: {
+              address: {
+                every: {
+                  lat: dressmaker.address[0].lat,
+                  lng: dressmaker.address[0].lng,
+                },
               },
+              status: StatusUser.ACTIVE,
             },
-            status: StatusUser.ACTIVE,
-          },
-          select: {
-            id: true,
-            email: true,
-            cellphone: true,
-            expertise: true,
-            name: true,
-            address: true,
-          },
-        });
-      }
-    }
+            select: {
+              id: true,
+              email: true,
+              cellphone: true,
+              expertise: true,
+              name: true,
+              address: true,
+            },
+          });
+          arrayOfDressmakersInsideRadius.push(dressmakers);
+        }
+      }),
+    );
+
+    return arrayOfDressmakersInsideRadius;
   }
 }

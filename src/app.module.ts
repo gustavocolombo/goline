@@ -7,16 +7,16 @@ import {
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { AuthModule } from './modules/auth/auth.module';
-import { GoogleStrategy } from './modules/auth/infra/strategy/google.strategy';
 import { DressmakerModule } from './modules/dressmaker/dressmaker.module';
 import { UsersModule } from './modules/users/users.module';
-import { OAuthService } from './modules/auth/infra/services/express/oauth-service';
-import { OAuthController } from './modules/auth/infra/http/express/controllers/oauth.controller';
+import { OAuthService } from './modules/auth/services/oauth-service';
+import { OAuthController } from './modules/auth/controllers/oauth.controller';
 import { PrismaService } from './shared/infra/prisma/prisma.service';
 import { ensureAuthenticatedMiddleware } from './shared/middlewares/ensureAuthenticatedMiddleware';
 import { MailModule } from './modules/mail/mail.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { GatewayModule } from './modules/gateway/gateway.module';
+import { GoogleStrategy } from './modules/auth/strategy/google.strategy';
 
 @Module({
   imports: [

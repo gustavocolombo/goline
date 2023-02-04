@@ -63,6 +63,6 @@ export class GetAllDressmakersInsideGeolocation {
       }),
     );
 
-    return arrayOfDressmakersInsideRadius;
+    return arrayOfDressmakersInsideRadius.flat();
   }
 }

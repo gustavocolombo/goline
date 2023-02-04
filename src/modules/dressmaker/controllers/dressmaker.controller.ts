@@ -38,7 +38,7 @@ export class DressmakerController {
   ) {}
 
   @Get('/get-by-geolocation/:user_id')
-  async teste(
+  async getDressmakerByGeolocation(
     @Param('user_id') user_id: string,
     @Query() query: GetDressmakerByGeolocation,
   ) {

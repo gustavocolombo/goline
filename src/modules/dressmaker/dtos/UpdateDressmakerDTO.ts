@@ -1,17 +1,20 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
+  IsArray,
   IsEmail,
   IsLatitude,
   IsLongitude,
+  IsNotEmpty,
   IsNumber,
   IsOptional,
   IsPhoneNumber,
   IsString,
+  IsUUID,
   MaxLength,
   MinLength,
 } from 'class-validator';
 
-export class UpdateUserDTO {
+export class UpdateDressmakerDTO {
   @ApiProperty()
   @IsString()
   @IsOptional()
@@ -19,6 +22,7 @@ export class UpdateUserDTO {
 
   @ApiProperty()
   @IsEmail()
+  @IsOptional()
   email?: string;
 
   @ApiProperty()
@@ -29,14 +33,9 @@ export class UpdateUserDTO {
   password?: string;
 
   @ApiProperty()
+  @IsArray()
   @IsOptional()
-  @IsNumber()
-  height?: number;
-
-  @ApiProperty()
-  @IsOptional()
-  @IsNumber()
-  weight?: number;
+  expertise?: string[];
 
   @ApiProperty()
   @IsOptional()
@@ -72,4 +71,9 @@ export class UpdateUserDTO {
   @IsNumber()
   @IsOptional()
   number?: number;
+
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
+  image_profile?: string;
 }

@@ -4,13 +4,14 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { PrismaService } from '../../shared/infra/prisma/prisma.service';
 import { RolesGuard } from '../../shared/roles/roles-guard';
-import { AuthenticateUsersService } from '../auth/infra/services/prisma/authenticate-user-service';
-import { UsersController } from './infra/http/express/controllers/users.controller';
-import { CreateUserService } from './services/prisma/create-user-service';
-import { GetInfoUserService } from './services/prisma/get-info-user-service';
-import { ResetPasswordService } from './services/prisma/reset-password-service';
-import { SoftDeleteUserService } from './services/prisma/soft-delete-user-service';
-import { UpdateUserService } from './services/prisma/update-user-service';
+import { AuthenticateUsersService } from '../auth/services/authenticate-user-service';
+import { UsersController } from './controllers/users.controller';
+import { UsersRepository } from './repositories/users.repository';
+import { CreateUserService } from './services/create-user-service';
+import { GetInfoUserService } from './services/get-info-user-service';
+import { ResetPasswordService } from './services/reset-password-service';
+import { SoftDeleteUserService } from './services/soft-delete-user-service';
+import { UpdateUserService } from './services/update-user-service';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { UpdateUserService } from './services/prisma/update-user-service';
     ResetPasswordService,
     { provide: APP_GUARD, useClass: RolesGuard },
     Logger,
+    UsersRepository,
   ],
 })
 export class UsersModule {}

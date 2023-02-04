@@ -1,18 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { Users } from '@prisma/client';
-import ErrorHandling from '../../../shared/errors/ErrorHandling';
-import { PrismaService } from '../../../shared/infra/prisma/prisma.service';
 import { GetUserInfoDTO } from '../dtos/GetUserInfoDTO';
+import { UsersRepository } from '../repositories/users.repository';
+import ErrorHandling from '../../../shared/errors/ErrorHandling';
 
 @Injectable()
 export class GetInfoUserService {
-  constructor(private prismaService: PrismaService) {}
+  constructor(private usersRepository: UsersRepository) {}
 
   async execute({ user_id }: GetUserInfoDTO): Promise<Users | undefined> {
     try {
-      const user = await this.prismaService.users.findFirst({
-        where: { id: user_id },
-      });
+      const user = await this.usersRepository.findById(user_id);
 
       delete user.password;
 

@@ -1,22 +1,17 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Users } from '@prisma/client';
 import { compare, hash } from 'bcryptjs';
-import ErrorHandling from '../../../shared/errors/ErrorHandling';
-import { PrismaService } from '../../../shared/infra/prisma/prisma.service';
 import { ResetPasswordDTO } from '../dtos/ResetPasswordDTO';
+import { UsersRepository } from '../repositories/users.repository';
+import ErrorHandling from '../../../shared/errors/ErrorHandling';
 
 @Injectable()
 export class ResetPasswordService {
-  constructor(private prismaService: PrismaService) {}
+  constructor(private usersRepository: UsersRepository) {}
 
   async execute({ email, new_password }: ResetPasswordDTO): Promise<Users> {
     try {
-      const user = await this.prismaService.users.findFirst({
-        where: { email },
-        select: {
-          password: true,
-        },
-      });
+      const user = await this.usersRepository.findByEmail(email);
 
       if (!user) throw new BadRequestException('User not found!');
 
@@ -28,9 +23,8 @@ export class ResetPasswordService {
         );
       }
 
-      const updatedUser = await this.prismaService.users.update({
-        where: { email },
-        data: { password: newPasswordHashed },
+      const updatedUser = await this.usersRepository.update({
+        password: newPasswordHashed,
       });
 
       delete updatedUser.password;

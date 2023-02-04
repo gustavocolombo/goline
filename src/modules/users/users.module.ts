@@ -6,6 +6,7 @@ import { PrismaService } from '../../shared/infra/prisma/prisma.service';
 import { RolesGuard } from '../../shared/roles/roles-guard';
 import { AuthenticateUsersService } from '../auth/services/authenticate-user-service';
 import { UsersController } from './controllers/users.controller';
+import { UsersRepository } from './repositories/users.repository';
 import { CreateUserService } from './services/create-user-service';
 import { GetInfoUserService } from './services/get-info-user-service';
 import { ResetPasswordService } from './services/reset-password-service';
@@ -37,6 +38,7 @@ import { UpdateUserService } from './services/update-user-service';
     ResetPasswordService,
     { provide: APP_GUARD, useClass: RolesGuard },
     Logger,
+    UsersRepository,
   ],
 })
 export class UsersModule {}

@@ -1,13 +1,12 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { RolesUser, StatusUser, Users } from '@prisma/client';
-import { hash } from 'bcryptjs';
-import ErrorHandling from '../../../shared/errors/ErrorHandling';
-import { PrismaService } from '../../../shared/infra/prisma/prisma.service';
+import { Users } from '@prisma/client';
 import { CreateUserDTO } from '../dtos/CreateUserDTO';
+import { UsersRepository } from '../repositories/users.repository';
+import ErrorHandling from '../../../shared/errors/ErrorHandling';
 
 @Injectable()
 export class CreateUserService {
-  constructor(private prismaService: PrismaService) {}
+  constructor(private usersRepository: UsersRepository) {}
 
   async execute({
     name,
@@ -24,38 +23,25 @@ export class CreateUserService {
     lng,
   }: CreateUserDTO): Promise<Users> {
     try {
-      let user = await this.prismaService.users.findUnique({
-        where: { email },
-      });
+      let user = await this.usersRepository.findByEmail(email);
 
       if (user)
         throw new BadRequestException('User with e-mail already registered');
 
       if (!user) {
-        user = await this.prismaService.users.create({
-          data: {
-            name,
-            email,
-            password: await hash(password, 8),
-            cellphone,
-            height,
-            weight,
-            roles: RolesUser.USER,
-            status: StatusUser.ACTIVE,
-            address: {
-              create: {
-                city,
-                street,
-                neighborhoud,
-                number,
-                lat,
-                lng,
-              },
-            },
-          },
-          include: {
-            address: true,
-          },
+        user = await this.usersRepository.create({
+          name,
+          email,
+          password,
+          cellphone,
+          height,
+          weight,
+          city,
+          street,
+          neighborhoud,
+          number,
+          lat,
+          lng,
         });
       }
 

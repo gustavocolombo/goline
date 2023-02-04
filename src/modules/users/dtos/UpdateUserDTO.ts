@@ -15,61 +15,61 @@ export class UpdateUserDTO {
   @ApiProperty()
   @IsString()
   @IsOptional()
-  name: string;
+  name?: string;
 
   @ApiProperty()
   @IsEmail()
-  email: string;
+  email?: string;
 
   @ApiProperty()
   @IsString()
   @IsOptional()
   @MinLength(4)
   @MaxLength(12)
-  password: string;
+  password?: string;
 
   @ApiProperty()
   @IsOptional()
   @IsNumber()
-  height: number;
+  height?: number;
 
   @ApiProperty()
   @IsOptional()
   @IsNumber()
-  weight: number;
+  weight?: number;
 
   @ApiProperty()
   @IsOptional()
   @IsPhoneNumber('BR')
-  cellphone: string;
+  cellphone?: string;
 
   @ApiProperty()
   @IsOptional()
   @IsLatitude()
-  lat: number;
+  lat?: number;
 
   @ApiProperty()
   @IsLongitude()
   @IsOptional()
-  lng: number;
+  lng?: number;
 
   @ApiProperty()
   @IsString()
   @IsOptional()
-  street: string;
+  street?: string;
 
   @ApiProperty()
   @IsString()
   @IsOptional()
-  city: string;
+  city?: string;
 
   @ApiProperty()
   @IsString()
   @IsOptional()
-  neighborhoud: string;
+  neighborhoud?: string;
 
   @ApiProperty()
   @IsNumber()
   @IsOptional()
-  number: number;
+  number?: number;
 }

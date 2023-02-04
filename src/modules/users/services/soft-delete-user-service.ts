@@ -1,25 +1,20 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { StatusUser, Users } from '@prisma/client';
-import ErrorHandling from '../../../shared/errors/ErrorHandling';
-import { PrismaService } from '../../../shared/infra/prisma/prisma.service';
+import { Users } from '@prisma/client';
 import { SoftDeleteUserDTO } from '../dtos/SoftDeleteUserDTO';
+import { UsersRepository } from '../repositories/users.repository';
+import ErrorHandling from '../../../shared/errors/ErrorHandling';
 
 @Injectable()
 export class SoftDeleteUserService {
-  constructor(private prismaService: PrismaService) {}
+  constructor(private usersRepository: UsersRepository) {}
 
   async execute({ email }: SoftDeleteUserDTO): Promise<Users> {
     try {
-      const user = await this.prismaService.users.findFirst({
-        where: { email },
-      });
+      const user = await this.usersRepository.findByEmail(email);
 
       if (!user) throw new BadRequestException('User not found!');
 
-      const updatedUser = await this.prismaService.users.update({
-        data: { status: StatusUser.INACTIVE },
-        where: { email },
-      });
+      const updatedUser = await this.usersRepository.softDelete({ email });
 
       return updatedUser;
     } catch (err) {

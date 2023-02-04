@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { Dressmaking } from '@prisma/client';
 import ErrorHandling from '../../../shared/errors/ErrorHandling';
 import { PrismaService } from '../../../shared/infra/prisma/prisma.service';
-import { IGrabDressmakingDTO } from '../dtos/IGrabDressmakingDTO';
+import { GrabDressmakingDTO } from '../dtos/GrabDressmakingDTO';
 
 @Injectable()
 export class GrabDressmakingService {
@@ -10,7 +10,7 @@ export class GrabDressmakingService {
   async execute({
     user_id,
     dressmaking_id,
-  }: IGrabDressmakingDTO): Promise<Dressmaking> {
+  }: GrabDressmakingDTO): Promise<Dressmaking> {
     try {
       const user = await this.prismaService.users.findFirst({
         where: { id: user_id },

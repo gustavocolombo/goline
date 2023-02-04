@@ -17,13 +17,14 @@ import {
 import { Dressmaker, Users } from '@prisma/client';
 import { UserDecorator } from '../../../shared/decorator/user.decorator';
 import { GetDressmakerByGeolocation } from '../dtos/GetDressmakerByGeolocationDTO';
-import { ICreateDressmakerDTO } from '../dtos/ICreateDressmakerDTO';
+import { CreateDressmakerDTO } from '../dtos/CreateDressmakerDTO';
 import { CreateDressmakerService } from '../services/create-dressmaker-service';
 import { GetAllDressmakersInsideGeolocation } from '../services/get-all-dressmakers-inside-geolocation';
 import { GetDistanceBetweenUserDressmakerService } from '../services/get-distance-between-user-dressmaker-service';
 import { GetDressmakerService } from '../services/get-dressmaker-service';
 import { SoftDeleteDressmakerService } from '../services/soft-delete-dressmaker-service';
 import { UpdateDressmakerService } from '../services/update-dressmaker-service';
+import { UpdateDressmakerDTO } from '../dtos/UpdateDressmakerDTO';
 
 @ApiTags('dressmaker')
 @Controller('dressmaker')
@@ -77,7 +78,7 @@ export class DressmakerController {
       neighborhoud,
       number,
       street,
-    }: ICreateDressmakerDTO,
+    }: CreateDressmakerDTO,
   ) {
     return await this.createDressmakerService.execute({
       name,
@@ -126,11 +127,12 @@ export class DressmakerController {
   @Put()
   async updateUser(
     @UserDecorator() dressmaker: Dressmaker,
-    @Body() { ...rest }: Dressmaker,
+    @Body() dressmakerDTO: UpdateDressmakerDTO,
   ): Promise<Dressmaker> {
-    return await this.updateDressmakerService.execute(dressmaker.id, {
-      ...rest,
-    });
+    return await this.updateDressmakerService.execute(
+      dressmaker,
+      dressmakerDTO,
+    );
   }
 
   @ApiOkResponse({
@@ -148,7 +150,7 @@ export class DressmakerController {
   @Patch()
   async softDelete(
     @UserDecorator() dressmaker: Dressmaker,
-  ): Promise<{ message: string }> {
+  ): Promise<Dressmaker> {
     return await this.softDeleteDressmakerService.execute(dressmaker);
   }
 

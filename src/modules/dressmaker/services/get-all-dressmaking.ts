@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { StatusUser } from '@prisma/client';
 import { PrismaService } from '../../../shared/infra/prisma/prisma.service';
-import { IGetAllDressmakingDTO } from '../dtos/IGetDressmakingsDTO';
+import { GetAllDressmakingDTO } from '../dtos/GetDressmakingsDTO';
 import { GetAllDressmakingsImplementations } from '../implementations/dressmakings/get-all-dressmakings.implementation';
 
 @Injectable()
@@ -13,7 +13,7 @@ export class GetAllDressmakingService
   async getAllDressmakings(
     skip?: number,
     take?: number,
-  ): Promise<IGetAllDressmakingDTO[]> {
+  ): Promise<GetAllDressmakingDTO[]> {
     const getDressmaking = await this.prismaService.dressmaking.findMany({
       skip,
       take,

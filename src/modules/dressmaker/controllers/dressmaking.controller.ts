@@ -16,13 +16,13 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { Dressmaking, RolesUser, Users } from '@prisma/client';
-import { ICreateDressmakingDTO } from '../dtos/ICreateDressmakingDTO';
+import { CreateDressmakingDTO } from '../dtos/CreateDressmakingDTO';
 import { Roles } from '../../../shared/roles/users-roles';
 import { CreateDressmakingService } from '../services/create-dressmaking-service';
 import { GetDressmakingsService } from '../services/get-dressmakings-service';
 import { GrabDressmakingService } from '../services/grab-dressmaking-service';
 import { UserDecorator } from '../../../shared/decorator/user.decorator';
-import { IGetAllDressmakingDTO } from '../dtos/IGetDressmakingsDTO';
+import { GetAllDressmakingDTO } from '../dtos/GetDressmakingsDTO';
 import { GetAllDressmakingService } from '../services/get-all-dressmaking';
 
 @ApiTags('dressmaking')
@@ -54,7 +54,7 @@ export class DressmakingController {
       tag,
       start_date,
       end_date,
-    }: ICreateDressmakingDTO,
+    }: CreateDressmakingDTO,
     @UserDecorator() user: Users,
   ): Promise<Dressmaking> {
     return await this.createDressmakingService.execute({
@@ -127,7 +127,7 @@ export class DressmakingController {
   async getDressmakingCronJob(
     @Query('skip', new DefaultValuePipe(0), ParseIntPipe) skip = 0,
     @Query('take', new DefaultValuePipe(10), ParseIntPipe) take = 10,
-  ): Promise<IGetAllDressmakingDTO[]> {
+  ): Promise<GetAllDressmakingDTO[]> {
     return await this.getAllDressmakingService.getAllDressmakings(skip, take);
   }
 }

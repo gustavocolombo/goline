@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { Dressmaking, StatusUser } from '@prisma/client';
 import ErrorHandling from '../../../shared/errors/ErrorHandling';
 import { PrismaService } from '../../../shared/infra/prisma/prisma.service';
-import { ICreateDressmakingDTO } from '../dtos/ICreateDressmakingDTO';
+import { CreateDressmakingDTO } from '../dtos/CreateDressmakingDTO';
 
 @Injectable()
 export class CreateDressmakingService {
@@ -17,7 +17,7 @@ export class CreateDressmakingService {
     grabbed,
     description,
     tag,
-  }: ICreateDressmakingDTO): Promise<Dressmaking> {
+  }: CreateDressmakingDTO): Promise<Dressmaking> {
     try {
       const verifyDressmaker = await this.prismaService.dressmaker.findFirst({
         where: { AND: [{ id: dressmaker_id }, { status: StatusUser.ACTIVE }] },

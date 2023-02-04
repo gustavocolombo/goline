@@ -13,7 +13,7 @@ import {
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class ICreateDressmakerDTO {
+export class CreateDressmakerDTO {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()

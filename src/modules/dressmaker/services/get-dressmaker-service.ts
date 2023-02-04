@@ -1,18 +1,26 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Dressmaker } from '@prisma/client';
-import { PrismaService } from '../../../shared/infra/prisma/prisma.service';
+import ErrorHandling from '../../../shared/errors/ErrorHandling';
+import { DressmakerRepository } from '../repositories/dressmakers.repository';
 
 @Injectable()
 export class GetDressmakerService {
-  constructor(private prismaService: PrismaService) {}
+  constructor(private dressmakersRepository: DressmakerRepository) {}
 
   async execute(dressmaker: Dressmaker): Promise<Dressmaker> {
-    const verifyDressmaker = await this.prismaService.dressmaker.findUnique({
-      where: { id: dressmaker.id },
-    });
+    try {
+      const verifyDressmaker = await this.dressmakersRepository.findById(
+        dressmaker.id,
+      );
 
-    delete verifyDressmaker.password;
+      if (!verifyDressmaker)
+        throw new NotFoundException('Dressmaker not found');
 
-    return verifyDressmaker;
+      delete verifyDressmaker.password;
+
+      return verifyDressmaker;
+    } catch (error) {
+      throw new ErrorHandling(error);
+    }
   }
 }

@@ -2,36 +2,36 @@ import { ApiProperty } from '@nestjs/swagger';
 import { StatusUser } from '@prisma/client';
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class IGetDressmakingDTO {
+export class GetDressmakingDTO {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
   id: string;
 }
 
-interface IDataToReturnUserDTO {
+interface DataToReturnUserDTO {
   id: string;
   email: string;
   status: StatusUser;
 }
 
-export interface IReturnDressmakingDTO {
+export interface ReturnDressmakingDTO {
   id: string;
   name_service: string;
   grabbed: boolean;
   price: number;
   start_date: Date;
   end_date: Date;
-  dressmaker: IDataToReturnUserDTO;
-  user: IDataToReturnUserDTO;
+  dressmaker: DataToReturnUserDTO;
+  user: DataToReturnUserDTO;
 }
 
-export interface IGetAllDressmakingDTO {
+export interface GetAllDressmakingDTO {
   id: string;
   name_service: string;
   grabbed: boolean;
   price: number;
   start_date: Date;
   end_date: Date;
-  dressmaker: IDataToReturnUserDTO;
+  dressmaker: DataToReturnUserDTO;
 }

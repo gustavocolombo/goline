@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { PrismaService } from '../../shared/infra/prisma/prisma.service';
 import { DressmakerController } from './controllers/dressmaker.controller';
 import { DressmakingController } from './controllers/dressmaking.controller';
+import { DressmakerRepository } from './repositories/dressmakers.repository';
 import { CreateDressmakerService } from './services/create-dressmaker-service';
 import { CreateDressmakingService } from './services/create-dressmaking-service';
 import { GetAllDressmakersInsideGeolocation } from './services/get-all-dressmakers-inside-geolocation';
@@ -41,6 +42,7 @@ import { UpdateDressmakerService } from './services/update-dressmaker-service';
     SoftDeleteDressmakerService,
     GetAllDressmakersInsideGeolocation,
     GetDistanceBetweenUserDressmakerService,
+    DressmakerRepository,
   ],
   controllers: [DressmakerController, DressmakingController],
 })

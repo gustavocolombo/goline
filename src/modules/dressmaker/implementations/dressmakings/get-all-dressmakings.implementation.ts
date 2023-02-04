@@ -1,5 +1,5 @@
-import { IGetAllDressmakingDTO } from '../../dtos/IGetDressmakingsDTO';
+import { GetAllDressmakingDTO } from '../../dtos/GetDressmakingsDTO';
 
 export interface GetAllDressmakingsImplementations {
-  getAllDressmakings(): Promise<IGetAllDressmakingDTO[]>;
+  getAllDressmakings(): Promise<GetAllDressmakingDTO[]>;
 }

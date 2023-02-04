@@ -6,7 +6,7 @@ import {
 } from '@nestjs/websockets';
 import { StatusUser } from '@prisma/client';
 import { PrismaService } from '../../../../shared/infra/prisma/prisma.service';
-import { IGetAllDressmakingDTO } from '../../../dressmaker/dtos/IGetDressmakingsDTO';
+import { GetAllDressmakingDTO } from '../../../dressmaker/dtos/GetDressmakingsDTO';
 import { GetAllDressmakingsImplementations } from '../../../dressmaker/implementations/dressmakings/get-all-dressmakings.implementation';
 import { Server } from 'socket.io';
 
@@ -21,7 +21,7 @@ export class GetAllDressmakingsGateway
 
   @Cron(CronExpression.EVERY_10_MINUTES)
   @SubscribeMessage('dressmakings')
-  async getAllDressmakings(): Promise<IGetAllDressmakingDTO[]> {
+  async getAllDressmakings(): Promise<GetAllDressmakingDTO[]> {
     const dressmakings = await this.prismaService.dressmaking.findMany({
       where: {
         grabbed: false,

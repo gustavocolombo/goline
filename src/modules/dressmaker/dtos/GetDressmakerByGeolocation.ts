@@ -1,4 +1,4 @@
-export interface IGetDressmakersByGeolocation {
+export interface GetDressmakersByGeolocation {
   lat?: number;
   lng?: number;
   radius: number;

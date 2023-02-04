@@ -2,13 +2,13 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../../shared/infra/prisma/prisma.service';
 import { insideCircle } from 'geolocation-utils';
 import { StatusUser } from '@prisma/client';
-import { IGetDressmakersByGeolocation } from '../dtos/IGetDressmakerByGeolocation';
+import { GetDressmakersByGeolocation } from '../dtos/GetDressmakerByGeolocation';
 
 @Injectable()
 export class GetAllDressmakersInsideGeolocation {
   constructor(private prismaService: PrismaService) {}
 
-  async execute({ lat, lng, radius, user_id }: IGetDressmakersByGeolocation) {
+  async execute({ lat, lng, radius, user_id }: GetDressmakersByGeolocation) {
     const dressmakers = await this.prismaService.dressmaker.findMany({
       include: { address: true },
     });

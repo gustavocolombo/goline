@@ -10,7 +10,7 @@ import {
   IsString,
 } from 'class-validator';
 
-export class ICreateDressmakingDTO {
+export class CreateDressmakingDTO {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()

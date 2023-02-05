@@ -1,45 +1,22 @@
 import { Injectable } from '@nestjs/common';
-import { StatusUser } from '@prisma/client';
-import { PrismaService } from '../../../shared/infra/prisma/prisma.service';
+import ErrorHandling from '../../../shared/errors/ErrorHandling';
 import { GetAllDressmakingDTO } from '../dtos/GetDressmakingsDTO';
-import { GetAllDressmakingsImplementations } from '../implementations/dressmakings/get-all-dressmakings.implementation';
+import { DressmakingsRepository } from '../repositories/dressmakings.repository';
 
 @Injectable()
-export class GetAllDressmakingService
-  implements GetAllDressmakingsImplementations
-{
-  constructor(private prismaService: PrismaService) {}
+export class GetAllDressmakingService {
+  constructor(private dressmakingRepository: DressmakingsRepository) {}
 
   async getAllDressmakings(
     skip?: number,
     take?: number,
   ): Promise<GetAllDressmakingDTO[]> {
-    const getDressmaking = await this.prismaService.dressmaking.findMany({
-      skip,
-      take,
-      where: {
-        grabbed: false,
-        dressmaker: {
-          status: StatusUser.ACTIVE,
-        },
-      },
-      select: {
-        id: true,
-        name_service: true,
-        grabbed: true,
-        price: true,
-        start_date: true,
-        end_date: true,
-        dressmaker: {
-          select: {
-            id: true,
-            email: true,
-            status: true,
-          },
-        },
-      },
-    });
-
-    return getDressmaking;
+    try {
+      const getDressmaking =
+        await this.dressmakingRepository.getAllDressmakings(skip, take);
+      return getDressmaking;
+    } catch (error) {
+      throw new ErrorHandling(error);
+    }
   }
 }

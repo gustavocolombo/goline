@@ -4,15 +4,16 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
-import { StatusUser } from '@prisma/client';
+import { Dressmaking, StatusUser } from '@prisma/client';
 import { PrismaService } from '../../../../shared/infra/prisma/prisma.service';
 import { GetAllDressmakingDTO } from '../../../dressmaker/dtos/GetDressmakingsDTO';
-import { GetAllDressmakingsImplementations } from '../../../dressmaker/implementations/dressmakings/get-all-dressmakings.implementation';
+
 import { Server } from 'socket.io';
+import { CrudInterface } from '../../../dressmaker/implementations/dressmakings/crud.interface';
 
 @WebSocketGateway(3001)
 export class GetAllDressmakingsGateway
-  implements GetAllDressmakingsImplementations
+  implements Partial<CrudInterface<Dressmaking>>
 {
   constructor(private prismaService: PrismaService) {}
 

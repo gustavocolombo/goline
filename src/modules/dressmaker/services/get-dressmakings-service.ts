@@ -1,45 +1,23 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../../../shared/infra/prisma/prisma.service';
+import ErrorHandling from '../../../shared/errors/ErrorHandling';
 import {
   GetDressmakingDTO,
   ReturnDressmakingDTO,
 } from '../dtos/GetDressmakingsDTO';
+import { DressmakingsRepository } from '../repositories/dressmakings.repository';
 
 @Injectable()
 export class GetDressmakingsService {
-  constructor(private prismaService: PrismaService) {}
+  constructor(private dressmakingRepository: DressmakingsRepository) {}
 
   async execute({ id }: GetDressmakingDTO): Promise<ReturnDressmakingDTO[]> {
-    const dressmakings = await this.prismaService.dressmaker.findFirst({
-      where: { id },
-      select: {
-        dressmaking: {
-          select: {
-            id: true,
-            name_service: true,
-            grabbed: true,
-            price: true,
-            start_date: true,
-            end_date: true,
-            dressmaker: {
-              select: {
-                id: true,
-                email: true,
-                status: true,
-              },
-            },
-            user: {
-              select: {
-                id: true,
-                email: true,
-                status: true,
-              },
-            },
-          },
-        },
-      },
-    });
+    try {
+      const dressmakings =
+        await this.dressmakingRepository.getDressmakingsByDressmaker({ id });
 
-    return dressmakings.dressmaking;
+      return dressmakings;
+    } catch (error) {
+      throw new ErrorHandling(error);
+    }
   }
 }

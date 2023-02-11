@@ -9,11 +9,11 @@ import { PrismaService } from '../../../../shared/infra/prisma/prisma.service';
 import { GetAllDressmakingDTO } from '../../../dressmaker/dtos/GetDressmakingsDTO';
 
 import { Server } from 'socket.io';
-import { CrudInterface } from '../../../dressmaker/implementations/dressmakings/crud.interface';
+import { CrudDressmakingInterface } from '../../../dressmaker/implementations/dressmakings/crud.interface';
 
 @WebSocketGateway(3001)
 export class GetAllDressmakingsGateway
-  implements Partial<CrudInterface<Dressmaking>>
+  implements Partial<CrudDressmakingInterface<Dressmaking>>
 {
   constructor(private prismaService: PrismaService) {}
 

@@ -1,12 +1,10 @@
-import { Users } from '@prisma/client';
-import { CreateUserDTO } from '../dtos/CreateUserDTO';
+import { Address, Users } from '@prisma/client';
+import { CrudInterface } from '../../../shared/implementations/crud.interface';
 import { SoftDeleteUserDTO } from '../dtos/SoftDeleteUserDTO';
-import { UpdateUserDTO } from '../dtos/UpdateUserDTO';
 
-export interface CrudInterface<T> {
-  create(data: CreateUserDTO): Promise<Users>;
-  findById(id: string): Promise<Users | undefined>;
+export interface CrudUserInterface extends CrudInterface<Users> {
+  create(data: Users & Address): Promise<Users>;
   findByEmail(email: string): Promise<Users | undefined>;
-  update(data: UpdateUserDTO): Promise<Users>;
   softDelete(data: SoftDeleteUserDTO): Promise<Users>;
+  findAllUsers(): Promise<Users[]>;
 }

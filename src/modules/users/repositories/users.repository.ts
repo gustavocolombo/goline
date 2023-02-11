@@ -1,6 +1,6 @@
 import { RolesUser, StatusUser, Users } from '@prisma/client';
 import { hash } from 'bcryptjs';
-import { CrudInterface } from '../implementations/crud.interface';
+import { CrudUserInterface } from '../implementations/crud.interface';
 import { PrismaService } from '../../../shared/infra/prisma/prisma.service';
 import { CreateUserDTO } from '../dtos/CreateUserDTO';
 import { Injectable } from '@nestjs/common';
@@ -9,7 +9,7 @@ import { SoftDeleteUserDTO } from '../dtos/SoftDeleteUserDTO';
 import ErrorHandling from '../../../shared/errors/ErrorHandling';
 
 @Injectable()
-export class UsersRepository implements CrudInterface<Users> {
+export class UsersRepository implements CrudUserInterface {
   constructor(private prismaService: PrismaService) {}
 
   async create({
@@ -59,13 +59,14 @@ export class UsersRepository implements CrudInterface<Users> {
     }
   }
 
-  async findById(id: string): Promise<Users | undefined> {
+  async findOne(id: string): Promise<Users | undefined> {
     try {
       const user = await this.prismaService.users.findUnique({
         where: { id },
+        include: { address: true },
       });
 
-      return user || null;
+      return user;
     } catch (error) {
       throw new ErrorHandling(error);
     }
@@ -108,6 +109,28 @@ export class UsersRepository implements CrudInterface<Users> {
       });
 
       return user;
+    } catch (error) {
+      throw new ErrorHandling(error);
+    }
+  }
+
+  async delete(data: Users): Promise<Users> {
+    try {
+      const user = await this.prismaService.users.delete({
+        where: { id: data.id },
+      });
+
+      return user;
+    } catch (error) {
+      throw new ErrorHandling(error);
+    }
+  }
+
+  async findAllUsers(): Promise<Users[]> {
+    try {
+      const users = await this.prismaService.users.findMany();
+
+      return users;
     } catch (error) {
       throw new ErrorHandling(error);
     }

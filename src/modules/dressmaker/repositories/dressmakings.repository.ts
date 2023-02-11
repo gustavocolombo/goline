@@ -8,11 +8,13 @@ import {
   ReturnDressmakingDTO,
 } from '../dtos/GetDressmakingsDTO';
 import { GrabDressmakingDTO } from '../dtos/GrabDressmakingDTO';
-import { CrudInterface } from '../implementations/dressmakings/crud.interface';
+import { CrudDressmakingInterface } from '../implementations/dressmakings/crud.interface';
 import ErrorHandling from '../../../shared/errors/ErrorHandling';
 
 @Injectable()
-export class DressmakingsRepository implements CrudInterface<Dressmaking> {
+export class DressmakingsRepository
+  implements CrudDressmakingInterface<Dressmaking>
+{
   constructor(private prismaService: PrismaService) {}
 
   async create({
@@ -167,6 +169,18 @@ export class DressmakingsRepository implements CrudInterface<Dressmaking> {
       });
 
       return dressmakings;
+    } catch (error) {
+      throw new ErrorHandling(error);
+    }
+  }
+
+  async findById(id: string): Promise<Dressmaking> {
+    try {
+      const dressmaking = await this.prismaService.dressmaking.findUnique({
+        where: { id },
+      });
+
+      return dressmaking;
     } catch (error) {
       throw new ErrorHandling(error);
     }

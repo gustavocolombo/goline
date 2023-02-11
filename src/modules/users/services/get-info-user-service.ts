@@ -10,7 +10,7 @@ export class GetInfoUserService {
 
   async execute({ user_id }: GetUserInfoDTO): Promise<Users | undefined> {
     try {
-      const user = await this.usersRepository.findById(user_id);
+      const user = await this.usersRepository.findOne(user_id);
 
       delete user.password;
 

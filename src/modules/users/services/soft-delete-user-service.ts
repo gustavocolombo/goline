@@ -16,6 +16,8 @@ export class SoftDeleteUserService {
 
       const updatedUser = await this.usersRepository.softDelete({ email });
 
+      delete updatedUser.password;
+
       return updatedUser;
     } catch (err) {
       throw new ErrorHandling(err);

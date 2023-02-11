@@ -16,7 +16,7 @@ export class GrabDressmakingService {
     dressmaking_id,
   }: GrabDressmakingDTO): Promise<Dressmaking> {
     try {
-      const user = await this.userRepository.findById(user_id);
+      const user = await this.userRepository.findOne(user_id);
 
       const dressmaking = await this.dressmakingRepository.findFirst(
         dressmaking_id,

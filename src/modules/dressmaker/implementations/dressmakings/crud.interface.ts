@@ -7,7 +7,7 @@ import {
 } from '../../dtos/GetDressmakingsDTO';
 import { GrabDressmakingDTO } from '../../dtos/GrabDressmakingDTO';
 
-export interface CrudInterface<T> {
+export interface CrudDressmakingInterface<Dressmaking> {
   create(data: CreateDressmakingDTO): Promise<Dressmaking>;
   findFirstToCreate(dressmaker_id: string): Promise<Dressmaker | null>;
   getDressmakingsByDressmaker(
@@ -19,4 +19,5 @@ export interface CrudInterface<T> {
     skip?: number,
     take?: number,
   ): Promise<GetAllDressmakingDTO[]>;
+  findById(id: string): Promise<Dressmaking>;
 }

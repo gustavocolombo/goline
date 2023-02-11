@@ -14,6 +14,16 @@ export class UpdateUserService {
 
       if (!user) throw new BadRequestException('User not found!');
 
+      const checkUserEmail = await this.usersRepository.findAllUsers();
+
+      checkUserEmail.forEach((user) => {
+        if (user.email === rest.email) {
+          throw new BadRequestException(
+            'E-mail already registered by other user',
+          );
+        }
+      });
+
       const updatedUser = await this.usersRepository.update({ ...rest });
 
       return updatedUser;

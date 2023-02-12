@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Dressmaker } from '@prisma/client';
 import ErrorHandling from '../../../shared/errors/ErrorHandling';
 import { UpdateDressmakerDTO } from '../dtos/UpdateDressmakerDTO';
@@ -13,11 +17,24 @@ export class UpdateDressmakerService {
     dressmakerDTO: UpdateDressmakerDTO,
   ): Promise<Dressmaker> {
     try {
-      const checkDressmaker = await this.dressmakersRepository.findById(
+      const checkDressmaker = await this.dressmakersRepository.findOne(
         dressmaker.id,
       );
 
       if (!checkDressmaker) throw new NotFoundException('Dressmaker not found');
+
+      if (dressmaker.email === dressmakerDTO.email)
+        throw new BadRequestException('E-mail já está sendo usado por você');
+
+      const checkEmailDressmakers = await this.dressmakersRepository.findAll();
+
+      checkEmailDressmakers.forEach((dressmaker) => {
+        if (dressmaker.email === dressmakerDTO.email) {
+          throw new BadRequestException(
+            'E-mail já está sendo utilizado por outro usuário',
+          );
+        }
+      });
 
       const updatedDressmaker = await this.dressmakersRepository.update(
         dressmaker,

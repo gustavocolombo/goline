@@ -13,7 +13,7 @@ export class SoftDeleteDressmakerService {
 
   async execute(dressmaker: Dressmaker): Promise<Dressmaker> {
     try {
-      const checkDressmaker = await this.dressmakersRepository.findById(
+      const checkDressmaker = await this.dressmakersRepository.findOne(
         dressmaker.id,
       );
 

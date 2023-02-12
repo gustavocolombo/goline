@@ -5,10 +5,10 @@ import ErrorHandling from '../../../shared/errors/ErrorHandling';
 import { PrismaService } from '../../../shared/infra/prisma/prisma.service';
 import { CreateDressmakerDTO } from '../dtos/CreateDressmakerDTO';
 import { UpdateDressmakerDTO } from '../dtos/UpdateDressmakerDTO';
-import { CrudInterface } from '../implementations/dressmakers/crud.interface';
+import { CrudDressmakerInterface } from '../implementations/dressmakers/crud.interface';
 
 @Injectable()
-export class DressmakerRepository implements CrudInterface<Dressmaker> {
+export class DressmakerRepository implements CrudDressmakerInterface {
   constructor(private prismaService: PrismaService) {}
 
   async create({
@@ -63,18 +63,6 @@ export class DressmakerRepository implements CrudInterface<Dressmaker> {
     }
   }
 
-  async findById(id: string): Promise<Dressmaker | undefined> {
-    try {
-      const dressmaker = await this.prismaService.dressmaker.findUnique({
-        where: { id },
-      });
-
-      return dressmaker || null;
-    } catch (error) {
-      throw new ErrorHandling(error);
-    }
-  }
-
   async findByEmail(email: string): Promise<Dressmaker | undefined> {
     try {
       const dressmaker = await this.prismaService.dressmaker.findUnique({
@@ -111,6 +99,40 @@ export class DressmakerRepository implements CrudInterface<Dressmaker> {
       });
 
       return updatedDressmaker;
+    } catch (error) {
+      throw new ErrorHandling(error);
+    }
+  }
+
+  async findOne(id: string): Promise<Dressmaker> {
+    try {
+      const dressmaker = await this.prismaService.dressmaker.findUnique({
+        where: { id },
+      });
+
+      return dressmaker || null;
+    } catch (error) {
+      throw new ErrorHandling(error);
+    }
+  }
+
+  async delete(data: Dressmaker): Promise<Dressmaker> {
+    try {
+      const dressmaker = await this.prismaService.dressmaker.delete({
+        where: { id: data.id },
+      });
+
+      return dressmaker;
+    } catch (error) {
+      throw new ErrorHandling(error);
+    }
+  }
+
+  async findAll(): Promise<Dressmaker[]> {
+    try {
+      const dressmaker = await this.prismaService.dressmaker.findMany();
+
+      return dressmaker;
     } catch (error) {
       throw new ErrorHandling(error);
     }

@@ -9,7 +9,7 @@ export class GetDressmakerService {
 
   async execute(dressmaker: Dressmaker): Promise<Dressmaker> {
     try {
-      const verifyDressmaker = await this.dressmakersRepository.findById(
+      const verifyDressmaker = await this.dressmakersRepository.findOne(
         dressmaker.id,
       );
 

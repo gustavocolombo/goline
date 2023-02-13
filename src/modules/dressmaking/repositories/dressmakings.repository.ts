@@ -8,7 +8,7 @@ import {
   ReturnDressmakingDTO,
 } from '../dtos/GetDressmakingsDTO';
 import { GrabDressmakingDTO } from '../dtos/GrabDressmakingDTO';
-import { CrudDressmakingInterface } from '../implementations/dressmakings/crud.interface';
+import { CrudDressmakingInterface } from '../implementations/crud.interface';
 import ErrorHandling from '../../../shared/errors/ErrorHandling';
 
 @Injectable()

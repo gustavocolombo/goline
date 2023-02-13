@@ -1,6 +1,6 @@
 import { Address, Dressmaker } from '@prisma/client';
-import { CrudInterface } from '../../../../shared/implementations/crud.interface';
-import { UpdateDressmakerDTO } from '../../dtos/UpdateDressmakerDTO';
+import { CrudInterface } from '../../../shared/implementations/crud.interface';
+import { UpdateDressmakerDTO } from '../dtos/UpdateDressmakerDTO';
 
 export interface CrudDressmakerInterface extends CrudInterface<Dressmaker> {
   create(data: Dressmaker & Address): Promise<Dressmaker>;

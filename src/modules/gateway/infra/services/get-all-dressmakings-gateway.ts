@@ -6,10 +6,10 @@ import {
 } from '@nestjs/websockets';
 import { Dressmaking, StatusUser } from '@prisma/client';
 import { PrismaService } from '../../../../shared/infra/prisma/prisma.service';
-import { GetAllDressmakingDTO } from '../../../dressmaker/dtos/GetDressmakingsDTO';
+import { GetAllDressmakingDTO } from '../../../dressmaking/dtos/GetDressmakingsDTO';
 
 import { Server } from 'socket.io';
-import { CrudDressmakingInterface } from '../../../dressmaker/implementations/dressmakings/crud.interface';
+import { CrudDressmakingInterface } from '../../../dressmaking/implementations/crud.interface';
 
 @WebSocketGateway(3001)
 export class GetAllDressmakingsGateway

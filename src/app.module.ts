@@ -17,6 +17,7 @@ import { MailModule } from './modules/mail/mail.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { GatewayModule } from './modules/gateway/gateway.module';
 import { GoogleStrategy } from './modules/auth/strategy/google.strategy';
+import { DressmakingModule } from './modules/dressmaking/dressmaking.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { GoogleStrategy } from './modules/auth/strategy/google.strategy';
     UsersModule,
     AuthModule,
     DressmakerModule,
+    DressmakingModule,
     MailModule,
     GatewayModule,
   ],

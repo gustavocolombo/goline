@@ -5,7 +5,7 @@ import ErrorHandling from '../../../shared/errors/ErrorHandling';
 import { PrismaService } from '../../../shared/infra/prisma/prisma.service';
 import { CreateDressmakerDTO } from '../dtos/CreateDressmakerDTO';
 import { UpdateDressmakerDTO } from '../dtos/UpdateDressmakerDTO';
-import { CrudDressmakerInterface } from '../implementations/dressmakers/crud.interface';
+import { CrudDressmakerInterface } from '../implementations/crud.interface';
 
 @Injectable()
 export class DressmakerRepository implements CrudDressmakerInterface {

@@ -1,11 +1,11 @@
-import { Dressmaker, Dressmaking } from '@prisma/client';
-import { CreateDressmakingDTO } from '../../dtos/CreateDressmakingDTO';
+import { Dressmaker } from '@prisma/client';
+import { CreateDressmakingDTO } from '../dtos/CreateDressmakingDTO';
 import {
   GetAllDressmakingDTO,
   GetDressmakingDTO,
   ReturnDressmakingDTO,
-} from '../../dtos/GetDressmakingsDTO';
-import { GrabDressmakingDTO } from '../../dtos/GrabDressmakingDTO';
+} from '../dtos/GetDressmakingsDTO';
+import { GrabDressmakingDTO } from '../dtos/GrabDressmakingDTO';
 
 export interface CrudDressmakingInterface<Dressmaking> {
   create(data: CreateDressmakingDTO): Promise<Dressmaking>;

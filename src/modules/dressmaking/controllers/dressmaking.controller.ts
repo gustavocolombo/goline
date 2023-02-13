@@ -24,6 +24,9 @@ import { GrabDressmakingService } from '../services/grab-dressmaking-service';
 import { UserDecorator } from '../../../shared/decorator/user.decorator';
 import { GetAllDressmakingDTO } from '../dtos/GetDressmakingsDTO';
 import { GetAllDressmakingService } from '../services/get-all-dressmaking';
+import { GetDressmakingService } from '../services/adapters/get-dressmaking.service';
+import { GetAllDressmakingAdapter } from '../adapters/get-all-dressmaking.adapter';
+import { GetOneDressmakingAdapter } from '../adapters/get-one-dressmaking.adapter';
 
 @ApiTags('dressmaking')
 @Controller('dressmaking')
@@ -33,6 +36,7 @@ export class DressmakingController {
     private getDressmakingService: GetDressmakingsService,
     private grabDressmakingService: GrabDressmakingService,
     private getAllDressmakingService: GetAllDressmakingService,
+    private getDressmakingWithAdaptersService: GetDressmakingService,
   ) {}
 
   @ApiOkResponse({
@@ -129,5 +133,21 @@ export class DressmakingController {
     @Query('take', new DefaultValuePipe(10), ParseIntPipe) take = 10,
   ): Promise<GetAllDressmakingDTO[]> {
     return await this.getAllDressmakingService.getAllDressmakings(skip, take);
+  }
+
+  @ApiTags('Test design pattern Adapter')
+  @Get('/:type')
+  async getDressmakingWithAdapter(
+    @Param('type') type: string,
+  ): Promise<Dressmaking | Dressmaking[]> {
+    if (type === 'all') {
+      return this.getDressmakingWithAdaptersService.execute(
+        new GetAllDressmakingAdapter(),
+      );
+    } else {
+      return this.getDressmakingWithAdaptersService.execute(
+        new GetOneDressmakingAdapter(),
+      );
+    }
   }
 }

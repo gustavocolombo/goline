@@ -7,6 +7,11 @@ import { GetAllDressmakingService } from './services/get-all-dressmaking';
 import { GetDressmakingsService } from './services/get-dressmakings-service';
 import { GrabDressmakingService } from './services/grab-dressmaking-service';
 import { UsersRepository } from '../users/repositories/users.repository';
+import { GetOneDressmakingAdapter } from './adapters/get-one-dressmaking.adapter';
+import { GetOneDressmakingsService } from './services/adapters/get-one-dressmaking.service';
+import { GetAllDressmakingAdapter } from './adapters/get-all-dressmaking.adapter';
+import { GetAllDressmakingsService } from './services/adapters/get-all-dressmaking.service';
+import { GetDressmakingService } from './services/adapters/get-dressmaking.service';
 
 @Module({
   providers: [
@@ -17,6 +22,11 @@ import { UsersRepository } from '../users/repositories/users.repository';
     GetAllDressmakingService,
     GetDressmakingsService,
     GrabDressmakingService,
+    GetOneDressmakingAdapter,
+    GetOneDressmakingsService,
+    GetAllDressmakingAdapter,
+    GetAllDressmakingsService,
+    GetDressmakingService,
   ],
   controllers: [DressmakingController],
 })

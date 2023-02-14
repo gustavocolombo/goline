@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   DefaultValuePipe,
@@ -19,20 +20,24 @@ import { Dressmaking, RolesUser, Users } from '@prisma/client';
 import { CreateDressmakingDTO } from '../dtos/CreateDressmakingDTO';
 import { Roles } from '../../../shared/roles/users-roles';
 import { CreateDressmakingService } from '../services/create-dressmaking-service';
-import { GetDressmakingsService } from '../services/get-dressmakings-service';
+import { GetDressmakingsByDressmakerService } from '../services/get-dressmakings-by-dresmaker-service';
 import { GrabDressmakingService } from '../services/grab-dressmaking-service';
 import { UserDecorator } from '../../../shared/decorator/user.decorator';
 import { GetAllDressmakingDTO } from '../dtos/GetDressmakingsDTO';
 import { GetAllDressmakingService } from '../services/get-all-dressmaking';
+import { GetDressmakingService } from '../services/adapters/get-dressmaking.service';
+import { GetAllDressmakingAdapter } from '../adapters/get-all-dressmaking.adapter';
+import { GetOneDressmakingAdapter } from '../adapters/get-one-dressmaking.adapter';
 
 @ApiTags('dressmaking')
 @Controller('dressmaking')
 export class DressmakingController {
   constructor(
     private createDressmakingService: CreateDressmakingService,
-    private getDressmakingService: GetDressmakingsService,
+    private getDressmakingService: GetDressmakingsByDressmakerService,
     private grabDressmakingService: GrabDressmakingService,
     private getAllDressmakingService: GetAllDressmakingService,
+    private getDressmakingWithAdaptersService: GetDressmakingService,
   ) {}
 
   @ApiOkResponse({
@@ -129,5 +134,38 @@ export class DressmakingController {
     @Query('take', new DefaultValuePipe(10), ParseIntPipe) take = 10,
   ): Promise<GetAllDressmakingDTO[]> {
     return await this.getAllDressmakingService.getAllDressmakings(skip, take);
+  }
+
+  @ApiTags('Implements explicit Adapter design pattern - Structural pattern')
+  @ApiOkResponse({
+    description: 'Return one or a list of dressmakings in unique request',
+    status: 200,
+  })
+  @ApiBadRequestResponse({
+    description: 'Please type a id of dressmaking',
+    status: 400,
+  })
+  @ApiUnauthorizedResponse({
+    description: 'User unauthorized to perform operation',
+    status: 401,
+  })
+  @Get('/operation')
+  async getDressmakingWithAdapter(
+    @Query('type') type: string,
+    @Query('id') id?: string,
+  ): Promise<Dressmaking | Dressmaking[]> {
+    if (type === 'all') {
+      return this.getDressmakingWithAdaptersService.execute(
+        new GetAllDressmakingAdapter(),
+      );
+    } else if (type !== 'all') {
+      if (id) {
+        const service = new GetOneDressmakingAdapter();
+        return await service.getOne(id);
+      }
+      throw new BadRequestException(
+        'Please make sure if id of dressmaking is defined',
+      );
+    }
   }
 }

@@ -7,7 +7,7 @@ import {
 import { DressmakingsRepository } from '../repositories/dressmakings.repository';
 
 @Injectable()
-export class GetDressmakingsService {
+export class GetDressmakingsByDressmakerService {
   constructor(private dressmakingRepository: DressmakingsRepository) {}
 
   async execute({ id }: GetDressmakingDTO): Promise<ReturnDressmakingDTO[]> {

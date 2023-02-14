@@ -19,7 +19,7 @@ import { Dressmaking, RolesUser, Users } from '@prisma/client';
 import { CreateDressmakingDTO } from '../dtos/CreateDressmakingDTO';
 import { Roles } from '../../../shared/roles/users-roles';
 import { CreateDressmakingService } from '../services/create-dressmaking-service';
-import { GetDressmakingsService } from '../services/get-dressmakings-service';
+import { GetDressmakingsByDressmakerService } from '../services/get-dressmakings-by-dresmaker-service';
 import { GrabDressmakingService } from '../services/grab-dressmaking-service';
 import { UserDecorator } from '../../../shared/decorator/user.decorator';
 import { GetAllDressmakingDTO } from '../dtos/GetDressmakingsDTO';
@@ -33,7 +33,7 @@ import { GetOneDressmakingAdapter } from '../adapters/get-one-dressmaking.adapte
 export class DressmakingController {
   constructor(
     private createDressmakingService: CreateDressmakingService,
-    private getDressmakingService: GetDressmakingsService,
+    private getDressmakingService: GetDressmakingsByDressmakerService,
     private grabDressmakingService: GrabDressmakingService,
     private getAllDressmakingService: GetAllDressmakingService,
     private getDressmakingWithAdaptersService: GetDressmakingService,

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Dressmaking } from '@prisma/client';
 import ErrorHandling from '../../../shared/errors/ErrorHandling';
-import { PrismaService } from '../../../shared/infra/prisma/prisma.service';
+import { database } from '../../../shared/infra/prisma/check-connection';
 import { SearchDressmakings } from '../implementations/search-dressmakings.interface';
 import { GetOneDressmakingsService } from '../services/adapters/get-one-dressmaking.service';
 
@@ -11,7 +11,7 @@ export class GetOneDressmakingAdapter
   implements SearchDressmakings
 {
   constructor() {
-    super(new PrismaService());
+    super(database);
   }
 
   async search(id: string): Promise<Dressmaking | Dressmaking[]> {

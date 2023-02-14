@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   DefaultValuePipe,
@@ -135,18 +136,35 @@ export class DressmakingController {
     return await this.getAllDressmakingService.getAllDressmakings(skip, take);
   }
 
-  @ApiTags('Test design pattern Adapter')
-  @Get('/:type')
+  @ApiTags('Implements explicit Adapter design pattern - Structural pattern')
+  @ApiOkResponse({
+    description: 'Return one or a list of dressmakings in unique request',
+    status: 200,
+  })
+  @ApiBadRequestResponse({
+    description: 'Please type a id of dressmaking',
+    status: 400,
+  })
+  @ApiUnauthorizedResponse({
+    description: 'User unauthorized to perform operation',
+    status: 401,
+  })
+  @Get('/operation')
   async getDressmakingWithAdapter(
-    @Param('type') type: string,
+    @Query('type') type: string,
+    @Query('id') id?: string,
   ): Promise<Dressmaking | Dressmaking[]> {
     if (type === 'all') {
       return this.getDressmakingWithAdaptersService.execute(
         new GetAllDressmakingAdapter(),
       );
-    } else {
-      return this.getDressmakingWithAdaptersService.execute(
-        new GetOneDressmakingAdapter(),
+    } else if (type !== 'all') {
+      if (id) {
+        const service = new GetOneDressmakingAdapter();
+        return await service.getOne(id);
+      }
+      throw new BadRequestException(
+        'Please make sure if id of dressmaking is defined',
       );
     }
   }

@@ -1,12 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { Dressmaking } from '@prisma/client';
-import { SearchDressmakings } from '../../implementations/search-dressmakings.interface';
+import { database } from '../../../../shared/infra/prisma/check-connection';
+import { GetAllDressmakingService } from '../get-all-dressmaking';
+import { GetFirstDressmakingsService } from './get-first-dressmaking.service';
 
 @Injectable()
-export class GetDressmakingService {
-  async execute(
-    dressmaking: SearchDressmakings,
-  ): Promise<Dressmaking | Dressmaking[]> {
-    return await dressmaking.search();
+export class GetDressmakingAdapterService extends GetAllDressmakingService {
+  private getOneDressmaking: GetFirstDressmakingsService;
+
+  constructor(getOneDressmaking: GetFirstDressmakingsService) {
+    super(database);
+    this.getOneDressmaking = getOneDressmaking;
+  }
+
+  async execute(): Promise<Dressmaking> {
+    return this.getOneDressmaking.getOne();
   }
 }

@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   DefaultValuePipe,
@@ -25,9 +24,7 @@ import { GrabDressmakingService } from '../services/grab-dressmaking-service';
 import { UserDecorator } from '../../../shared/decorator/user.decorator';
 import { GetAllDressmakingDTO } from '../dtos/GetDressmakingsDTO';
 import { GetAllDressmakingService } from '../services/get-all-dressmaking';
-import { GetDressmakingService } from '../services/adapters/get-dressmaking.service';
-import { GetAllDressmakingAdapter } from '../adapters/get-all-dressmaking.adapter';
-import { GetOneDressmakingAdapter } from '../adapters/get-one-dressmaking.adapter';
+import { GetDressmakingAdapterService } from '../services/adapters/get-dressmaking.service';
 
 @ApiTags('dressmaking')
 @Controller('dressmaking')
@@ -37,7 +34,7 @@ export class DressmakingController {
     private getDressmakingService: GetDressmakingsByDressmakerService,
     private grabDressmakingService: GrabDressmakingService,
     private getAllDressmakingService: GetAllDressmakingService,
-    private getDressmakingWithAdaptersService: GetDressmakingService,
+    private getDressmakingWithAdaptersService: GetDressmakingAdapterService,
   ) {}
 
   @ApiOkResponse({
@@ -85,7 +82,7 @@ export class DressmakingController {
     status: 401,
     description: 'The dressmaking can not be loaded, fail authentication',
   })
-  @Roles(RolesUser.DRESSMAKER, RolesUser.DRESSMAKER)
+  @Roles(RolesUser.USER, RolesUser.DRESSMAKER)
   @Get()
   async getDressmakings(@UserDecorator() user: Users) {
     return await this.getDressmakingService.execute({ id: user.id });
@@ -150,22 +147,7 @@ export class DressmakingController {
     status: 401,
   })
   @Get('/operation')
-  async getDressmakingWithAdapter(
-    @Query('type') type: string,
-    @Query('id') id?: string,
-  ): Promise<Dressmaking | Dressmaking[]> {
-    if (type === 'all') {
-      return this.getDressmakingWithAdaptersService.execute(
-        new GetAllDressmakingAdapter(),
-      );
-    } else if (type !== 'all') {
-      if (id) {
-        const service = new GetOneDressmakingAdapter();
-        return await service.getOne(id);
-      }
-      throw new BadRequestException(
-        'Please make sure if id of dressmaking is defined',
-      );
-    }
+  async getDressmakingWithAdapter(): Promise<Dressmaking | Dressmaking[]> {
+    return new GetDressmakingAdapterService();
   }
 }

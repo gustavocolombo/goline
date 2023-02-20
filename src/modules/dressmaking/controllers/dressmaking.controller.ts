@@ -24,7 +24,7 @@ import { GrabDressmakingService } from '../services/grab-dressmaking-service';
 import { UserDecorator } from '../../../shared/decorator/user.decorator';
 import { GetAllDressmakingDTO } from '../dtos/GetDressmakingsDTO';
 import { GetAllDressmakingService } from '../services/get-all-dressmaking';
-import { GetDressmakingAdapterService } from '../services/adapters/get-dressmaking.service';
+
 
 @ApiTags('dressmaking')
 @Controller('dressmaking')
@@ -34,7 +34,6 @@ export class DressmakingController {
     private getDressmakingService: GetDressmakingsByDressmakerService,
     private grabDressmakingService: GrabDressmakingService,
     private getAllDressmakingService: GetAllDressmakingService,
-    private getDressmakingWithAdaptersService: GetDressmakingAdapterService,
   ) {}
 
   @ApiOkResponse({
@@ -131,23 +130,5 @@ export class DressmakingController {
     @Query('take', new DefaultValuePipe(10), ParseIntPipe) take = 10,
   ): Promise<GetAllDressmakingDTO[]> {
     return await this.getAllDressmakingService.getAllDressmakings(skip, take);
-  }
-
-  @ApiTags('Implements explicit Adapter design pattern - Structural pattern')
-  @ApiOkResponse({
-    description: 'Return one or a list of dressmakings in unique request',
-    status: 200,
-  })
-  @ApiBadRequestResponse({
-    description: 'Please type a id of dressmaking',
-    status: 400,
-  })
-  @ApiUnauthorizedResponse({
-    description: 'User unauthorized to perform operation',
-    status: 401,
-  })
-  @Get('/operation')
-  async getDressmakingWithAdapter(): Promise<Dressmaking | Dressmaking[]> {
-    return new GetDressmakingAdapterService();
   }
 }

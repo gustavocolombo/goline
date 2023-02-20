@@ -16,6 +16,14 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@users/*": ["src/modules/users/*"],
+      "@auth/*": ["src/modules/auth/*"],
+      "@shared/*": ["src/shared/*"],
+      "@dressmaking/*": ["src/modules/dressmaking/*"],
+      "@dressmaker/*": ["src/modules/dressmaker/*"],
+      "@mail/*": ["src/modules/mail/*"]
+    }
   }
 }

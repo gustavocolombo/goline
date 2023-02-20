@@ -2,11 +2,11 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { join } from 'path';
-import { PrismaService } from '../../shared/infra/prisma/prisma.service';
-import { SendMailWithTokenService } from '../auth/services/send-mail-with-token-service';
-import { MailController } from './infra/http/mail/mail.controller';
+import { PrismaService } from '@shared/infra/prisma/prisma.service';
+import { SendMailWithTokenService } from '@auth/services/send-mail-with-token-service';
+import { MailController } from '@mail/infra/http/mail/mail.controller';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
-import SendEmailWithTokenForRecoverPasswordService from './infra/services/SendEmailWithTokenForRecoverPasswordService';
+import SendEmailWithTokenForRecoverPasswordService from '@mail/infra/services/SendEmailWithTokenForRecoverPasswordService';
 
 @Module({
   imports: [

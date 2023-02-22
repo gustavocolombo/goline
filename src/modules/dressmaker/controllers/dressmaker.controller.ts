@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiOkResponse,
   ApiTags,
   ApiUnauthorizedResponse,
@@ -38,6 +39,7 @@ export class DressmakerController {
     private getDistanceBetweenUserDressmakerService: GetDistanceBetweenUserDressmakerService,
   ) {}
 
+  @ApiBearerAuth()
   @Get('/get-by-geolocation/:user_id')
   async getDressmakerByGeolocation(
     @Param('user_id') user_id: string,
@@ -95,6 +97,7 @@ export class DressmakerController {
     });
   }
 
+  @ApiBearerAuth()
   @ApiOkResponse({
     status: 201,
     description: 'The dressmaker has been researched with success',
@@ -112,6 +115,7 @@ export class DressmakerController {
     return await this.getDressmakerService.execute(dressmaker);
   }
 
+  @ApiBearerAuth()
   @ApiOkResponse({
     status: 201,
     description: 'The dressmaker has been updated',
@@ -135,6 +139,7 @@ export class DressmakerController {
     );
   }
 
+  @ApiBearerAuth()
   @ApiOkResponse({
     status: 201,
     description: 'The dressmaker has been inactivated',
@@ -154,6 +159,7 @@ export class DressmakerController {
     return await this.softDeleteDressmakerService.execute(dressmaker);
   }
 
+  @ApiBearerAuth()
   @Get('/:dressmaker_id')
   async getDistanceBetweenUserDressmaker(
     @Param('dressmaker_id') dressmaker_id: string,

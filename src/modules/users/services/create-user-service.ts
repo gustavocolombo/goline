@@ -44,7 +44,6 @@ export class CreateUserService {
           lng,
         });
       }
-
       delete user.password;
 
       return user;

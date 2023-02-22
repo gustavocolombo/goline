@@ -4,6 +4,7 @@ import { CreateUserDTO } from '../dtos/CreateUserDTO';
 import { CreateUserService } from '../services/create-user-service';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiOkResponse,
   ApiTags,
   ApiUnauthorizedResponse,
@@ -68,6 +69,7 @@ export class UsersController {
     });
   }
 
+  @ApiBearerAuth()
   @ApiOkResponse({
     status: 200,
     description: 'The user has been loaded, success',
@@ -86,6 +88,7 @@ export class UsersController {
     return await this.getUserInfoService.execute({ user_id: user.id });
   }
 
+  @ApiBearerAuth()
   @ApiOkResponse({
     status: 200,
     description: 'The user has been updated, success',
@@ -104,6 +107,7 @@ export class UsersController {
     return await this.updateUserService.execute({ ...rest });
   }
 
+  @ApiBearerAuth()
   @ApiOkResponse({
     status: 200,
     description: 'The user has been inactivated, success',

@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiOkResponse,
   ApiTags,
   ApiUnauthorizedResponse,
@@ -35,6 +36,7 @@ export class DressmakingController {
     private getAllDressmakingService: GetAllDressmakingService,
   ) {}
 
+  @ApiBearerAuth()
   @ApiOkResponse({
     status: 201,
     description: 'The dressmaking has been create',
@@ -68,6 +70,7 @@ export class DressmakingController {
     });
   }
 
+  @ApiBearerAuth()
   @ApiOkResponse({
     status: 201,
     description: 'The dressmaking has been loaded',
@@ -86,6 +89,7 @@ export class DressmakingController {
     return await this.getDressmakingService.execute({ id: user.id });
   }
 
+  @ApiBearerAuth()
   @ApiOkResponse({
     status: 200,
     description: 'The dressmaking has been updated',
@@ -110,6 +114,7 @@ export class DressmakingController {
     });
   }
 
+  @ApiBearerAuth()
   @ApiOkResponse({
     status: 200,
     description: 'A new dressmaking has been added',

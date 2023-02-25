@@ -27,6 +27,7 @@ model Users {
   address     Address[]
   dressmaking Dressmaking[]
   UsersToken  UsersToken[]
+  order       Order[]
 
   @@map("users")
 }
@@ -66,8 +67,10 @@ model Dressmaking {
   user    Users?  @relation(fields: [user_id], references: [id])
   user_id String?
 
-  created_at DateTime   @default(now())
-  updated_at DateTime   @default(now())
+  order Order[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
 
   @@map("dressmaking")
 }
@@ -90,18 +93,35 @@ model Address {
 }
 
 model UsersToken {
-  id         String   @id @default(uuid())
-  token      String   @default(uuid())
-  used       Boolean  @default(false)
-  used_in    DateTime? 
+  id         String    @id @default(uuid())
+  token      String    @default(uuid())
+  used       Boolean   @default(false)
+  used_in    DateTime?
   expires_in DateTime?
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
 
   users_id String
-  user    Users  @relation(fields: [users_id], references: [id])
+  user     Users  @relation(fields: [users_id], references: [id])
 
   @@map("userstoken")
+}
+
+model Order {
+  id            String           @id @default(uuid())
+  final_price   Float
+  tag           TagsDressmaking? @default(DRESSMAKING)
+  user          Users            @relation(fields: [user_id], references: [id])
+  dressmaking   Dressmaking      @relation(fields: [dressmaking_id], references: [id])
+  status        StatusOder?      @default(AWAITING_PAYMENT)
+  delivery_date DateTime?
+
+  created_at     DateTime @default(now())
+  updated_at     DateTime @default(now())
+  user_id        String
+  dressmaking_id String
+
+  @@map("order")
 }
 
 enum StatusUser {
@@ -121,4 +141,12 @@ enum TagsDressmaking {
   ADJUSTMENT
   REPAIR
   OTHERS
+}
+
+enum StatusOder {
+  CANCELED
+  DELIVERED
+  IN_COURSE
+  PAYED
+  AWAITING_PAYMENT
 }

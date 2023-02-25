@@ -18,6 +18,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { GatewayModule } from './modules/gateway/gateway.module';
 import { GoogleStrategy } from './modules/auth/strategy/google.strategy';
 import { DressmakingModule } from './modules/dressmaking/dressmaking.module';
+import { OrderModule } from './modules/order/order.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { DressmakingModule } from './modules/dressmaking/dressmaking.module';
     AuthModule,
     DressmakerModule,
     DressmakingModule,
+    OrderModule,
     MailModule,
     GatewayModule,
   ],

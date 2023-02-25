@@ -3,7 +3,6 @@ import { CreateOrderDTO } from '../dtos/CreateOrderDTO';
 import { CreateOrderService } from '../services/create-order-service';
 import { GetOneOrderService } from '../services/get-one-order-service';
 import { GetOrderByUserService } from '../services/get-order-by-user-service';
-import { UpdateStatusOrderService } from '../services/update-status-order-service';
 
 @Controller('order')
 export class OrderController {

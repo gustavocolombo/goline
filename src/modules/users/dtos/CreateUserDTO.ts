@@ -86,4 +86,9 @@ export class CreateUserDTO {
   @IsEmail()
   @IsOptional()
   status?: StatusUser;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  zip_code: string;
 }

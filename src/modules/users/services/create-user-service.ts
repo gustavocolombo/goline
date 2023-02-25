@@ -21,6 +21,7 @@ export class CreateUserService {
     number,
     lat,
     lng,
+    zip_code,
   }: CreateUserDTO): Promise<Users> {
     try {
       let user = await this.usersRepository.findByEmail(email);
@@ -42,6 +43,7 @@ export class CreateUserService {
           number,
           lat,
           lng,
+          zip_code,
         });
       }
       delete user.password;

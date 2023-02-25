@@ -75,4 +75,9 @@ export class CreateDressmakerDTO {
   @IsString()
   @IsOptional()
   image_profile?: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  zip_code: string;
 }

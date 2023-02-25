@@ -20,6 +20,7 @@ export class CreateDressmakerService {
     neighborhoud,
     number,
     street,
+    zip_code,
   }: CreateDressmakerDTO): Promise<Dressmaker> {
     try {
       let dressmaker = await this.dressmakersRepository.findByEmail(email);
@@ -37,6 +38,7 @@ export class CreateDressmakerService {
           neighborhoud,
           number,
           street,
+          zip_code,
         });
       } else {
         throw new BadRequestException('User with email already exists');

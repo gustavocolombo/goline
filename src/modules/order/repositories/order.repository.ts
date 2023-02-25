@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Order, StatusOder } from '@prisma/client';
+import { Order, StatusOrder } from '@prisma/client';
 import ErrorHandling from '../../../shared/errors/ErrorHandling';
 import { PrismaService } from '../../../shared/infra/prisma/prisma.service';
 import { CrudOrderInterface } from '../implementations/crud-order.interface';
@@ -32,7 +32,7 @@ export class OrderRepository implements CrudOrderInterface {
     }
   }
 
-  async update(id: string, status: StatusOder): Promise<Order> {
+  async update(id: string, status: StatusOrder): Promise<Order> {
     try {
       const order = await this.prismaService.order.update({
         where: { id },
@@ -51,6 +51,29 @@ export class OrderRepository implements CrudOrderInterface {
     try {
       const order = await this.prismaService.order.delete({
         where: { id: data.id },
+      });
+
+      return order;
+    } catch (error) {
+      throw new ErrorHandling(error);
+    }
+  }
+
+  async getByUser(user_id: string): Promise<Order[]> {
+    try {
+      const order = await this.prismaService.order.findMany({
+        where: {
+          user_id,
+        },
+        include: {
+          user: {
+            select: {
+              id: true,
+              email: true,
+              status: true,
+            },
+          },
+        },
       });
 
       return order;

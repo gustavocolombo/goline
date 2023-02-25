@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Order, StatusOder } from '@prisma/client';
+import { Order, StatusOrder } from '@prisma/client';
 import { DressmakingsRepository } from '../../dressmaking/repositories/dressmakings.repository';
 import { UsersRepository } from '../../users/repositories/users.repository';
 import { CreateOrderDTO } from '../dtos/CreateOrderDTO';
@@ -47,7 +47,7 @@ export class CreateOrderService {
         created_at: new Date(),
         updated_at: undefined,
         final_price: dressmaking.value.price,
-        status: StatusOder.AWAITING_PAYMENT,
+        status: StatusOrder.AWAITING_PAYMENT,
       };
 
       const order = await this.orderRepository.create(data);

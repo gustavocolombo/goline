@@ -113,7 +113,7 @@ model Order {
   tag           TagsDressmaking? @default(DRESSMAKING)
   user          Users            @relation(fields: [user_id], references: [id])
   dressmaking   Dressmaking      @relation(fields: [dressmaking_id], references: [id])
-  status        StatusOder?      @default(AWAITING_PAYMENT)
+  status        StatusOrder?     @default(AWAITING_PAYMENT)
   delivery_date DateTime?
 
   created_at     DateTime @default(now())
@@ -143,7 +143,7 @@ enum TagsDressmaking {
   OTHERS
 }
 
-enum StatusOder {
+enum StatusOrder {
   CANCELED
   DELIVERED
   IN_COURSE

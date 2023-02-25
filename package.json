@@ -38,6 +38,7 @@
     "class-validator": "^0.13.2",
     "date-fns": "^2.29.3",
     "dotenv": "^16.0.3",
+    "frete": "^0.4.6",
     "geolocation-utils": "^1.2.5",
     "handlebars": "^4.7.7",
     "nodemailer": "^6.8.0",

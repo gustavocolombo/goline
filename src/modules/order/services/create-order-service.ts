@@ -19,14 +19,14 @@ export class CreateOrderService {
     user_id,
     dressmaking_id,
     tag,
-  }: CreateOrderDTO): Promise<Order> {
+  }: CreateOrderDTO): Promise<any> {
     try {
       const [user, dressmaking] = await Promise.allSettled([
         await this.userRepository.findOne(user_id),
         await this.dressmakingRepository.findById(dressmaking_id),
       ]);
 
-      if (user.status === 'rejected') {
+      if (user.status === 'rejected' || !user.value) {
         throw new NotFoundException(
           'User not found, please provide a valid id',
         );

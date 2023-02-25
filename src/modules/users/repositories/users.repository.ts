@@ -1,4 +1,4 @@
-import { RolesUser, StatusUser, Users } from '@prisma/client';
+import { Address, RolesUser, StatusUser, Users } from '@prisma/client';
 import { hash } from 'bcryptjs';
 import { CrudUserInterface } from '../implementations/crud.interface';
 import { PrismaService } from '../../../shared/infra/prisma/prisma.service';
@@ -25,6 +25,7 @@ export class UsersRepository implements CrudUserInterface {
     number,
     lat,
     lng,
+    zip_code,
   }: CreateUserDTO): Promise<Users> {
     try {
       const user = await this.prismaService.users.create({
@@ -45,6 +46,7 @@ export class UsersRepository implements CrudUserInterface {
               number,
               lat,
               lng,
+              zip_code,
             },
           },
         },
@@ -131,6 +133,18 @@ export class UsersRepository implements CrudUserInterface {
       const users = await this.prismaService.users.findMany();
 
       return users;
+    } catch (error) {
+      throw new ErrorHandling(error);
+    }
+  }
+
+  async getAddressUser(user_id: string): Promise<Address[]> {
+    try {
+      const address = await this.prismaService.address.findMany({
+        where: { users_id: user_id },
+      });
+
+      return address;
     } catch (error) {
       throw new ErrorHandling(error);
     }

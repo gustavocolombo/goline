@@ -80,6 +80,7 @@ export class DressmakerController {
       neighborhoud,
       number,
       street,
+      zip_code,
     }: CreateDressmakerDTO,
   ) {
     return await this.createDressmakerService.execute({
@@ -94,6 +95,7 @@ export class DressmakerController {
       neighborhoud,
       number,
       street,
+      zip_code,
     });
   }
 

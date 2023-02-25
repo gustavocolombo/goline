@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Dressmaker, StatusUser } from '@prisma/client';
+import { Address, Dressmaker, StatusUser } from '@prisma/client';
 import { hash } from 'bcryptjs';
 import ErrorHandling from '../../../shared/errors/ErrorHandling';
 import { PrismaService } from '../../../shared/infra/prisma/prisma.service';
@@ -23,6 +23,7 @@ export class DressmakerRepository implements CrudDressmakerInterface {
     neighborhoud,
     number,
     street,
+    zip_code,
   }: CreateDressmakerDTO): Promise<Dressmaker> {
     try {
       const dressmaker = await this.prismaService.dressmaker.create({
@@ -40,6 +41,7 @@ export class DressmakerRepository implements CrudDressmakerInterface {
               number,
               lat,
               lng,
+              zip_code,
             },
           },
         },
@@ -133,6 +135,18 @@ export class DressmakerRepository implements CrudDressmakerInterface {
       const dressmaker = await this.prismaService.dressmaker.findMany();
 
       return dressmaker;
+    } catch (error) {
+      throw new ErrorHandling(error);
+    }
+  }
+
+  async getAddressUser(dressmaker_id: string): Promise<Address[]> {
+    try {
+      const address = await this.prismaService.address.findMany({
+        where: { dressmaker_id: dressmaker_id },
+      });
+
+      return address;
     } catch (error) {
       throw new ErrorHandling(error);
     }

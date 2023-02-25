@@ -19,6 +19,7 @@ import { GatewayModule } from './modules/gateway/gateway.module';
 import { GoogleStrategy } from './modules/auth/strategy/google.strategy';
 import { DressmakingModule } from './modules/dressmaking/dressmaking.module';
 import { OrderModule } from './modules/order/order.module';
+import { ShippingModule } from './modules/shipping/shipping.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { OrderModule } from './modules/order/order.module';
     DressmakerModule,
     DressmakingModule,
     OrderModule,
+    ShippingModule,
     MailModule,
     GatewayModule,
   ],

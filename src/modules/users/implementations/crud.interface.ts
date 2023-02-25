@@ -7,4 +7,5 @@ export interface CrudUserInterface extends CrudInterface<Users> {
   findByEmail(email: string): Promise<Users | undefined>;
   softDelete(data: SoftDeleteUserDTO): Promise<Users>;
   findAllUsers(): Promise<Users[]>;
+  getAddressUser(user_id: string): Promise<Address[]>;
 }

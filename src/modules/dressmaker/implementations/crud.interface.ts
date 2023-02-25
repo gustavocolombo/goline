@@ -10,4 +10,5 @@ export interface CrudDressmakerInterface extends CrudInterface<Dressmaker> {
     dressmaker: Dressmaker,
     dressmakerDTO: UpdateDressmakerDTO,
   ): Promise<Dressmaker>;
+  getAddressUser(dressmaker_id: string): Promise<Address[]>;
 }

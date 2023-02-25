@@ -83,6 +83,7 @@ model Address {
   street       String
   lat          Float
   lng          Float
+  zip_code     String
 
   users         Users?      @relation(fields: [users_id], references: [id])
   users_id      String?

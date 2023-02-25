@@ -51,6 +51,7 @@ export class UsersController {
       street,
       lat,
       lng,
+      zip_code,
     }: CreateUserDTO,
   ): Promise<Users> {
     return await this.createUserService.execute({
@@ -66,6 +67,7 @@ export class UsersController {
       neighborhoud,
       number,
       street,
+      zip_code,
     });
   }
 

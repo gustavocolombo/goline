@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
 
 export class CalculateShippingDTO {
   @ApiProperty()
@@ -17,44 +17,44 @@ export class CalculateShippingDTO {
       'Peso da encomenda, incluindo sua embalagem. O peso deve ser informado em quilogramas. Se o formato for Envelope, o valor máximo permitido será 1 kg',
   })
   @IsString()
-  @IsNotEmpty()
-  nVlPeso: string;
+  @IsOptional()
+  nVlPeso?: string;
 
   @ApiProperty({
     description:
       'Formato da encomenda (incluindo embalagem) 1 - formato caixa/pacote 2 - formato rolo/prisma 3 - Envelope',
   })
   @IsString()
-  @IsNotEmpty()
-  nCdFormato: string;
+  @IsOptional()
+  nCdFormato?: string;
 
   @ApiProperty({
     description:
       'Comprimento da encomenda (incluindo embalagem), em centímetros',
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  nVlComprimento: string;
+  nVlComprimento?: string;
 
   @ApiProperty({
     description:
       'Altura da encomenda (incluindo embalagem), em centímetros. Se o formato for envelope, informar zero (0)',
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  nVlAltura: string;
+  nVlAltura?: string;
 
   @ApiProperty({
     description: 'Largura da encomenda (incluindo embalagem), em centímetros',
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  nVlLargura: string;
+  nVlLargura?: string;
 
   @ApiProperty({
     description: 'Diâmetro da encomenda (incluindo embalagem), em centímetros',
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  nVlDiametro: string;
+  nVlDiametro?: string;
 }

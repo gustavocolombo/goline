@@ -17,4 +17,9 @@ export class CreateOrderDTO {
   @IsUUID(4)
   @IsNotEmpty()
   dressmaking_id: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
+  delivery_option?: string;
 }

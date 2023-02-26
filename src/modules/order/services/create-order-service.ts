@@ -6,6 +6,8 @@ import { CreateOrderDTO } from '../dtos/CreateOrderDTO';
 import { OrderRepository } from '../repositories/order.repository';
 import { uuid } from 'uuidv4';
 import ErrorHandling from '../../../shared/errors/ErrorHandling';
+import { DeliveryDateCalcService } from '../../shipping/services/delivery-date-calc-service';
+import { addDays } from 'date-fns';
 
 @Injectable()
 export class CreateOrderService {
@@ -13,11 +15,13 @@ export class CreateOrderService {
     private orderRepository: OrderRepository,
     private userRepository: UsersRepository,
     private dressmakingRepository: DressmakingsRepository,
+    private deliveryDateCalcService: DeliveryDateCalcService,
   ) {}
 
   async execute({
     user_id,
     dressmaking_id,
+    delivery_option,
     tag,
   }: CreateOrderDTO): Promise<any> {
     try {
@@ -32,21 +36,32 @@ export class CreateOrderService {
         );
       }
 
-      if (dressmaking.status === 'rejected') {
+      if (dressmaking.status === 'rejected' || !dressmaking.value) {
         throw new NotFoundException(
           'Dressmaking not found, please provide a valid id',
         );
       }
+
+      const shipping = await this.deliveryDateCalcService.execute({
+        user_id: user.value.id,
+        dressmaker_id: dressmaking.value.dressmaker_id,
+      });
 
       const data: Order = {
         id: uuid(),
         user_id,
         dressmaking_id,
         tag,
-        delivery_date: undefined,
+        delivery_date:
+          delivery_option === 'pac'
+            ? addDays(new Date(), parseInt(shipping[0].PrazoEntrega))
+            : addDays(new Date(), parseInt(shipping[1].PrazoEntrega)),
         created_at: new Date(),
         updated_at: undefined,
-        final_price: dressmaking.value.price,
+        final_price:
+          delivery_option === 'pac'
+            ? dressmaking.value.price + parseFloat(shipping[0].Valor)
+            : dressmaking.value.price + parseFloat(shipping[1].Valor),
         status: StatusOrder.AWAITING_PAYMENT,
       };
 

@@ -49,12 +49,12 @@ export class DeliveryDateCalcService {
         sCepOrigem: addressDressmaker[0].zip_code,
         sCepDestino: addressUser[0].zip_code,
         nCdServico: ['04510', '04014'],
-        nVlPeso,
-        nCdFormato,
-        nVlComprimento,
-        nVlAltura,
-        nVlLargura,
-        nVlDiametro,
+        nVlPeso: nVlPeso ? nVlPeso : '1',
+        nCdFormato: nCdFormato ? nCdFormato : '1',
+        nVlComprimento: nVlComprimento ? nVlComprimento : '20',
+        nVlAltura: nVlAltura ? nVlAltura : '20',
+        nVlLargura: nVlLargura ? nVlLargura : '20',
+        nVlDiametro: nVlDiametro ? nVlDiametro : '0',
       });
 
       return shipping;

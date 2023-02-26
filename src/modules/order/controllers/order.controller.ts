@@ -13,11 +13,14 @@ export class OrderController {
   ) {}
 
   @Post()
-  async createOrder(@Body() { user_id, dressmaking_id, tag }: CreateOrderDTO) {
+  async createOrder(
+    @Body() { user_id, dressmaking_id, tag, delivery_option }: CreateOrderDTO,
+  ) {
     return await this.createOrderService.execute({
       user_id,
       dressmaking_id,
       tag,
+      delivery_option,
     });
   }
 

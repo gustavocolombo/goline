@@ -66,13 +66,18 @@ export class CreateOrderService {
             ? dressmaking.value.price + parseFloat(shipping[0].Valor)
             : dressmaking.value.price + parseFloat(shipping[1].Valor),
         status: StatusOrder.AWAITING_PAYMENT,
+        tax_delivery:
+          delivery_option === DeliveryOption.PAC
+            ? parseFloat(shipping[0].Valor)
+            : parseFloat(shipping[1].Valor),
       };
 
-      const order = await this.orderRepository.create(data);
       await this.grabDressmakingService.execute({
         user_id,
         dressmaking_id,
       });
+
+      const order = await this.orderRepository.create(data);
 
       return order;
     } catch (error) {

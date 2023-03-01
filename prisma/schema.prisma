@@ -118,6 +118,7 @@ model Order {
   status          StatusOrder?     @default(AWAITING_PAYMENT)
   delivery_date   DateTime?
   delivery_option DeliveryOption
+  tax_delivery    Float
 
   created_at     DateTime @default(now())
   updated_at     DateTime @default(now())

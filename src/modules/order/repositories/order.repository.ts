@@ -19,6 +19,7 @@ export class OrderRepository implements CrudOrderInterface {
           tag: data.tag,
           status: data.status,
           delivery_option: data.delivery_option,
+          tax_delivery: data.tax_delivery,
         },
       });
 

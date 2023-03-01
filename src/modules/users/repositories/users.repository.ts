@@ -1,12 +1,12 @@
 import { Address, RolesUser, StatusUser, Users } from '@prisma/client';
 import { hash } from 'bcryptjs';
 import { CrudUserInterface } from '../implementations/crud.interface';
-import { PrismaService } from '../../../shared/infra/prisma/prisma.service';
+import { PrismaService } from '@shared/infra/prisma/prisma.service';
 import { CreateUserDTO } from '../dtos/CreateUserDTO';
 import { Injectable } from '@nestjs/common';
 import { UpdateUserDTO } from '../dtos/UpdateUserDTO';
 import { SoftDeleteUserDTO } from '../dtos/SoftDeleteUserDTO';
-import ErrorHandling from '../../../shared/errors/ErrorHandling';
+import ErrorHandling from '@shared/errors/ErrorHandling';
 
 @Injectable()
 export class UsersRepository implements CrudUserInterface {

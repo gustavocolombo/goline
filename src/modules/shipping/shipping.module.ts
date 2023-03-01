@@ -4,6 +4,7 @@ import { DressmakerRepository } from '../dressmaker/repositories/dressmakers.rep
 import { UsersRepository } from '../users/repositories/users.repository';
 import { ShippingController } from './controllers/shipping.controller';
 import { DeliveryDateCalcService } from './services/delivery-date-calc-service';
+import { GetZipCodeByUserService } from './services/get-zip-code-by-user-service';
 
 @Module({
   controllers: [ShippingController],
@@ -12,6 +13,7 @@ import { DeliveryDateCalcService } from './services/delivery-date-calc-service';
     DressmakerRepository,
     PrismaService,
     DeliveryDateCalcService,
+    GetZipCodeByUserService,
   ],
 })
 export class ShippingModule {}

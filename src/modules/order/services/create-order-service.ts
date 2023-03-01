@@ -8,6 +8,7 @@ import { uuid } from 'uuidv4';
 import ErrorHandling from '../../../shared/errors/ErrorHandling';
 import { DeliveryDateCalcService } from '../../shipping/services/delivery-date-calc-service';
 import { addDays } from 'date-fns';
+import { GrabDressmakingService } from '../../dressmaking/services/grab-dressmaking-service';
 
 @Injectable()
 export class CreateOrderService {
@@ -16,6 +17,7 @@ export class CreateOrderService {
     private userRepository: UsersRepository,
     private dressmakingRepository: DressmakingsRepository,
     private deliveryDateCalcService: DeliveryDateCalcService,
+    private grabDressmakingService: GrabDressmakingService,
   ) {}
 
   async execute({
@@ -23,7 +25,7 @@ export class CreateOrderService {
     dressmaking_id,
     delivery_option,
     tag,
-  }: CreateOrderDTO): Promise<any> {
+  }: CreateOrderDTO): Promise<Order> {
     try {
       const [user, dressmaking] = await Promise.allSettled([
         await this.userRepository.findOne(user_id),
@@ -67,6 +69,10 @@ export class CreateOrderService {
       };
 
       const order = await this.orderRepository.create(data);
+      await this.grabDressmakingService.execute({
+        user_id,
+        dressmaking_id,
+      });
 
       return order;
     } catch (error) {

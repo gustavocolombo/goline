@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Order, StatusOrder } from '@prisma/client';
+import { DeliveryOption, Order, StatusOrder } from '@prisma/client';
 import { DressmakingsRepository } from '../../dressmaking/repositories/dressmakings.repository';
 import { UsersRepository } from '../../users/repositories/users.repository';
 import { CreateOrderDTO } from '../dtos/CreateOrderDTO';
@@ -52,14 +52,15 @@ export class CreateOrderService {
         user_id,
         dressmaking_id,
         tag,
+        delivery_option,
         delivery_date:
-          delivery_option === 'pac'
+          delivery_option === DeliveryOption.PAC
             ? addDays(new Date(), parseInt(shipping[0].PrazoEntrega))
             : addDays(new Date(), parseInt(shipping[1].PrazoEntrega)),
         created_at: new Date(),
         updated_at: undefined,
         final_price:
-          delivery_option === 'pac'
+          delivery_option === DeliveryOption.PAC
             ? dressmaking.value.price + parseFloat(shipping[0].Valor)
             : dressmaking.value.price + parseFloat(shipping[1].Valor),
         status: StatusOrder.AWAITING_PAYMENT,

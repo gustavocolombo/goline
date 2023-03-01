@@ -18,6 +18,7 @@ export class OrderRepository implements CrudOrderInterface {
           dressmaking_id: data.dressmaking_id,
           tag: data.tag,
           status: data.status,
+          delivery_option: data.delivery_option,
         },
       });
 

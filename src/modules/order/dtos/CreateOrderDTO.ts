@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { TagsDressmaking } from '@prisma/client';
+import { DeliveryOption, TagsDressmaking } from '@prisma/client';
 import { IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
 
 export class CreateOrderDTO {
@@ -20,6 +20,6 @@ export class CreateOrderDTO {
 
   @ApiProperty()
   @IsString()
-  @IsOptional()
-  delivery_option?: string;
+  @IsNotEmpty()
+  delivery_option: DeliveryOption;
 }

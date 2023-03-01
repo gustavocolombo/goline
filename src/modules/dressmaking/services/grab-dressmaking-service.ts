@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Dressmaking } from '@prisma/client';
 import { UsersRepository } from '../../users/repositories/users.repository';
 import { GrabDressmakingDTO } from '../dtos/GrabDressmakingDTO';
@@ -16,15 +20,20 @@ export class GrabDressmakingService {
     dressmaking_id,
   }: GrabDressmakingDTO): Promise<Dressmaking> {
     try {
-      const user = await this.userRepository.findOne(user_id);
+      const [user, dressmaking] = await Promise.allSettled([
+        await this.userRepository.findOne(user_id),
+        await this.dressmakingRepository.findFirst(dressmaking_id),
+      ]);
 
-      const dressmaking = await this.dressmakingRepository.findFirst(
-        dressmaking_id,
-      );
+      if (!user) throw new NotFoundException('User not found');
 
-      if (!user) throw new BadRequestException('User not found');
+      if (!dressmaking) throw new NotFoundException('Dressmaking not found');
 
-      if (!dressmaking) throw new BadRequestException('Dressmaking not found');
+      if (
+        dressmaking.status === 'fulfilled' &&
+        dressmaking.value.grabbed === true
+      )
+        throw new UnauthorizedException('Dressmaking is already grabbed');
 
       const grabbedDressmaking =
         await this.dressmakingRepository.grabDressmaking({

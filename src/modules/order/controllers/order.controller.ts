@@ -8,6 +8,7 @@ import {
   ApiResponse,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { Order } from '@prisma/client';
 import { CreateOrderDTO } from '../dtos/CreateOrderDTO';
 import { CreateOrderService } from '../services/create-order-service';
 import { GetOneOrderService } from '../services/get-one-order-service';
@@ -38,12 +39,12 @@ export class OrderController {
   })
   @ApiInternalServerErrorResponse({
     status: 500,
-    description: 'Internal server error, contact developer team',
+    description: 'Internal server error, contact development team',
   })
   @Post()
   async createOrder(
     @Body() { user_id, dressmaking_id, tag, delivery_option }: CreateOrderDTO,
-  ) {
+  ): Promise<Order> {
     return await this.createOrderService.execute({
       user_id,
       dressmaking_id,
@@ -68,10 +69,10 @@ export class OrderController {
   })
   @ApiInternalServerErrorResponse({
     status: 500,
-    description: 'Internal server error, contact developer team',
+    description: 'Internal server error, contact development team',
   })
   @Get('/:id')
-  async getOneOrder(@Param('id') id: string) {
+  async getOneOrder(@Param('id') id: string): Promise<Order> {
     return await this.getOneOrderService.execute(id);
   }
 
@@ -93,10 +94,10 @@ export class OrderController {
   })
   @ApiInternalServerErrorResponse({
     status: 500,
-    description: 'Internal server error, contact developer team',
+    description: 'Internal server error, contact development team',
   })
   @Get('/user/:user_id')
-  async getOrderByUser(@Param('user_id') user_id: string) {
+  async getOrderByUser(@Param('user_id') user_id: string): Promise<Order[]> {
     return await this.getOrderByUserService.execute(user_id);
   }
 }

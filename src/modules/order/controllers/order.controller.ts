@@ -10,9 +10,9 @@ import {
 } from '@nestjs/swagger';
 import { Order } from '@prisma/client';
 import { CreateOrderDTO } from '../dtos/CreateOrderDTO';
-import { CreateOrderService } from '../services/create-order-service';
-import { GetOneOrderService } from '../services/get-one-order-service';
-import { GetOrderByUserService } from '../services/get-order-by-user-service';
+import { CreateOrderService } from '../services/CreateOrder.service';
+import { GetOneOrderService } from '../services/GetOneOrder.service';
+import { GetOrderByUserService } from '../services/GetOrderByUser.service';
 
 @Controller('order')
 export class OrderController {

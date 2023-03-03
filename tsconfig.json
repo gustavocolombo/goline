@@ -23,7 +23,9 @@
       "@shared/*": ["src/shared/*"],
       "@dressmaking/*": ["src/modules/dressmaking/*"],
       "@dressmaker/*": ["src/modules/dressmaker/*"],
-      "@mail/*": ["src/modules/mail/*"]
+      "@mail/*": ["src/modules/mail/*"],
+      "@shipping/*": ["src/modules/shipping/*"],
+      "@order/*": ["src/modules/order/*"]
     }
   }
 }

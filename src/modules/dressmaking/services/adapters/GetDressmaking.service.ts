@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Dressmaking } from '@prisma/client';
 import { database } from '../../../../shared/infra/prisma/check-connection';
-import { GetAllDressmakingService } from '../get-all-dressmaking';
-import { GetFirstDressmakingsService } from './get-first-dressmaking.service';
+import { GetAllDressmakingService } from '../GetAllDressmaking.service';
+import { GetFirstDressmakingsService } from './GetFirstDressmaking.service';
 
 @Injectable()
 export class GetDressmakingAdapterService extends GetAllDressmakingService {

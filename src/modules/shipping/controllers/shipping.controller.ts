@@ -7,8 +7,8 @@ import {
 } from '@nestjs/swagger';
 import { PrecoPrazoResponse } from 'correios-brasil/dist';
 import { CalculateShippingDTO } from '../dtos/CalculateShippingDTO';
-import { DeliveryDateCalcService } from '../services/delivery-date-calc-service';
-import { GetZipCodeByUserService } from '../services/get-zip-code-by-user-service';
+import { DeliveryDateCalcService } from '../services/DeliveryDateCalc.service';
+import { GetZipCodeByUserService } from '../services/GetZipCodeByUser.service';
 
 @Controller('shipping')
 export class ShippingController {

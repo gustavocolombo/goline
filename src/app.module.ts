@@ -9,7 +9,7 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { AuthModule } from './modules/auth/auth.module';
 import { DressmakerModule } from './modules/dressmaker/dressmaker.module';
 import { UsersModule } from './modules/users/users.module';
-import { OAuthService } from './modules/auth/services/oauth-service';
+import { OAuthService } from './modules/auth/services/OAuth.service';
 import { OAuthController } from './modules/auth/controllers/oauth.controller';
 import { PrismaService } from './shared/infra/prisma/prisma.service';
 import { ensureAuthenticatedMiddleware } from './shared/middlewares/ensureAuthenticatedMiddleware';

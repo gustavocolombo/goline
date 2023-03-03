@@ -4,9 +4,9 @@ import { PrismaService } from '@shared/infra/prisma/prisma.service';
 import SendEmailWithTokenForRecoverPasswordService from '@mail/infra/services/SendEmailWithTokenForRecoverPasswordService';
 import SendEmailConfirmRecoverPasswordService from '@mail/infra/services/SendMailWithTokenService';
 import { AuthController } from '@auth/controllers/auth.controller';
-import { AuthenticateUsersService } from '@auth/services/authenticate-user-service';
-import RedefinePasswordService from '@auth/services/redefine-password-service';
-import { SendMailWithTokenService } from '@auth/services/send-mail-with-token-service';
+import { AuthenticateUsersService } from '@auth/services/AuthenticateUser.service';
+import RedefinePasswordService from '@auth/services/RedefinePassword.service';
+import { SendMailWithTokenService } from '@auth/services/SendMailWithToken.service';
 
 @Module({
   imports: [ConfigModule.forRoot()],

@@ -5,12 +5,12 @@ import { PrismaService } from '@shared/infra/prisma/prisma.service';
 import { UsersRepository } from '@users/repositories/users.repository';
 import { DressmakerController } from '@dressmaker/controllers/dressmaker.controller';
 import { DressmakerRepository } from '@dressmaker/repositories/dressmakers.repository';
-import { CreateDressmakerService } from '@dressmaker/services/create-dressmaker-service';
-import { GetAllDressmakersInsideGeolocation } from '@dressmaker/services/get-all-dressmakers-inside-geolocation';
-import { GetDistanceBetweenUserDressmakerService } from '@dressmaker/services/get-distance-between-user-dressmaker-service';
-import { GetDressmakerService } from '@dressmaker/services/get-dressmaker-service';
-import { SoftDeleteDressmakerService } from '@dressmaker/services/soft-delete-dressmaker-service';
-import { UpdateDressmakerService } from '@dressmaker/services/update-dressmaker-service';
+import { CreateDressmakerService } from '@dressmaker/services/CreateDressmaker.service';
+import { GetAllDressmakersInsideGeolocationService } from '@dressmaker/services/GetAllDressmakersInsideGeolocation.service';
+import { GetDistanceBetweenUserDressmakerService } from '@dressmaker/services/GetDistanceBetweenUserDressmaker.service';
+import { GetDressmakerService } from '@dressmaker/services/GetDressmaker.service';
+import { SoftDeleteDressmakerService } from '@dressmaker/services/SoftDeleteDressmaker.service';
+import { UpdateDressmakerService } from '@dressmaker/services/UpdateDressmaker.service';
 
 @Module({
   imports: [
@@ -32,7 +32,7 @@ import { UpdateDressmakerService } from '@dressmaker/services/update-dressmaker-
     GetDressmakerService,
     UpdateDressmakerService,
     SoftDeleteDressmakerService,
-    GetAllDressmakersInsideGeolocation,
+    GetAllDressmakersInsideGeolocationService,
     GetDistanceBetweenUserDressmakerService,
     DressmakerRepository,
     UsersRepository,

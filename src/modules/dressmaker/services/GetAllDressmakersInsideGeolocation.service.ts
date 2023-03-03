@@ -5,7 +5,7 @@ import { StatusUser } from '@prisma/client';
 import { GetDressmakersByGeolocation } from '../dtos/GetDressmakerByGeolocation';
 
 @Injectable()
-export class GetAllDressmakersInsideGeolocation {
+export class GetAllDressmakersInsideGeolocationService {
   constructor(private prismaService: PrismaService) {}
 
   async execute({ lat, lng, radius, user_id }: GetDressmakersByGeolocation) {

@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Patch, Post, Put } from '@nestjs/common';
 import { RolesUser, Users } from '@prisma/client';
 import { CreateUserDTO } from '../dtos/CreateUserDTO';
-import { CreateUserService } from '../services/create-user-service';
+import { CreateUserService } from '../services/CreateUser.service';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
@@ -10,12 +10,12 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { UpdateUserDTO } from '../dtos/UpdateUserDTO';
-import { UpdateUserService } from '../services/update-user-service';
-import { GetInfoUserService } from '../services/get-info-user-service';
-import { SoftDeleteUserService } from '../services/soft-delete-user-service';
+import { UpdateUserService } from '../services/UpdateUser.service';
+import { GetInfoUserService } from '../services/GetInfoUser.service';
+import { SoftDeleteUserService } from '../services/SoftDeleteUser.service';
 import { SoftDeleteUserDTO } from '../dtos/SoftDeleteUserDTO';
 import { ResetPasswordDTO } from '../dtos/ResetPasswordDTO';
-import { ResetPasswordService } from '../services/reset-password-service';
+import { ResetPasswordService } from '../services/ResetPassword.service';
 import { Roles } from '../../../shared/roles/users-roles';
 import { UserDecorator } from '../../../shared/decorator/user.decorator';
 

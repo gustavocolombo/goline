@@ -19,12 +19,12 @@ import { Dressmaker, Users } from '@prisma/client';
 import { UserDecorator } from '../../../shared/decorator/user.decorator';
 import { GetDressmakerByGeolocation } from '../dtos/GetDressmakerByGeolocationDTO';
 import { CreateDressmakerDTO } from '../dtos/CreateDressmakerDTO';
-import { CreateDressmakerService } from '../services/create-dressmaker-service';
-import { GetAllDressmakersInsideGeolocation } from '../services/get-all-dressmakers-inside-geolocation';
-import { GetDistanceBetweenUserDressmakerService } from '../services/get-distance-between-user-dressmaker-service';
-import { GetDressmakerService } from '../services/get-dressmaker-service';
-import { SoftDeleteDressmakerService } from '../services/soft-delete-dressmaker-service';
-import { UpdateDressmakerService } from '../services/update-dressmaker-service';
+import { CreateDressmakerService } from '../services/CreateDressmaker.service';
+import { GetAllDressmakersInsideGeolocationService } from '../services/GetAllDressmakersInsideGeolocation.service';
+import { GetDistanceBetweenUserDressmakerService } from '../services/GetDistanceBetweenUserDressmaker.service';
+import { GetDressmakerService } from '../services/GetDressmaker.service';
+import { SoftDeleteDressmakerService } from '../services/SoftDeleteDressmaker.service';
+import { UpdateDressmakerService } from '../services/UpdateDressmaker.service';
 import { UpdateDressmakerDTO } from '../dtos/UpdateDressmakerDTO';
 
 @ApiTags('dressmaker')
@@ -35,7 +35,7 @@ export class DressmakerController {
     private getDressmakerService: GetDressmakerService,
     private updateDressmakerService: UpdateDressmakerService,
     private softDeleteDressmakerService: SoftDeleteDressmakerService,
-    private getAllDressmakerInsideGeolocation: GetAllDressmakersInsideGeolocation,
+    private getAllDressmakerInsideGeolocation: GetAllDressmakersInsideGeolocationService,
     private getDistanceBetweenUserDressmakerService: GetDistanceBetweenUserDressmakerService,
   ) {}
 

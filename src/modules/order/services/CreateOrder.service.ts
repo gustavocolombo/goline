@@ -1,14 +1,14 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { DeliveryOption, Order, StatusOrder } from '@prisma/client';
-import { DressmakingsRepository } from '../../dressmaking/repositories/dressmakings.repository';
-import { UsersRepository } from '../../users/repositories/users.repository';
+import { DressmakingsRepository } from '@dressmaking/repositories/dressmakings.repository';
+import { UsersRepository } from '@users/repositories/users.repository';
 import { CreateOrderDTO } from '../dtos/CreateOrderDTO';
 import { OrderRepository } from '../repositories/order.repository';
 import { uuid } from 'uuidv4';
-import ErrorHandling from '../../../shared/errors/ErrorHandling';
-import { DeliveryDateCalcService } from '../../shipping/services/delivery-date-calc-service';
+import ErrorHandling from '@shared/errors/ErrorHandling';
+import { DeliveryDateCalcService } from '@shipping/services/DeliveryDateCalc.service';
 import { addDays } from 'date-fns';
-import { GrabDressmakingService } from '../../dressmaking/services/grab-dressmaking-service';
+import { GrabDressmakingService } from '@dressmaking/services/GrabDressmaking.service';
 
 @Injectable()
 export class CreateOrderService {

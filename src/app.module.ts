@@ -19,6 +19,11 @@ import { GatewayModule } from './modules/gateway/gateway.module';
 import { GoogleStrategy } from './modules/auth/strategy/google.strategy';
 import { DressmakingModule } from './modules/dressmaking/dressmaking.module';
 import { OrderModule } from './modules/order/order.module';
+<<<<<<< Updated upstream
+=======
+import { ShippingModule } from './modules/shipping/shipping.module';
+import { AppController } from './app.controller';
+>>>>>>> Stashed changes
 
 @Module({
   imports: [
@@ -35,7 +40,7 @@ import { OrderModule } from './modules/order/order.module';
     MailModule,
     GatewayModule,
   ],
-  controllers: [OAuthController],
+  controllers: [OAuthController, AppController],
   providers: [
     PrismaService,
     { provide: APP_GUARD, useClass: ThrottlerGuard },
@@ -58,6 +63,10 @@ export class AppModule implements NestModule {
         { path: '/api/dressmaker', method: RequestMethod.POST },
         {
           path: '/api/dressmaker/get-by-geolocation/:user_id',
+          method: RequestMethod.GET,
+        },
+        {
+          path: '/api/status',
           method: RequestMethod.GET,
         },
       )

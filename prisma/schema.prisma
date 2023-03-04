@@ -76,13 +76,15 @@ model Dressmaking {
 }
 
 model Address {
-  id           String @id @default(uuid())
+  id           String         @id @default(uuid())
   city         String
   neighborhoud String
   number       Int
   street       String
   lat          Float
   lng          Float
+  zip_code     String
+  status       StatusAddress? @default(DEFAULT)
 
   users         Users?      @relation(fields: [users_id], references: [id])
   users_id      String?
@@ -108,13 +110,15 @@ model UsersToken {
 }
 
 model Order {
-  id            String           @id @default(uuid())
-  final_price   Float
-  tag           TagsDressmaking? @default(DRESSMAKING)
-  user          Users            @relation(fields: [user_id], references: [id])
-  dressmaking   Dressmaking      @relation(fields: [dressmaking_id], references: [id])
-  status        StatusOrder?     @default(AWAITING_PAYMENT)
-  delivery_date DateTime?
+  id              String           @id @default(uuid())
+  final_price     Float
+  tag             TagsDressmaking? @default(DRESSMAKING)
+  user            Users            @relation(fields: [user_id], references: [id])
+  dressmaking     Dressmaking      @relation(fields: [dressmaking_id], references: [id])
+  status          StatusOrder?     @default(AWAITING_PAYMENT)
+  delivery_date   DateTime?
+  delivery_option DeliveryOption
+  tax_delivery    Float
 
   created_at     DateTime @default(now())
   updated_at     DateTime @default(now())
@@ -149,4 +153,16 @@ enum StatusOrder {
   IN_COURSE
   PAYED
   AWAITING_PAYMENT
+}
+
+enum DeliveryOption {
+  PAC
+  SEDEX
+}
+
+enum StatusAddress {
+  ACTIVE
+  INACTIVE
+  DEFAULT
+  DELETED
 }

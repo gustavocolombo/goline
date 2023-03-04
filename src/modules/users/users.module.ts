@@ -4,14 +4,14 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { PrismaService } from '@shared/infra/prisma/prisma.service';
 import { RolesGuard } from '@shared/roles/roles-guard';
-import { AuthenticateUsersService } from '@auth/services/authenticate-user-service';
+import { AuthenticateUsersService } from '@auth/services/AuthenticateUser.service';
 import { UsersController } from '@users/controllers/users.controller';
 import { UsersRepository } from '@users/repositories/users.repository';
-import { CreateUserService } from '@users/services/create-user-service';
-import { GetInfoUserService } from '@users/services/get-info-user-service';
-import { ResetPasswordService } from '@users/services/reset-password-service';
-import { SoftDeleteUserService } from '@users/services/soft-delete-user-service';
-import { UpdateUserService } from '@users/services/update-user-service';
+import { CreateUserService } from '@users/services/CreateUser.service';
+import { GetInfoUserService } from '@users/services/GetInfoUser.service';
+import { ResetPasswordService } from '@users/services/ResetPassword.service';
+import { SoftDeleteUserService } from '@users/services/SoftDeleteUser.service';
+import { UpdateUserService } from '@users/services/UpdateUser.service';
 
 @Module({
   imports: [

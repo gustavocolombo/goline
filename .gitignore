@@ -12,9 +12,9 @@ yarn-error.log*
 lerna-debug.log*
 
 .env
-prisma/migrations
-prisma/dev.db
-prisma/dev.db-journal
+# prisma/migrations
+# prisma/dev.db
+# prisma/dev.db-journal
 postgres_data
 
 # OS

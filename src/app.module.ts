@@ -9,7 +9,7 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { AuthModule } from './modules/auth/auth.module';
 import { DressmakerModule } from './modules/dressmaker/dressmaker.module';
 import { UsersModule } from './modules/users/users.module';
-import { OAuthService } from './modules/auth/services/oauth-service';
+import { OAuthService } from './modules/auth/services/OAuth.service';
 import { OAuthController } from './modules/auth/controllers/oauth.controller';
 import { PrismaService } from './shared/infra/prisma/prisma.service';
 import { ensureAuthenticatedMiddleware } from './shared/middlewares/ensureAuthenticatedMiddleware';
@@ -19,6 +19,7 @@ import { GatewayModule } from './modules/gateway/gateway.module';
 import { GoogleStrategy } from './modules/auth/strategy/google.strategy';
 import { DressmakingModule } from './modules/dressmaking/dressmaking.module';
 import { OrderModule } from './modules/order/order.module';
+import { ShippingModule } from './modules/shipping/shipping.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { OrderModule } from './modules/order/order.module';
     DressmakerModule,
     DressmakingModule,
     OrderModule,
+    ShippingModule,
     MailModule,
     GatewayModule,
   ],

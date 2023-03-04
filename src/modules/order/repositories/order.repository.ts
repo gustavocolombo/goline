@@ -11,7 +11,16 @@ export class OrderRepository implements CrudOrderInterface {
   async create(data: Order): Promise<Order> {
     try {
       const order = await this.prismaService.order.create({
-        data: { ...data },
+        data: {
+          user_id: data.user_id,
+          final_price: data.final_price,
+          delivery_date: data.delivery_date,
+          dressmaking_id: data.dressmaking_id,
+          tag: data.tag,
+          status: data.status,
+          delivery_option: data.delivery_option,
+          tax_delivery: data.tax_delivery,
+        },
       });
 
       return order;

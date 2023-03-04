@@ -19,13 +19,12 @@ import {
 import { Dressmaking, RolesUser, Users } from '@prisma/client';
 import { CreateDressmakingDTO } from '../dtos/CreateDressmakingDTO';
 import { Roles } from '../../../shared/roles/users-roles';
-import { CreateDressmakingService } from '../services/create-dressmaking-service';
-import { GetDressmakingsByDressmakerService } from '../services/get-dressmakings-by-dresmaker-service';
-import { GrabDressmakingService } from '../services/grab-dressmaking-service';
+import { CreateDressmakingService } from '../services/CreateDressmaking.service';
+import { GetDressmakingsByDressmakerService } from '../services/GetDressmakingByDressmaker.service';
+import { GrabDressmakingService } from '../services/GrabDressmaking.service';
 import { UserDecorator } from '../../../shared/decorator/user.decorator';
 import { GetAllDressmakingDTO } from '../dtos/GetDressmakingsDTO';
-import { GetAllDressmakingService } from '../services/get-all-dressmaking';
-
+import { GetAllDressmakingService } from '../services/GetAllDressmaking.service';
 
 @ApiTags('dressmaking')
 @Controller('dressmaking')

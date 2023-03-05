@@ -20,6 +20,7 @@ import { GoogleStrategy } from './modules/auth/strategy/google.strategy';
 import { DressmakingModule } from './modules/dressmaking/dressmaking.module';
 import { OrderModule } from './modules/order/order.module';
 import { ShippingModule } from './modules/shipping/shipping.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -37,7 +38,7 @@ import { ShippingModule } from './modules/shipping/shipping.module';
     MailModule,
     GatewayModule,
   ],
-  controllers: [OAuthController],
+  controllers: [OAuthController, AppController],
   providers: [
     PrismaService,
     { provide: APP_GUARD, useClass: ThrottlerGuard },
@@ -60,6 +61,10 @@ export class AppModule implements NestModule {
         { path: '/api/dressmaker', method: RequestMethod.POST },
         {
           path: '/api/dressmaker/get-by-geolocation/:user_id',
+          method: RequestMethod.GET,
+        },
+        {
+          path: '/api/status',
           method: RequestMethod.GET,
         },
       )

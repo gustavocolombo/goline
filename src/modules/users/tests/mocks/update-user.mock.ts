@@ -1,8 +1,8 @@
-import { CreateUserDTO } from '../../dtos/CreateUserDTO';
+import { UpdateUserDTO } from '../../dtos/UpdateUserDTO';
 
-export const mockCreateUser: CreateUserDTO = {
+export const updateUserMock: UpdateUserDTO = {
   name: 'John Doe',
-  email: 'johndoe@gmail.com',
+  email: 'johndoe1@gmail.com',
   password: 'pass123',
   cellphone: '55942240797',
   height: 60.21,

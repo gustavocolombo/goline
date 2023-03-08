@@ -72,4 +72,9 @@ export class UpdateUserDTO {
   @IsNumber()
   @IsOptional()
   number?: number;
+
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
+  zip_code?: string;
 }

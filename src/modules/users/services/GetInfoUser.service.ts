@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Users } from '@prisma/client';
 import { GetUserInfoDTO } from '../dtos/GetUserInfoDTO';
 import { UsersRepository } from '../repositories/users.repository';
@@ -11,6 +11,8 @@ export class GetInfoUserService {
   async execute({ user_id }: GetUserInfoDTO): Promise<Users | undefined> {
     try {
       const user = await this.usersRepository.findOne(user_id);
+
+      if (!user) throw new NotFoundException('User not found');
 
       delete user.password;
 

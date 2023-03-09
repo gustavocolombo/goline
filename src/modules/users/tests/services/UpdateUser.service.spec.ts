@@ -92,5 +92,17 @@ describe('Testing update user service', () => {
       expect(usersRepository.findAllUsers).toHaveBeenCalled();
       expect(usersRepository.update).not.toHaveBeenCalled();
     });
+    it('Should not update user, user not found', async () => {
+      jest
+        .spyOn(usersRepository, 'findByEmail')
+        .mockReturnValueOnce(Promise.resolve(null));
+
+      await expect(service.execute(updateUserMock)).rejects.toEqual(
+        new BadRequestException('User not found!'),
+      );
+      expect(usersRepository.findByEmail).toHaveBeenCalled();
+      expect(usersRepository.findByEmail).toHaveBeenCalledTimes(1);
+      expect(usersRepository.update).not.toHaveBeenCalled();
+    });
   });
 });

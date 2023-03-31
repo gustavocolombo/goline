@@ -1,16 +1,23 @@
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
-import { PrismaService } from '../../../shared/infra/prisma/prisma.service';
 import { IAuthFieldsRequiredDTO } from '../dtos/IAuthFieldsRequiredDTO';
 import { UsersResponse } from '../dtos/IResponseAuthDTO';
 import secrets from '../../../shared/config/auth/secrets';
 import ErrorHandling from '../../../shared/errors/ErrorHandling';
+import { UsersRepository } from '../../users/repositories/users.repository';
+import { DressmakerRepository } from '../../dressmaker/repositories/dressmakers.repository';
 
 @Injectable()
 export class AuthenticateUsersService {
   constructor(
-    private prismaService: PrismaService,
+    private dressmakerRepository: DressmakerRepository,
+    private userRepository: UsersRepository,
     private readonly logger: Logger,
   ) {}
 
@@ -19,55 +26,60 @@ export class AuthenticateUsersService {
     password,
   }: IAuthFieldsRequiredDTO): Promise<UsersResponse> {
     try {
-      let dressmaker = await this.prismaService.dressmaker.findFirst({
-        where: { email },
-      });
+      const [user, dressmaker] = await Promise.allSettled([
+        await this.userRepository.findByEmail(email),
+        await this.dressmakerRepository.findByEmail(email),
+      ]);
 
-      let user = await this.prismaService.users.findFirst({
-        where: { email },
-      });
+      if (user.status === 'rejected' || dressmaker.status === 'rejected') {
+        throw new NotFoundException('User not found');
+      }
 
-      if (user) {
-        const verifyPass = await compare(password, user.password);
+      if (user.value) {
+        const verifyPass = await compare(password, user.value.password);
 
         if (!verifyPass)
           throw new BadRequestException('Combination e-mail/password failed');
 
         const token = sign(
-          { id: user.id, email: user.email, roles: user.roles },
+          {
+            id: user.value.id,
+            email: user.value.email,
+            roles: user.value.roles,
+          },
           secrets.secret,
           {
             expiresIn: secrets.expiresIn,
-            subject: user.id,
+            subject: user.value.id,
           },
         );
 
-        delete user.password;
+        delete user.value.password;
 
         return {
           token,
           user,
         };
-      } else if (dressmaker) {
-        const verifyPass = await compare(password, dressmaker.password);
+      } else if (dressmaker.value) {
+        const verifyPass = await compare(password, dressmaker.value.password);
 
         if (!verifyPass)
           throw new BadRequestException('Combination e-mail/password failed');
 
         const token = sign(
           {
-            id: dressmaker.id,
-            email: dressmaker.email,
-            roles: dressmaker.roles,
+            id: dressmaker.value.id,
+            email: dressmaker.value.email,
+            roles: dressmaker.value.roles,
           },
           secrets.secret,
           {
             expiresIn: secrets.expiresIn,
-            subject: dressmaker.id,
+            subject: dressmaker.value.id,
           },
         );
 
-        delete dressmaker.password;
+        delete dressmaker.value.password;
 
         return {
           token,

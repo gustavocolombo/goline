@@ -7,6 +7,8 @@ import { AuthController } from '@auth/controllers/auth.controller';
 import { AuthenticateUsersService } from '@auth/services/AuthenticateUser.service';
 import RedefinePasswordService from '@auth/services/RedefinePassword.service';
 import { SendMailWithTokenService } from '@auth/services/SendMailWithToken.service';
+import { DressmakerRepository } from '../dressmaker/repositories/dressmakers.repository';
+import { UsersRepository } from '../users/repositories/users.repository';
 
 @Module({
   imports: [ConfigModule.forRoot()],
@@ -19,6 +21,8 @@ import { SendMailWithTokenService } from '@auth/services/SendMailWithToken.servi
     SendMailWithTokenService,
     SendEmailConfirmRecoverPasswordService,
     SendEmailWithTokenForRecoverPasswordService,
+    DressmakerRepository,
+    UsersRepository,
   ],
 })
 export class AuthModule {}

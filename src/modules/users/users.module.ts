@@ -12,6 +12,7 @@ import { GetInfoUserService } from '@users/services/GetInfoUser.service';
 import { ResetPasswordService } from '@users/services/ResetPassword.service';
 import { SoftDeleteUserService } from '@users/services/SoftDeleteUser.service';
 import { UpdateUserService } from '@users/services/UpdateUser.service';
+import { DressmakerRepository } from '../dressmaker/repositories/dressmakers.repository';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { UpdateUserService } from '@users/services/UpdateUser.service';
     { provide: APP_GUARD, useClass: RolesGuard },
     Logger,
     UsersRepository,
+    DressmakerRepository,
   ],
 })
 export class UsersModule {}

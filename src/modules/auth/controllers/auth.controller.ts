@@ -30,7 +30,11 @@ export class AuthController {
   @Post()
   async login(
     @Body() { email, password }: IAuthFieldsRequiredDTO,
-  ): Promise<IResponseAuthDTO<Users | Dressmaker>> {
+  ): Promise<
+    IResponseAuthDTO<
+      PromiseSettledResult<Users> | PromiseSettledResult<Dressmaker>
+    >
+  > {
     return await this.authenticateUserService.execute({ email, password });
   }
 

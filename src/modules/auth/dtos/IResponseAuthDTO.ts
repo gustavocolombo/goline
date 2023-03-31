@@ -6,5 +6,5 @@ export interface IResponseAuthDTO<T> {
 }
 
 export type UsersResponse =
-  | { token: string; user: Users }
-  | { token: string; user: Dressmaker };
+  | { token: string; user: PromiseSettledResult<Users> }
+  | { token: string; user: PromiseSettledResult<Dressmaker> };

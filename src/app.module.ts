@@ -21,6 +21,7 @@ import { DressmakingModule } from './modules/dressmaking/dressmaking.module';
 import { OrderModule } from './modules/order/order.module';
 import { ShippingModule } from './modules/shipping/shipping.module';
 import { AppController } from './app.controller';
+import { PostsModule } from './modules/posts/posts.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { AppController } from './app.controller';
     ShippingModule,
     MailModule,
     GatewayModule,
+    PostsModule,
   ],
   controllers: [OAuthController, AppController],
   providers: [
@@ -63,6 +65,7 @@ export class AppModule implements NestModule {
           path: '/api/dressmaker/get-by-geolocation/:user_id',
           method: RequestMethod.GET,
         },
+
         {
           path: '/api/status',
           method: RequestMethod.GET,

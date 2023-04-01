@@ -44,9 +44,11 @@ model Dressmaker {
   image_profile String?
   created_at    DateTime    @default(now())
   updated_at    DateTime    @default(now())
+  followers     Int         @default(0)
 
   dressmaking Dressmaking[]
   address     Address[]
+  post        Post[]
 
   @@map("dressmaker")
 }
@@ -68,6 +70,7 @@ model Dressmaking {
   user_id String?
 
   order Order[]
+  post  Post?
 
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
@@ -126,6 +129,25 @@ model Order {
   dressmaking_id String
 
   @@map("order")
+}
+
+model Post {
+  id String @id @default(uuid())
+
+  dressmaking_id String      @unique
+  dressmaking    Dressmaking @relation(fields: [dressmaking_id], references: [id])
+
+  dressmaker_id String
+  dressmaker    Dressmaker @relation(fields: [dressmaker_id], references: [id])
+
+  title String
+  image String?
+  stars Int     @default(0)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  @@map("posts")
 }
 
 enum StatusUser {

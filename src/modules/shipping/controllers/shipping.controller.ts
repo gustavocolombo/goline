@@ -4,12 +4,14 @@ import {
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiResponse,
+  ApiTags,
 } from '@nestjs/swagger';
 import { PrecoPrazoResponse } from 'correios-brasil/dist';
 import { CalculateShippingDTO } from '../dtos/CalculateShippingDTO';
 import { DeliveryDateCalcService } from '../services/DeliveryDateCalc.service';
 import { GetZipCodeByUserService } from '../services/GetZipCodeByUser.service';
 
+@ApiTags('shipping')
 @Controller('shipping')
 export class ShippingController {
   constructor(

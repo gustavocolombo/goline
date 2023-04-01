@@ -19,6 +19,7 @@ import {
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiResponse,
+  ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { Order, Users } from '@prisma/client';
@@ -29,6 +30,7 @@ import { CreateOrderService } from '../services/CreateOrder.service';
 import { GetOneOrderService } from '../services/GetOneOrder.service';
 import { GetOrderByUserService } from '../services/GetOrderByUser.service';
 
+@ApiTags('orders')
 @Controller('order')
 export class OrderController {
   constructor(

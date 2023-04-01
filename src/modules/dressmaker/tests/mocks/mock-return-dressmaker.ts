@@ -12,6 +12,7 @@ export const mockReturnDressmaker: Dressmaker = {
   created_at: new Date(),
   updated_at: new Date(),
   roles: 'DRESSMAKER',
+  followers: 0,
 };
 
 export const mockReturnDressmakerSoftDeleted: Dressmaker = {
@@ -26,4 +27,5 @@ export const mockReturnDressmakerSoftDeleted: Dressmaker = {
   created_at: new Date(),
   updated_at: new Date(),
   roles: 'DRESSMAKER',
+  followers: 0,
 };

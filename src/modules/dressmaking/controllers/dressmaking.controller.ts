@@ -13,6 +13,7 @@ import {
   ApiBadRequestResponse,
   ApiBearerAuth,
   ApiOkResponse,
+  ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -37,6 +38,7 @@ export class DressmakingController {
   ) {}
 
   @ApiBearerAuth()
+  @ApiOperation({ deprecated: true })
   @ApiOkResponse({
     status: 201,
     description: 'The dressmaking has been create',

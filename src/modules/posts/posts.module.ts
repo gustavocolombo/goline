@@ -5,11 +5,17 @@ import { DressmakerRepository } from '../dressmaker/repositories/dressmakers.rep
 import { DressmakingsRepository } from '../dressmaking/repositories/dressmakings.repository';
 import { PostsController } from './controllers/posts.controller';
 import { PrismaService } from '../../shared/infra/prisma/prisma.service';
+import { DeletePostService } from './services/DeletePost.service';
+import { FindAllPostsService } from './services/FindAllPosts.service';
+import { FindAllPostsByDressmaker } from './services/FindAllPostsByDressmaker.service';
 
 @Module({
   controllers: [PostsController],
   providers: [
     CreatePostService,
+    DeletePostService,
+    FindAllPostsService,
+    FindAllPostsByDressmaker,
     PostsRepository,
     DressmakerRepository,
     DressmakingsRepository,

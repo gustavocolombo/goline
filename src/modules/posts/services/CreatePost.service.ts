@@ -7,7 +7,7 @@ import { PostsRepository } from '../repositories/posts.repository';
 import { CreatePostDTO } from '../dtos/CreatePostDTO';
 import ErrorHandling from '../../../shared/errors/ErrorHandling';
 import { DressmakerRepository } from '../../dressmaker/repositories/dressmakers.repository';
-import { StatusUser } from '@prisma/client';
+import { Post, StatusUser } from '@prisma/client';
 
 @Injectable()
 export class CreatePostService {
@@ -16,7 +16,12 @@ export class CreatePostService {
     private dressmakerRepository: DressmakerRepository,
   ) {}
 
-  async execute({ title, image, dressmaker_id, dressmaking }: CreatePostDTO) {
+  async execute({
+    title,
+    image,
+    dressmaker_id,
+    dressmaking,
+  }: CreatePostDTO): Promise<Post> {
     try {
       const dressmaker = await this.dressmakerRepository.findOne(dressmaker_id);
 

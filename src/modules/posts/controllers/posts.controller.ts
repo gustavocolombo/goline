@@ -68,6 +68,7 @@ export class PostsController {
     status: 500,
     description: 'Internal server error',
   })
+  @Roles(RolesUser.DRESSMAKER, RolesUser.USER)
   @Get()
   async findAllPosts() {
     return this.findAllPostsService.execute();
@@ -83,6 +84,7 @@ export class PostsController {
     status: 500,
     description: 'Internal server error',
   })
+  @Roles(RolesUser.DRESSMAKER, RolesUser.USER)
   @Get('/:dressmaker_id')
   async findPostsByDressmaker(@Param('dressmaker_id') dressmaker_id: string) {
     return this.findAllPostsByDressmaker.execute(dressmaker_id);
@@ -99,6 +101,7 @@ export class PostsController {
     status: 500,
     description: 'Internal server error',
   })
+  @Roles(RolesUser.DRESSMAKER)
   @Delete('/:id')
   async deletePost(@Param('id') id: string) {
     return this.deletePostService.execute(id);

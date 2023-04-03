@@ -8,6 +8,7 @@ import { PrismaService } from '../../shared/infra/prisma/prisma.service';
 import { DeletePostService } from './services/DeletePost.service';
 import { FindAllPostsService } from './services/FindAllPosts.service';
 import { FindAllPostsByDressmaker } from './services/FindAllPostsByDressmaker.service';
+import { UpdatePostService } from './services/UpdatePost.service';
 
 @Module({
   controllers: [PostsController],
@@ -16,6 +17,7 @@ import { FindAllPostsByDressmaker } from './services/FindAllPostsByDressmaker.se
     DeletePostService,
     FindAllPostsService,
     FindAllPostsByDressmaker,
+    UpdatePostService,
     PostsRepository,
     DressmakerRepository,
     DressmakingsRepository,

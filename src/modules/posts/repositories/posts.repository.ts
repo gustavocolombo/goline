@@ -86,8 +86,19 @@ export class PostsRepository implements CrudPostsInterface {
   async update(data: UpdatePostDTO): Promise<Post> {
     try {
       const post = await this.prismaService.post.update({
-        where: { id: data.id },
-        data: { ...data },
+        where: { id: data.post_id },
+        data: {
+          title: data.title,
+          image: data.image,
+          dressmaking: {
+            update: {
+              ...data.dressmaking,
+            },
+          },
+        },
+        include: {
+          dressmaking: true,
+        },
       });
 
       return post;

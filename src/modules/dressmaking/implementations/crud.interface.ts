@@ -6,6 +6,7 @@ import {
   ReturnDressmakingDTO,
 } from '../dtos/GetDressmakingsDTO';
 import { GrabDressmakingDTO } from '../dtos/GrabDressmakingDTO';
+import { UpdateDressmakingDTO } from '../dtos/UpdateDressmakingDTO';
 
 export interface CrudDressmakingInterface<Dressmaking> {
   create(data: CreateDressmakingDTO): Promise<Dressmaking>;
@@ -20,4 +21,5 @@ export interface CrudDressmakingInterface<Dressmaking> {
     take?: number,
   ): Promise<GetAllDressmakingDTO[]>;
   findById(id: string): Promise<Dressmaking>;
+  update(data: UpdateDressmakingDTO): Promise<Dressmaking>;
 }

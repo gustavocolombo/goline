@@ -10,6 +10,7 @@ import {
 import { GrabDressmakingDTO } from '../dtos/GrabDressmakingDTO';
 import { CrudDressmakingInterface } from '../implementations/crud.interface';
 import ErrorHandling from '../../../shared/errors/ErrorHandling';
+import { UpdateDressmakingDTO } from '../dtos/UpdateDressmakingDTO';
 
 @Injectable()
 export class DressmakingsRepository
@@ -181,6 +182,21 @@ export class DressmakingsRepository
       });
 
       return dressmaking;
+    } catch (error) {
+      throw new ErrorHandling(error);
+    }
+  }
+
+  async update(data: UpdateDressmakingDTO): Promise<Dressmaking> {
+    try {
+      const updatedDresmaking = await this.prismaService.dressmaking.update({
+        where: { id: data.id },
+        data: {
+          ...data,
+        },
+      });
+
+      return updatedDresmaking;
     } catch (error) {
       throw new ErrorHandling(error);
     }

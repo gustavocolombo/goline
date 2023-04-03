@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { CreatePostService } from '../services/CreatePost.service';
 import { CreatePostDTO } from '../dtos/CreatePostDTO';
 import {
@@ -15,6 +23,8 @@ import { RolesUser } from '@prisma/client';
 import { DeletePostService } from '../services/DeletePost.service';
 import { FindAllPostsService } from '../services/FindAllPosts.service';
 import { FindAllPostsByDressmaker } from '../services/FindAllPostsByDressmaker.service';
+import { UpdatePostService } from '../services/UpdatePost.service';
+import { UpdatePostDTO } from '../dtos/UpdatePostDTO';
 
 @ApiTags('posts')
 @Controller('/posts')
@@ -24,6 +34,7 @@ export class PostsController {
     private deletePostService: DeletePostService,
     private findAllPostsService: FindAllPostsService,
     private findAllPostsByDressmaker: FindAllPostsByDressmaker,
+    private updatePostService: UpdatePostService,
   ) {}
 
   @ApiBearerAuth()
@@ -88,6 +99,26 @@ export class PostsController {
   @Get('/:dressmaker_id')
   async findPostsByDressmaker(@Param('dressmaker_id') dressmaker_id: string) {
     return this.findAllPostsByDressmaker.execute(dressmaker_id);
+  }
+
+  @ApiOperation({ description: 'Route to update specific post' })
+  @ApiBearerAuth()
+  @ApiUnauthorizedResponse({
+    status: 401,
+    description: 'User not allowed to perform this operation',
+  })
+  @ApiNotFoundResponse({
+    status: 404,
+    description: 'Post not found',
+  })
+  @ApiInternalServerErrorResponse({
+    status: 500,
+    description: 'Internal server error',
+  })
+  @Roles(RolesUser.DRESSMAKER, RolesUser.USER)
+  @Put()
+  async updatePost(@Body() dataUpdatePost: UpdatePostDTO) {
+    return this.updatePostService.execute(dataUpdatePost);
   }
 
   @ApiOperation({ description: 'Route to delete a post' })

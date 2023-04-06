@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Put,
 } from '@nestjs/common';
@@ -19,12 +20,14 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { Roles } from '../../../shared/roles/users-roles';
-import { RolesUser } from '@prisma/client';
+import { RolesUser, Users } from '@prisma/client';
 import { DeletePostService } from '../services/DeletePost.service';
 import { FindAllPostsService } from '../services/FindAllPosts.service';
 import { FindAllPostsByDressmaker } from '../services/FindAllPostsByDressmaker.service';
 import { UpdatePostService } from '../services/UpdatePost.service';
 import { UpdatePostDTO } from '../dtos/UpdatePostDTO';
+import { UserDecorator } from '../../../shared/decorator/user.decorator';
+import { AddFavoritPostService } from '../services/AddFavoritePost.service';
 
 @ApiTags('posts')
 @Controller('/posts')
@@ -35,6 +38,7 @@ export class PostsController {
     private findAllPostsService: FindAllPostsService,
     private findAllPostsByDressmaker: FindAllPostsByDressmaker,
     private updatePostService: UpdatePostService,
+    private addFavoritePostService: AddFavoritPostService,
   ) {}
 
   @ApiBearerAuth()
@@ -136,5 +140,29 @@ export class PostsController {
   @Delete('/:id')
   async deletePost(@Param('id') id: string) {
     return this.deletePostService.execute(id);
+  }
+
+  @ApiOperation({ description: 'Route to update specific post' })
+  @ApiBearerAuth()
+  @ApiUnauthorizedResponse({
+    status: 401,
+    description: 'User not allowed to perform this operation',
+  })
+  @ApiNotFoundResponse({
+    status: 404,
+    description: 'Post not found',
+  })
+  @ApiInternalServerErrorResponse({
+    status: 500,
+    description: 'Internal server error',
+  })
+  @Roles(RolesUser.USER)
+  @Patch('/:post_id')
+  async addFavoritePost(
+    @Param('post_id') post_id: string,
+    @UserDecorator() user: Users,
+  ) {
+    const data = { post_id, user };
+    return this.addFavoritePostService.execute(data);
   }
 }

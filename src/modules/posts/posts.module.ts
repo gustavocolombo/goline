@@ -9,6 +9,8 @@ import { DeletePostService } from './services/DeletePost.service';
 import { FindAllPostsService } from './services/FindAllPosts.service';
 import { FindAllPostsByDressmaker } from './services/FindAllPostsByDressmaker.service';
 import { UpdatePostService } from './services/UpdatePost.service';
+import { AddFavoritPostService } from './services/AddFavoritePost.service';
+import { UsersRepository } from '../users/repositories/users.repository';
 
 @Module({
   controllers: [PostsController],
@@ -18,6 +20,8 @@ import { UpdatePostService } from './services/UpdatePost.service';
     FindAllPostsService,
     FindAllPostsByDressmaker,
     UpdatePostService,
+    AddFavoritPostService,
+    UsersRepository,
     PostsRepository,
     DressmakerRepository,
     DressmakingsRepository,

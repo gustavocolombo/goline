@@ -5,6 +5,7 @@ import { PrismaService } from '../../../shared/infra/prisma/prisma.service';
 import { CreatePostDTO } from '../dtos/CreatePostDTO';
 import { UpdatePostDTO } from '../dtos/UpdatePostDTO';
 import { CrudPostsInterface } from '../implementations/crud-posts.interface';
+import { AddFavoritePostDTO } from '../dtos/AddFavoritePostDTO';
 
 @Injectable()
 export class PostsRepository implements CrudPostsInterface {
@@ -36,8 +37,11 @@ export class PostsRepository implements CrudPostsInterface {
         },
         include: {
           dressmaking: true,
+          favorite_by: true,
         },
       });
+
+      delete post.users_id;
 
       return post;
     } catch (error) {
@@ -102,6 +106,54 @@ export class PostsRepository implements CrudPostsInterface {
       });
 
       return post;
+    } catch (error) {
+      throw new ErrorHandling(error);
+    }
+  }
+
+  async addFavorite({ post_id, user }: AddFavoritePostDTO) {
+    try {
+      const post = await this.prismaService.post.update({
+        where: { id: post_id },
+        data: {
+          stars: {
+            increment: 1,
+          },
+          favorite_by: {
+            connect: {
+              id: user.id,
+            },
+          },
+        },
+      });
+
+      return post;
+    } catch (error) {
+      throw new ErrorHandling(error);
+    }
+  }
+
+  async checkIfPostAlredyFavorited(
+    post_id: string,
+    user_id: string,
+  ): Promise<boolean> {
+    try {
+      const postIsFavorite = await this.prismaService.post.findFirst({
+        where: {
+          AND: [
+            {
+              favorite_by: {
+                id: user_id,
+              },
+            },
+            {
+              id: post_id,
+            },
+          ],
+        },
+      });
+
+      return postIsFavorite ? true : false;
     } catch (error) {
       throw new ErrorHandling(error);
     }

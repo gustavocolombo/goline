@@ -26,8 +26,9 @@ model Users {
 
   address     Address[]
   dressmaking Dressmaking[]
-  UsersToken  UsersToken[]
+  usersToken  UsersToken[]
   order       Order[]
+  post        Post[]
 
   @@map("users")
 }
@@ -139,6 +140,9 @@ model Post {
 
   dressmaker_id String
   dressmaker    Dressmaker @relation(fields: [dressmaker_id], references: [id])
+
+  users_id    String?
+  favorite_by Users?  @relation(fields: [users_id], references: [id])
 
   title String
   image String?

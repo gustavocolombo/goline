@@ -89,6 +89,7 @@ model Address {
   lng          Float
   zip_code     String
   status       StatusAddress? @default(DEFAULT)
+  selected     Boolean        @default(true)
 
   users         Users?      @relation(fields: [users_id], references: [id])
   users_id      String?

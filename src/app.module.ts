@@ -22,6 +22,7 @@ import { OrderModule } from './modules/order/order.module';
 import { ShippingModule } from './modules/shipping/shipping.module';
 import { AppController } from './app.controller';
 import { PostsModule } from './modules/posts/posts.module';
+import { AddressModule } from './modules/address/address.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { PostsModule } from './modules/posts/posts.module';
     MailModule,
     GatewayModule,
     PostsModule,
+    AddressModule,
   ],
   controllers: [OAuthController, AppController],
   providers: [

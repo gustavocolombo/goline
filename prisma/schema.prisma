@@ -80,16 +80,16 @@ model Dressmaking {
 }
 
 model Address {
-  id           String         @id @default(uuid())
-  city         String
-  neighborhoud String
-  number       Int
-  street       String
-  lat          Float
-  lng          Float
-  zip_code     String
-  status       StatusAddress? @default(DEFAULT)
-  selected     Boolean        @default(true)
+  id              String         @id @default(uuid())
+  city            String
+  neighborhoud    String
+  number          Int
+  street          String
+  lat             Float
+  lng             Float
+  zip_code        String
+  status          StatusAddress? @default(DEFAULT)
+  current_address Boolean        @default(true)
 
   users         Users?      @relation(fields: [users_id], references: [id])
   users_id      String?

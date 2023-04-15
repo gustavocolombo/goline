@@ -5,6 +5,7 @@ import { AddressRepository } from './repositories/address.repository';
 import { CreateAddressService } from './services/CreateAddress.service';
 import { AddressController } from './controllers/address.controller';
 import { AlterAddressActiveService } from './services/AlterAddressActive.service';
+import { FindAllAddressesOfUser } from './services/FindAllAddressesOfUser.service';
 
 @Module({
   providers: [
@@ -13,6 +14,7 @@ import { AlterAddressActiveService } from './services/AlterAddressActive.service
     AddressRepository,
     CreateAddressService,
     AlterAddressActiveService,
+    FindAllAddressesOfUser,
   ],
   controllers: [AddressController],
 })

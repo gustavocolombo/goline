@@ -1,7 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { StatusAddress } from '@prisma/client';
 import {
   IsLatitude,
   IsLongitude,
+  IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString,
@@ -12,41 +14,51 @@ export class UpdateAddressDTO {
   @ApiProperty()
   @IsUUID(4)
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   address_id: string;
 
   @ApiProperty()
   @IsOptional()
   @IsLatitude()
-  lat: number;
+  lat?: number;
 
   @ApiProperty()
   @IsLongitude()
   @IsOptional()
-  lng: number;
+  lng?: number;
 
   @ApiProperty()
   @IsString()
   @IsOptional()
-  street: string;
+  street?: string;
 
   @ApiProperty()
   @IsString()
   @IsOptional()
-  city: string;
+  city?: string;
 
   @ApiProperty()
   @IsString()
   @IsOptional()
-  neighborhoud: string;
+  neighborhoud?: string;
 
   @ApiProperty()
   @IsNumber()
   @IsOptional()
-  number: number;
+  number?: number;
 
   @ApiProperty()
   @IsString()
   @IsOptional()
-  zip_code: string;
+  zip_code?: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
+  status?: StatusAddress;
+
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
+  current_address?: boolean;
 }

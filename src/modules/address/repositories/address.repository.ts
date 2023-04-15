@@ -126,6 +126,8 @@ export class AddressRepository implements CrudAddressInterface {
     street,
     zip_code,
     address_id,
+    status,
+    current_address,
   }: UpdateAddressDTO): Promise<Address> {
     try {
       const address = await this.prismaService.address.update({
@@ -138,6 +140,8 @@ export class AddressRepository implements CrudAddressInterface {
           number,
           street,
           zip_code,
+          status,
+          current_address,
         },
       });
 

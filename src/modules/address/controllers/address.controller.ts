@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { CreateAddressService } from '../services/CreateAddress.service';
 import {
   ApiBadRequestResponse,
@@ -14,6 +22,9 @@ import { AlterAddressActiveDTO } from '../dtos/AlterAddressActiveDTO';
 import { AlterAddressActiveSerializer } from '../serializers/AlterAddressActive.serializer';
 import { AlterAddressActiveService } from '../services/AlterAddressActive.service';
 import { FindAllAddressesOfUser } from '../services/FindAllAddressesOfUser.service';
+import { FindOneAddressService } from '../services/FindOneAddress.service';
+import { DeleteAddressService } from '../services/DeleteAddress.service';
+import { DeleteAddressSerializer } from '../serializers/DeleteAddress.serializer';
 
 @Controller('/address')
 export class AddressController {
@@ -21,6 +32,8 @@ export class AddressController {
     private createAddressService: CreateAddressService,
     private alterAddressActiveService: AlterAddressActiveService,
     private getAllAddressesOfUserService: FindAllAddressesOfUser,
+    private getOneAddressService: FindOneAddressService,
+    private deleteAddressService: DeleteAddressService,
   ) {}
 
   @ApiOperation({
@@ -112,5 +125,57 @@ export class AddressController {
   @Get()
   async findAllAddressOfUser(@UserDecorator() user: Users): Promise<Address[]> {
     return this.getAllAddressesOfUserService.execute(user.id);
+  }
+
+  @ApiOperation({
+    description: 'Request to return one of addresses of user alredy registered',
+  })
+  @ApiNotFoundResponse({
+    description: 'Address not found',
+    status: 404,
+  })
+  @ApiUnauthorizedResponse({
+    description: 'User not allowed to perform this operation',
+    status: 401,
+  })
+  @ApiBadRequestResponse({
+    description: 'No address related to user',
+    status: 400,
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'Internal server error, contact developers team',
+    status: 500,
+  })
+  @Get('/:address_id')
+  async findOneAddressOfUser(
+    @Param('address_id') address_id: string,
+  ): Promise<Address> {
+    return this.getOneAddressService.execute(address_id);
+  }
+
+  @ApiOperation({
+    description: 'Request to return one of addresses of user alredy registered',
+  })
+  @ApiNotFoundResponse({
+    description: 'Address not found',
+    status: 404,
+  })
+  @ApiUnauthorizedResponse({
+    description: 'User not allowed to perform this operation',
+    status: 401,
+  })
+  @ApiBadRequestResponse({
+    description: 'No address related to user',
+    status: 400,
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'Internal server error, contact developers team',
+    status: 500,
+  })
+  @Delete('/:address_id')
+  async deleteAddressOfUser(
+    @Param('address_id') address_id: string,
+  ): Promise<DeleteAddressSerializer> {
+    return this.deleteAddressService.execute(address_id);
   }
 }

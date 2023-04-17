@@ -1,6 +1,6 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CrudAddressInterface } from '../implementations/crud-address.interface';
-import { Address, StatusAddress } from '@prisma/client';
+import { Address } from '@prisma/client';
 import ErrorHandling from '../../../shared/errors/ErrorHandling';
 import { PrismaService } from '../../../shared/infra/prisma/prisma.service';
 import { UpdateAddressDTO } from '../dtos/UpdateAddressDTO';
@@ -151,21 +151,13 @@ export class AddressRepository implements CrudAddressInterface {
     }
   }
 
-  async deleteAddress(address_id: string): Promise<{
-    status: StatusAddress;
-    httpStatus: HttpStatus;
-    message: string;
-  }> {
+  async deleteAddress(address_id: string): Promise<Address> {
     try {
-      await this.prismaService.address.delete({
+      const address = await this.prismaService.address.delete({
         where: { id: address_id },
       });
 
-      return {
-        status: StatusAddress.DELETED,
-        httpStatus: HttpStatus.OK,
-        message: 'Address deleted with success',
-      };
+      return address;
     } catch (error) {
       throw new ErrorHandling(error);
     }

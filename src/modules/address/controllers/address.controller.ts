@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
 } from '@nestjs/common';
 import { CreateAddressService } from '../services/CreateAddress.service';
 import {
@@ -25,6 +26,8 @@ import { FindAllAddressesOfUser } from '../services/FindAllAddressesOfUser.servi
 import { FindOneAddressService } from '../services/FindOneAddress.service';
 import { DeleteAddressService } from '../services/DeleteAddress.service';
 import { DeleteAddressSerializer } from '../serializers/DeleteAddress.serializer';
+import { UpdateAddressService } from '../services/UpdateAddress.service';
+import { UpdateAddressDTO } from '../dtos/UpdateAddressDTO';
 
 @Controller('/address')
 export class AddressController {
@@ -34,6 +37,7 @@ export class AddressController {
     private getAllAddressesOfUserService: FindAllAddressesOfUser,
     private getOneAddressService: FindOneAddressService,
     private deleteAddressService: DeleteAddressService,
+    private updateAddressService: UpdateAddressService,
   ) {}
 
   @ApiOperation({
@@ -154,6 +158,30 @@ export class AddressController {
   }
 
   @ApiOperation({
+    description: 'Request to update addresses of user alredy registered',
+  })
+  @ApiNotFoundResponse({
+    description: 'Address not found',
+    status: 404,
+  })
+  @ApiUnauthorizedResponse({
+    description: 'User not allowed to perform this operation',
+    status: 401,
+  })
+  @ApiBadRequestResponse({
+    description: 'No address related to user',
+    status: 400,
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'Internal server error, contact developers team',
+    status: 500,
+  })
+  @Put()
+  async updateAddress(@Body() data: UpdateAddressDTO): Promise<Address> {
+    return this.updateAddressService.execute(data);
+  }
+
+  @ApiOperation({
     description: 'Request to return one of addresses of user alredy registered',
   })
   @ApiNotFoundResponse({
@@ -175,7 +203,8 @@ export class AddressController {
   @Delete('/:address_id')
   async deleteAddressOfUser(
     @Param('address_id') address_id: string,
+    @UserDecorator() user: Users,
   ): Promise<DeleteAddressSerializer> {
-    return this.deleteAddressService.execute(address_id);
+    return this.deleteAddressService.execute(user.id, address_id);
   }
 }

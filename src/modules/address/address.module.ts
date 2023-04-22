@@ -8,6 +8,7 @@ import { AlterAddressActiveService } from './services/AlterAddressActive.service
 import { FindAllAddressesOfUser } from './services/FindAllAddressesOfUser.service';
 import { FindOneAddressService } from './services/FindOneAddress.service';
 import { DeleteAddressService } from './services/DeleteAddress.service';
+import { UpdateAddressService } from './services/UpdateAddress.service';
 
 @Module({
   providers: [
@@ -19,6 +20,7 @@ import { DeleteAddressService } from './services/DeleteAddress.service';
     FindAllAddressesOfUser,
     FindOneAddressService,
     DeleteAddressService,
+    UpdateAddressService,
   ],
   controllers: [AddressController],
 })

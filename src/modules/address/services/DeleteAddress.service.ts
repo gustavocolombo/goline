@@ -12,13 +12,22 @@ import { DeleteAddressSerializer } from '../serializers/DeleteAddress.serializer
 export class DeleteAddressService {
   constructor(private addressRepository: AddressRepository) {}
 
-  async execute(address_id: string): Promise<DeleteAddressSerializer> {
+  async execute(
+    user_id: string,
+    address_id: string,
+  ): Promise<DeleteAddressSerializer> {
     try {
       let successDeletedAddress: DeleteAddressSerializer;
 
       const deletedAddress = await this.addressRepository.findOneAddress(
         address_id,
       );
+
+      if (
+        Array(await this.addressRepository.findAllOfUser(user_id)).length === 1
+      ) {
+        throw new BadRequestException('User can not stay without address');
+      }
 
       if (!deletedAddress) throw new NotFoundException('Address not found');
 

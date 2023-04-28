@@ -21,8 +21,12 @@ export class GetAllDressmakersInsideGeolocationService {
     if (!user) throw new NotFoundException('User not found');
 
     const center = {
-      lat: user.address[0].lat,
-      lng: user.address[0].lng,
+      lat: user.address.find(
+        (selectedAddress) => selectedAddress.current_address === true,
+      ).lat,
+      lng: user.address.find(
+        (selectedAddress) => selectedAddress.current_address === true,
+      ).lng,
     } ?? { lat, lng };
 
     let arrayOfDressmakersInsideRadius = [];
@@ -31,8 +35,12 @@ export class GetAllDressmakersInsideGeolocationService {
       dressmakers.map(async (dressmaker) => {
         const isInsideCircle = insideCircle(
           {
-            lat: dressmaker.address[0].lat,
-            lng: dressmaker.address[0].lng,
+            lat: dressmaker.address.find(
+              (selectedAddress) => selectedAddress.current_address === true,
+            ).lat,
+            lng: dressmaker.address.find(
+              (selectedAddress) => selectedAddress.current_address === true,
+            ).lng,
           },
           center,
           radius,
@@ -43,8 +51,14 @@ export class GetAllDressmakersInsideGeolocationService {
             where: {
               address: {
                 every: {
-                  lat: dressmaker.address[0].lat,
-                  lng: dressmaker.address[0].lng,
+                  lat: dressmaker.address.find(
+                    (selectedAddress) =>
+                      selectedAddress.current_address === true,
+                  ).lat,
+                  lng: dressmaker.address.find(
+                    (selectedAddress) =>
+                      selectedAddress.current_address === true,
+                  ).lng,
                 },
               },
               status: StatusUser.ACTIVE,

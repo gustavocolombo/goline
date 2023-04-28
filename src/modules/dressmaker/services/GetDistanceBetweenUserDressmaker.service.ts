@@ -24,12 +24,20 @@ export class GetDistanceBetweenUserDressmakerService {
 
     const distance = distanceTo(
       {
-        lat: findUser.address[0].lat,
-        lng: findUser.address[0].lng,
+        lat: findUser.address.find(
+          (selectedAddress) => selectedAddress.current_address === true,
+        ).lat,
+        lng: findUser.address.find(
+          (selectedAddress) => selectedAddress.current_address === true,
+        ).lng,
       },
       {
-        lat: dressmaker.address[0].lat,
-        lng: dressmaker.address[0].lng,
+        lat: dressmaker.address.find(
+          (selectedAddress) => selectedAddress.current_address === true,
+        ).lat,
+        lng: dressmaker.address.find(
+          (selectedAddress) => selectedAddress.current_address === true,
+        ).lng,
       },
     );
 

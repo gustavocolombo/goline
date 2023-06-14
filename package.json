@@ -63,6 +63,7 @@
     "@types/express": "^4.17.13",
     "@types/jest": "28.1.4",
     "@types/jsonwebtoken": "^8.5.9",
+    "@types/multer": "^1.4.7",
     "@types/node": "^16.0.0",
     "@types/nodemailer": "^6.4.6",
     "@types/passport-google-oauth20": "^2.0.11",

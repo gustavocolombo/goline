@@ -146,8 +146,8 @@ model Post {
   favorite_by Users?  @relation(fields: [users_id], references: [id])
 
   title String
-  image String?
-  stars Int     @default(0)
+  image Json?
+  stars Int    @default(0)
 
   created_at DateTime @default(now())
   updated_at DateTime @default(now())

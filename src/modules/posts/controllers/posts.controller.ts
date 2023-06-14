@@ -7,6 +7,8 @@ import {
   Patch,
   Post,
   Put,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { CreatePostService } from '../services/CreatePost.service';
 import { CreatePostDTO } from '../dtos/CreatePostDTO';
@@ -28,6 +30,8 @@ import { UpdatePostService } from '../services/UpdatePost.service';
 import { UpdatePostDTO } from '../dtos/UpdatePostDTO';
 import { UserDecorator } from '../../../shared/decorator/user.decorator';
 import { AddFavoritPostService } from '../services/AddFavoritePost.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 
 @ApiTags('posts')
 @Controller('/posts')
@@ -120,8 +124,18 @@ export class PostsController {
     description: 'Internal server error',
   })
   @Roles(RolesUser.DRESSMAKER, RolesUser.USER)
+  @UseInterceptors(
+    FileInterceptor('image', {
+      storage: diskStorage({ destination: './uploads' }),
+    }),
+  )
   @Put()
-  async updatePost(@Body() dataUpdatePost: UpdatePostDTO) {
+  async updatePost(
+    @Body() dataUpdatePost: UpdatePostDTO,
+    @UploadedFile() image: Express.Multer.File,
+  ) {
+    Object.assign(dataUpdatePost, { image });
+    console.log('deu certo', image);
     return this.updatePostService.execute(dataUpdatePost);
   }
 

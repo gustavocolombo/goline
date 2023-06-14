@@ -126,7 +126,12 @@ export class PostsController {
   @Roles(RolesUser.DRESSMAKER, RolesUser.USER)
   @UseInterceptors(
     FileInterceptor('image', {
-      storage: diskStorage({ destination: './uploads' }),
+      storage: diskStorage({
+        destination: './uploads',
+        filename(req, file, callback) {
+          callback(null, `${file.originalname}`);
+        },
+      }),
     }),
   )
   @Put()
@@ -135,7 +140,6 @@ export class PostsController {
     @UploadedFile() image: Express.Multer.File,
   ) {
     Object.assign(dataUpdatePost, { image });
-    console.log('deu certo', image);
     return this.updatePostService.execute(dataUpdatePost);
   }
 

@@ -27,8 +27,6 @@ export class CreateAddressService {
 
       if (!findUser) throw new NotFoundException('User not found');
 
-      console.log('finduser', findUser);
-
       const address = await this.addressRepository.create({
         city,
         lat,

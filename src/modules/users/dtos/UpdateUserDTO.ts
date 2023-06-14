@@ -77,4 +77,9 @@ export class UpdateUserDTO {
   @IsString()
   @IsOptional()
   zip_code?: string;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
+  image?: any;
 }

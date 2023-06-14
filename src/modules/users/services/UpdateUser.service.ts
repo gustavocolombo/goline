@@ -31,6 +31,8 @@ export class UpdateUserService {
 
       const updatedUser = await this.usersRepository.update({ ...rest });
 
+      updatedUser.image = Object.values(updatedUser.image)[0];
+
       delete updatedUser.password;
 
       return updatedUser;

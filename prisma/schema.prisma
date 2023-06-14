@@ -21,6 +21,7 @@ model Users {
   cellphone  String
   status     StatusUser @default(ACTIVE)
   roles      RolesUser  @default(USER)
+  image      Json?
   created_at DateTime   @default(now())
   updated_at DateTime   @default(now())
 

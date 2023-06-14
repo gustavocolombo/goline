@@ -105,8 +105,11 @@ export class UsersController {
   })
   @Roles(RolesUser.USER)
   @Put()
-  async updateUser(@Body() { ...rest }: UpdateUserDTO): Promise<any> {
-    return await this.updateUserService.execute({ ...rest });
+  async updateUser(
+    @Body() { ...rest }: UpdateUserDTO,
+    @UserDecorator() user: Users,
+  ): Promise<any> {
+    return await this.updateUserService.execute({ ...rest }, user.id);
   }
 
   @ApiBearerAuth()

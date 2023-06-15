@@ -23,6 +23,8 @@ export class UpdatePostService {
 
       const updatedPost = await this.postRepository.update(data);
 
+      updatedPost.image = Object.values(updatedPost.image)[0];
+
       return updatedPost;
     } catch (error) {
       throw new ErrorHandling(error);

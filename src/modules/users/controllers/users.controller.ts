@@ -1,4 +1,16 @@
-import { Body, Controller, Get, Patch, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  FileTypeValidator,
+  Get,
+  MaxFileSizeValidator,
+  ParseFilePipe,
+  Patch,
+  Post,
+  Put,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
 import { RolesUser, Users } from '@prisma/client';
 import { CreateUserDTO } from '../dtos/CreateUserDTO';
 import { CreateUserService } from '../services/CreateUser.service';
@@ -18,6 +30,8 @@ import { ResetPasswordDTO } from '../dtos/ResetPasswordDTO';
 import { ResetPasswordService } from '../services/ResetPassword.service';
 import { Roles } from '../../../shared/roles/users-roles';
 import { UserDecorator } from '../../../shared/decorator/user.decorator';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 
 @ApiTags('users')
 @Controller('/users')
@@ -104,9 +118,32 @@ export class UsersController {
     description: 'The user has not been authorized',
   })
   @Roles(RolesUser.USER)
+  @UseInterceptors(
+    FileInterceptor('image', {
+      storage: diskStorage({
+        destination: './uploads',
+        filename(req, file, callback) {
+          callback(null, `${file.originalname}`);
+        },
+      }),
+    }),
+  )
   @Put()
-  async updateUser(@Body() { ...rest }: UpdateUserDTO): Promise<any> {
-    return await this.updateUserService.execute({ ...rest });
+  async updateUser(
+    @Body() { ...rest }: UpdateUserDTO,
+    @UserDecorator() user: Users,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 1000000000 }),
+          new FileTypeValidator({ fileType: /(jpg|jpeg|png)$/ }),
+        ],
+      }),
+    )
+    image: Express.Multer.File,
+  ): Promise<any> {
+    Object.assign(rest, { image });
+    return await this.updateUserService.execute({ ...rest }, user.id);
   }
 
   @ApiBearerAuth()

@@ -2,11 +2,16 @@ import {
   Body,
   Controller,
   Delete,
+  FileTypeValidator,
   Get,
+  MaxFileSizeValidator,
   Param,
+  ParseFilePipe,
   Patch,
   Post,
   Put,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { CreatePostService } from '../services/CreatePost.service';
 import { CreatePostDTO } from '../dtos/CreatePostDTO';
@@ -28,6 +33,8 @@ import { UpdatePostService } from '../services/UpdatePost.service';
 import { UpdatePostDTO } from '../dtos/UpdatePostDTO';
 import { UserDecorator } from '../../../shared/decorator/user.decorator';
 import { AddFavoritPostService } from '../services/AddFavoritePost.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 
 @ApiTags('posts')
 @Controller('/posts')
@@ -120,8 +127,30 @@ export class PostsController {
     description: 'Internal server error',
   })
   @Roles(RolesUser.DRESSMAKER, RolesUser.USER)
+  @UseInterceptors(
+    FileInterceptor('image', {
+      storage: diskStorage({
+        destination: './uploads',
+        filename(req, file, callback) {
+          callback(null, `${file.originalname}`);
+        },
+      }),
+    }),
+  )
   @Put()
-  async updatePost(@Body() dataUpdatePost: UpdatePostDTO) {
+  async updatePost(
+    @Body() dataUpdatePost: UpdatePostDTO,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 1000000000 }),
+          new FileTypeValidator({ fileType: /(jpg|jpeg|png)$/ }),
+        ],
+      }),
+    )
+    image: Express.Multer.File,
+  ) {
+    Object.assign(dataUpdatePost, { image });
     return this.updatePostService.execute(dataUpdatePost);
   }
 

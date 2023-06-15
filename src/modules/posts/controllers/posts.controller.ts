@@ -2,8 +2,11 @@ import {
   Body,
   Controller,
   Delete,
+  FileTypeValidator,
   Get,
+  MaxFileSizeValidator,
   Param,
+  ParseFilePipe,
   Patch,
   Post,
   Put,
@@ -137,7 +140,15 @@ export class PostsController {
   @Put()
   async updatePost(
     @Body() dataUpdatePost: UpdatePostDTO,
-    @UploadedFile() image: Express.Multer.File,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 1000000000 }),
+          new FileTypeValidator({ fileType: /(jpg|jpeg|png)$/ }),
+        ],
+      }),
+    )
+    image: Express.Multer.File,
   ) {
     Object.assign(dataUpdatePost, { image });
     return this.updatePostService.execute(dataUpdatePost);

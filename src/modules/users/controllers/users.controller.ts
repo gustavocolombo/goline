@@ -1,7 +1,10 @@
 import {
   Body,
   Controller,
+  FileTypeValidator,
   Get,
+  MaxFileSizeValidator,
+  ParseFilePipe,
   Patch,
   Post,
   Put,
@@ -129,7 +132,15 @@ export class UsersController {
   async updateUser(
     @Body() { ...rest }: UpdateUserDTO,
     @UserDecorator() user: Users,
-    @UploadedFile() image: Express.Multer.File,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 1000000000 }),
+          new FileTypeValidator({ fileType: /(jpg|jpeg|png)$/ }),
+        ],
+      }),
+    )
+    image: Express.Multer.File,
   ): Promise<any> {
     Object.assign(rest, { image });
     return await this.updateUserService.execute({ ...rest }, user.id);
